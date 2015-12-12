@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:elevation="7dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.pl4za.help.MyViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.pl4za.spotifytest.MainActivity"
+            android:layout_below="@+id/toolbar" />
+
+        <FrameLayout
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:id="@+id/container"
+            android:layout_below="@+id/toolbar"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+        </FrameLayout>
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:paddingTop="@dimen/tool_bar_top_padding"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlDrawerListView"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_gravity="start"
+        android:clickable="true">
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:layout_above="@+id/view" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey"
+            android:id="@+id/view"
+            android:layout_above="@+id/tvMadeBy"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Thank you for using Spotlite"
+            android:paddingTop="8dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="8dp"
+            android:id="@+id/tvMadeBy"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:adjustViewBounds="true"
+            android:paddingTop="11dp"
+            android:layout_marginLeft="5dp"
+            android:maxWidth="22dp"
+            android:maxHeight="22dp"
+            android:layout_below="@id/view"
+            android:src="@drawable/heart"
+            android:layout_toRightOf="@+id/tvMadeBy"
+            android:layout_toEndOf="@+id/tvMadeBy" />
+
+    </RelativeLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

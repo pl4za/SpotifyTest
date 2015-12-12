@@ -1,0 +1,45 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pl4za.spotifytest.MainActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_login"
+        android:icon="@drawable/ic_action_add_person"
+        android:title="@string/action_login"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/action_refresh"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_clear_queue"
+        android:icon="@drawable/ic_action_remove"
+        android:title="@string/action_clear"
+        app:showAsAction="ifRoom" />
+    <!--
+    <item
+        android:id="@+id/action_undo"
+        android:icon="@drawable/ic_action_undo"
+        app:showAsAction="always"
+        android:title="@string/action_undo"/>
+
+            <item
+        android:id="@+id/action_player"
+        android:icon="@drawable/ic_action_play_over_video"
+        app:showAsAction="always"
+        android:title="Playing"/>
+        -->
+
+
+</menu><!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/menu/main.xml -->

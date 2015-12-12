@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/back"
+        android:tag="back"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/front"
+        android:tag="front"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_row_selector"
+        android:padding="5dp">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/thumbnail"
+            android:transitionName="MyTransition"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/track"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/track"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/darkgrey"
+            android:textSize="@dimen/artist"
+            android:layout_toLeftOf="@+id/added"
+            android:layout_alignRight="@+id/track"
+            android:layout_alignEnd="@+id/track" />
+
+        <TextView
+            android:id="@+id/album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/artist"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/darkgrey"
+            android:textSize="@dimen/album"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/time"
+            android:layout_toStartOf="@+id/time" />
+
+        <TextView
+            android:id="@+id/added"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/thumbnail"
+            android:layout_alignRight="@+id/time"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/added" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/added"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/time" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

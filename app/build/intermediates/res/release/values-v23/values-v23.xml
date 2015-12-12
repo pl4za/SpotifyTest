@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values-v23/colors.xml -->
+    <eat-comment/>
+    <color name="notification_text">#000000</color>
+    <color name="notification_text_secondary">#616161</color>
+    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values-v23/dimens.xml -->
+    <eat-comment/>
+    <dimen name="tool_bar_top_padding">24dp</dimen>
+    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values-v23/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="android:windowActivityTransitions">true</item>
+
+    </style>
+    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values-v23/values-v23.xml -->
+    <eat-comment/>
+    <style name="Base.TextAppearance.AppCompat.Widget.Button.Inverse" parent="android:TextAppearance.Material.Widget.Button.Inverse"/>
+    <style name="Base.Theme.AppCompat" parent="Base.V23.Theme.AppCompat"/>
+    <style name="Base.Theme.AppCompat.Light" parent="Base.V23.Theme.AppCompat.Light"/>
+    <style name="Base.V23.Theme.AppCompat" parent="Base.V22.Theme.AppCompat">
+        <!-- We can use the platform drawable on v23+ -->
+        <item name="actionBarItemBackground">?android:attr/actionBarItemBackground</item>
+
+        <item name="controlBackground">@drawable/abc_control_background_material</item>
+    </style>
+    <style name="Base.V23.Theme.AppCompat.Light" parent="Base.V22.Theme.AppCompat.Light">
+        <!-- We can use the platform drawable on v23+ -->
+        <item name="actionBarItemBackground">?android:attr/actionBarItemBackground</item>
+
+        <item name="controlBackground">@drawable/abc_control_background_material</item>
+    </style>
+    <style name="Base.Widget.AppCompat.Button.Colored" parent="android:Widget.Material.Button.Colored"/>
+</resources>

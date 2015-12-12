@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Spotlite</string>
+    <string name="action_settings">Settings</string>
+
+	<!--Settings available -->
+	<string name="SpotifyPreferences">SpotifyPreferences</string>
+	<string name="code">code</string>
+    <string name="state">state</string>
+    <string name="user_id">user_id</string>
+    <string name="product">product</string>
+    <string name="access_token">access_token</string>
+    <string name="refresh_token">refresh_token</string>
+	<!--Cache available -->
+	<string name="SpotifyCache">SpotifyCache</string>
+	<string name="Etag">ETag</string>
+	<!--Drawer -->
+	<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="Playlists">SpotifyCache</string>
+    <!-- Action bar -->
+    <string name="action_search">Search</string>
+    <string name="action_login">Login</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_clear">Clear queue</string>
+    <string name="search_hint">Search by artist, track or album</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_queue">Queue</string>
+    <!-- Volley tags -->
+    <string name="TAG_exchangeCodeForToken">exchangeCodeForToken</string>
+    <string name="TAG_getCurrentUserProfile">getCurrentUserProfile</string>
+    <string name="TAG_getCurrentUserPlaylists">getCurrentUserPlaylists</string>
+    <string name="TAG_refreshToken">refreshToken</string>
+    <string name="TAG_getSelectedPlaylistTracks">getSelectedPlaylistTracks</string>
+    <string name="TAG_getArtistID">getSelectedPlaylistTracks</string>
+    <!-- Spotify values -->
+    <string name="CLIENT_ID">6d4eddf8161c434994500be4a48cab9b</string>
+    <string name="CLIENT_SECRET">5ddc0c1b67c2446993ca2306eeb90149</string>
+    <string name="REDIRECT_URI">spotify-feed://callback</string>
+    <string name="SCOPES">user-follow-read playlist-read-private streaming user-read-private</string>
+    <string name="profile_picture">profile_picture</string>
+    <!-- Transitions -->
+    <string name="list_row_transition">list_row_transition</string>
+</resources>
