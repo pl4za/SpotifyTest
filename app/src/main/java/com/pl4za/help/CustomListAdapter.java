@@ -1,17 +1,21 @@
 package com.pl4za.help;
 
 import android.app.Activity;
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.pl4za.interfaces.ISwipeListener;
 import com.pl4za.spotifytest.FragmentQueue;
 import com.pl4za.spotifytest.FragmentTracks;
 import com.pl4za.spotifytest.MainActivity;
@@ -30,16 +34,56 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomListAdapter extends BaseAdapter implements Filterable {
+public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
+    private static final String TAG = "CustomListAdapter";
     private List<Track> trackList;
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private List<Track> originalTracklist = null;
     private final Activity activity;
     private LayoutInflater inflater;
+    private ISwipeListener swipeListener;
+    private String direction = "right";
 
     public CustomListAdapter(Activity activity, List<Track> trackList) {
         this.activity = activity;
         this.trackList = trackList;
+    }
+
+    public void setSwipeListener(ISwipeListener i) {
+        this.swipeListener = i;
+    }
+
+    public void setSwipeDirection(String direction) {this.direction = direction;}
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
+    @Override
+    public View generateView(final int position, ViewGroup parent) {
+        View v = LayoutInflater.from(activity).inflate(R.layout.list_view_item, null);
+        final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
+        if (direction.equals("right")) {
+            swipeLayout.addDrag(SwipeLayout.DragEdge.Left, swipeLayout.findViewById(R.id.back));
+        } else {
+            swipeLayout.addDrag(SwipeLayout.DragEdge.Right, swipeLayout.findViewById(R.id.back));
+        }
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+
+                swipeListener.onSwipe(position);
+                layout.close();
+            }
+        });
+        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+                swipeListener.onDoubleClick(position);
+            }
+        });
+        return v;
     }
 
     @Override
@@ -58,23 +102,14 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (inflater == null)
-            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_row, null);
-            holder = new ViewHolder();
-            holder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
-            holder.track = (TextView) convertView.findViewById(R.id.track);
-            holder.artist = (TextView) convertView.findViewById(R.id.artist);
-            holder.time = (TextView) convertView.findViewById(R.id.time);
-            holder.album = (TextView) convertView.findViewById(R.id.album);
-            holder.added = (TextView) convertView.findViewById(R.id.added);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+    public void fillValues(int position, View convertView) {
+        ViewHolder holder = new ViewHolder();
+        holder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+        holder.track = (TextView) convertView.findViewById(R.id.track);
+        holder.artist = (TextView) convertView.findViewById(R.id.artist);
+        holder.time = (TextView) convertView.findViewById(R.id.time);
+        holder.album = (TextView) convertView.findViewById(R.id.album);
+        holder.added = (TextView) convertView.findViewById(R.id.added);
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         // getting movie data for the row
@@ -99,7 +134,6 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
         // Loading image with placeholder and error image
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
-        return convertView;
     }
 
     private String convertAdded(String time) {

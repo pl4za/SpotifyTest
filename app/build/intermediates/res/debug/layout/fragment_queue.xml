@@ -4,22 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/tracklist_bg_color">
 
-    <com.fortysevendeg.swipelistview.SwipeListView
-        xmlns:swipe="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/list"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/list_divider"
-        android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_row_selector"
-        swipe:swipeAnimationTime="200"
-        swipe:swipeBackView="@+id/back"
-        swipe:swipeFrontView="@+id/front"
-        swipe:swipeMode="left"
-        swipe:swipeActionLeft="dismiss"
-        android:fastScrollEnabled="false"
-        swipe:swipeOffsetLeft="0dp"
-        swipe:swipeOpenOnLongPress="false" />
+        android:layout_height="fill_parent" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

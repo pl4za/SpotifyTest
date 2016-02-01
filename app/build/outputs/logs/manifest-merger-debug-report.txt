@@ -15,15 +15,16 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
-MERGED from com.fortysevendeg.swipelistview:swipelistview:1.0-SNAPSHOT:19:3
-MERGED from com.android.support:appcompat-v7:23.0.1:20:5
+MERGED from com.spotify.sdk:spotify-auth:1.0.0-beta12:26:5
+MERGED from com.spotify.sdk:spotify-player:1.0.0-beta12:26:5
+MERGED from com.daimajia.swipelayout:library:1.2.0:6:5
 MERGED from com.android.support:support-v4:23.1.1:20:5
-MERGED from com.spotify.sdk:spotify-player:1.0.0-beta9:25:5
+MERGED from com.android.support:appcompat-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.1.1:20:5
-MERGED from com.android.support:appcompat-v7:23.0.1:20:5
+MERGED from com.android.support:recyclerview-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.1.1:20:5
 MERGED from com.melnykov:floatingactionbutton:1.2.0:8:5
-MERGED from com.android.support:recyclerview-v7:21.0.2:15:5
+MERGED from com.android.support:recyclerview-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.1.1:20:5
 MERGED from de.hdodenhof:circleimageview:1.2.2:5:5
 MERGED from com.github.mrengineer13:snackbar:1.1.0:8:5
@@ -45,15 +46,13 @@ ADDED from AndroidManifest.xml:12:5
 		ADDED from AndroidManifest.xml:12:22
 application
 ADDED from AndroidManifest.xml:14:5
-MERGED from com.fortysevendeg.swipelistview:swipelistview:1.0-SNAPSHOT:21:5
-MERGED from com.android.support:appcompat-v7:23.0.1:22:5
+MERGED from com.spotify.sdk:spotify-auth:1.0.0-beta12:30:5
+MERGED from com.spotify.sdk:spotify-player:1.0.0-beta12:30:5
 MERGED from com.android.support:support-v4:23.1.1:22:5
-MERGED from com.spotify.sdk:spotify-player:1.0.0-beta9:29:5
+MERGED from com.android.support:appcompat-v7:23.1.1:22:5
 MERGED from com.android.support:support-v4:23.1.1:22:5
-MERGED from com.android.support:appcompat-v7:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.1.1:22:5
 MERGED from com.melnykov:floatingactionbutton:1.2.0:12:5
-MERGED from com.android.support:recyclerview-v7:21.0.2:17:5
 MERGED from com.android.support:support-v4:23.1.1:22:5
 MERGED from de.hdodenhof:circleimageview:1.2.2:9:5
 MERGED from com.github.mrengineer13:snackbar:1.1.0:12:5
@@ -125,9 +124,3 @@ ADDED from AndroidManifest.xml:47:9
 		ADDED from AndroidManifest.xml:49:13
 	android:name
 		ADDED from AndroidManifest.xml:48:13
-activity#android.support.v7.widget.TestActivity
-ADDED from com.android.support:recyclerview-v7:21.0.2:18:9
-	android:label
-		ADDED from com.android.support:recyclerview-v7:21.0.2:18:19
-	android:name
-		ADDED from com.android.support:recyclerview-v7:21.0.2:18:60

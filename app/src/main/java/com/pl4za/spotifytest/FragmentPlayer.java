@@ -158,7 +158,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Ip
     private void insertImage() {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView albumArt = (NetworkImageView) view.findViewById(R.id.thumbnail);
+        NetworkImageView albumArt = (NetworkImageView) view.findViewById(R.id.albumArt);
         albumArt.setImageUrl(Queue.playingTrack.getBigAlbumArt(), imageLoader);
         imageLoader.get(Queue.playingTrack.getBigAlbumArt(), ImageLoader.getImageListener(albumArt, R.drawable.no_image, R.drawable.no_image));
     }

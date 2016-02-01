@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:tag="Bottom3"
+        android:weightSum="10">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/front"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_row_selector"
+        android:padding="5dp"
+        android:tag="Hover">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
+            android:transitionName="MyTransition" />
+
+        <TextView
+            android:id="@+id/track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/track"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/track"
+            android:layout_alignRight="@+id/track"
+            android:layout_below="@+id/track"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/added"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/darkgrey"
+            android:textSize="@dimen/artist" />
+
+        <TextView
+            android:id="@+id/album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/artist"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/time"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_toStartOf="@+id/time"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/darkgrey"
+            android:textSize="@dimen/album" />
+
+        <TextView
+            android:id="@+id/added"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/thumbnail"
+            android:layout_alignRight="@+id/time"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/added" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/added"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/time" />
+
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

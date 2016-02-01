@@ -19,30 +19,30 @@ public final class R {
 		public static final int sb__transparent = 0x7f0d004b;
 	}
 	public static final class dimen {
-		public static final int activity_horizontal_margin = 0x7f09000b;
-		public static final int activity_vertical_margin = 0x7f09000c;
-		public static final int horizontal_margin = 0x7f090052;
-		public static final int vertical_margin_bottom = 0x7f09000d;
-		public static final int vertical_margin_top = 0x7f09000e;
+		public static final int activity_horizontal_margin = 0x7f0a000d;
+		public static final int activity_vertical_margin = 0x7f0a000e;
+		public static final int horizontal_margin = 0x7f0a0056;
+		public static final int vertical_margin_bottom = 0x7f0a000f;
+		public static final int vertical_margin_top = 0x7f0a0010;
 	}
 	public static final class drawable {
-		public static final int sb__tablet_bkgnd = 0x7f020071;
+		public static final int sb__tablet_bkgnd = 0x7f020078;
 	}
 	public static final class id {
-		public static final int snackBar = 0x7f0e0090;
-		public static final int snackButton = 0x7f0e0007;
-		public static final int snackContainer = 0x7f0e0008;
-		public static final int snackMessage = 0x7f0e0009;
+		public static final int snackBar = 0x7f0e0097;
+		public static final int snackButton = 0x7f0e0008;
+		public static final int snackContainer = 0x7f0e0009;
+		public static final int snackMessage = 0x7f0e000a;
 	}
 	public static final class layout {
-		public static final int sb__snack = 0x7f04002a;
-		public static final int sb__snack_container = 0x7f04002b;
+		public static final int sb__snack = 0x7f04002d;
+		public static final int sb__snack_container = 0x7f04002e;
 	}
 	public static final class style {
-		public static final int SnackBar = 0x7f0a0003;
-		public static final int SnackBar_Button = 0x7f0a00ae;
-		public static final int SnackBar_Container = 0x7f0a00af;
-		public static final int SnackBar_Message = 0x7f0a00b0;
-		public static final int SnackBar_SnackBar = 0x7f0a0004;
+		public static final int SnackBar = 0x7f0b0004;
+		public static final int SnackBar_Button = 0x7f0b00b1;
+		public static final int SnackBar_Container = 0x7f0b00b2;
+		public static final int SnackBar_Message = 0x7f0b00b3;
+		public static final int SnackBar_SnackBar = 0x7f0b0005;
 	}
 }

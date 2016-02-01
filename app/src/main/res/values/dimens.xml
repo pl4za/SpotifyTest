@@ -10,6 +10,7 @@
     <dimen name="album">12sp</dimen>
 	<dimen name="added">12sp</dimen>
     <dimen name="tool_bar_top_padding">0dp</dimen>
+    <dimen name="drawer_width">400dp</dimen>
 
 
 </resources>

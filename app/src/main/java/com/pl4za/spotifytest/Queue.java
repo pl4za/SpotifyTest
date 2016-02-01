@@ -40,8 +40,8 @@ public class Queue {
         //Log.i("Queue", "Adding track to queue");
         //Log.i("Queue", "Queue size: " + queue.size());
         queue.add(track);
-        if (queue.size() - 1 == 0)
-            playingTrack = queue.get(0);
+        if (queue.size() == 1)
+            playingTrack = track;
         if (callBackRefreshQueue != null)
             callBackRefreshQueue.refreshList();
         MainActivity.ENABLE_UNDO_VALUE = true;

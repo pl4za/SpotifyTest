@@ -39,6 +39,7 @@ import java.util.List;
 //TODO: initialize player on add
 public class PlayService extends Service implements PlayerNotificationCallback, ConnectionStateCallback, IqueueRefresh, IspotifyPlayerOptions, IspotifySdkValues {
 
+    private static final String TAG = "PlayService";
     public static Player mPlayer;
     public static boolean SKIP_NEXT = true;
     public static boolean TRACK_END = true;
@@ -57,10 +58,11 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     private String access_token;
 
     public static void addToQueue(List<String> queue, int index) {
+        Log.i(TAG, "Queue size: "+queue.size()+ " with index: "+index);
         if (queue.size() == 1) {
             mPlayer.play(queue);
         } else {
-            Log.i("PlayService)", "Adding to queue: " + queue.get(0) + " - " + index);
+            //Log.i("PlayService)", "Adding to queue: " + queue.get(0) + " - " + index);
             mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(index));
         }
     }
