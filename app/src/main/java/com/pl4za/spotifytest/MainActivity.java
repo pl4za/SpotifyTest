@@ -204,8 +204,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
                     .replace(R.id.container, playFrag, "FragmentPlayer")
                     .addToBackStack(null)
                     .commit();
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            MainActivity.isHomeAsUpEnabled = true;
+            refreshActionBar(2);
         }
     }
 
@@ -404,14 +403,8 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
             startApp();
         }
         if (id == R.id.action_clear_queue) {
-            copyTracklistBack();
             Queue.clearQueue();
             PlayService.clearQueue();
-            if (serviceIntent != null) {
-                if (playService.notificationActive) {
-                    PlayService.destroyPlayer();
-                }
-            }
             ENABLE_CLEAR = false;
             ENABLE_SEARCH = false;
             refreshActionBar(3);
@@ -430,9 +423,6 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
         return super.onOptionsItemSelected(item);
     }
 
-    private void copyTracklistBack() {
-        FragmentTracks.TrackList.addAll(Queue.TRACK_LIST);
-    }
 
     @Override
     public void refreshActionBar(int i) {

@@ -250,13 +250,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void onPlaybackError(PlayerNotificationCallback.ErrorType arg0, String arg1) {
         Log.e("Playback", arg1 + " " + arg0.toString());
-        Toast.makeText(getApplicationContext(), arg0.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), arg0.toString(), Toast.LENGTH_SHORT).show();
         if (arg0.toString().equals("TRACK_UNAVAILABLE")) {
-            Queue.removeFromQueue(Queue.trackNumber);
+            Toast.makeText(getApplicationContext(), "Track unavailable", Toast.LENGTH_SHORT).show();
+            nextTrack();
         } else if (arg0.toString().equals("ERROR_PLAYBACK")) {
-            if (!Queue.TRACK_LIST.isEmpty()) {
-                addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), Queue.trackNumber + 1);
-            }
+            Toast.makeText(getApplicationContext(), "Playback error", Toast.LENGTH_SHORT).show();
+            nextTrack();
         }
     }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pl4za.help.FixedSwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:swipe="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:leftEdgeSwipeOffset="90dp"
     swipe:rightEdgeSwipeOffset="0dp">
 
     <LinearLayout
@@ -95,4 +95,4 @@
             android:textSize="@dimen/time" />
 
     </RelativeLayout>
-</com.daimajia.swipe.SwipeLayout>
+</com.pl4za.help.FixedSwipeLayout>

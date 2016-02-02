@@ -9,12 +9,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -52,6 +52,8 @@ import java.util.Map;
 
 public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeListener {
 
+    private static final String TAG = "FragmentTracks";
+    private static final int SCROLL_STATE_IDLE = 0;
     private final static int MY_SOCKET_TIMEOUT_MS = 7000;
     public static List<Track> TrackList = new ArrayList<>();
     private static IspotifyPlayerOptions mInitializePlayer;
@@ -62,7 +64,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     private String globalUrl = "";
     private int statusCode = 0;
     private Context context;
-    private ListView swipeListView;
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
     private boolean animate = true;
     private boolean isCacheNull = true;
@@ -70,15 +72,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
 
-    public static void insertTrack(Track track, int position) {
-        if (position >= TrackList.size()) {
-            TrackList.add(track);
-        } else {
-            TrackList.add(position, track);
-        }
-    }
-
-    public static void updateTrackList(List<Track> TrackListUpdated) {
+    public static void setFilteredList(List<Track> TrackListUpdated) {
         TrackList = TrackListUpdated;
     }
 
@@ -92,7 +86,8 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
         mRefreshToken = (IrefreshToken) context;
         mRefreshActionBar = (IrefreshActionBar) context;
         view = inflater.inflate(R.layout.fragment_tracks, container, false);
-        swipeListView = (ListView) view.findViewById(R.id.listview);
+        recyclerView = (RecyclerView) view.findViewById(R.id.listview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -122,11 +117,11 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 MainActivity.mViewPager.setCurrentItem(1);
             }
         });
-
-        swipeListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == SCROLL_STATE_IDLE) {
                     fabPlay.show(true);
                     fabQueue.show(true);
 
@@ -140,17 +135,12 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                     refreshView.setEnabled(false);
                 }
             }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
         });
-        swipeListView.setEnabled(false);
-        mAdapter = new CustomListAdapter(getActivity(), TrackList);
+        recyclerView.setEnabled(false);
+        mAdapter = new CustomListAdapter(TrackList);
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
-        swipeListView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
         Queue.TracksRefreshListener(this);
         if (MainActivity.landscape) {
@@ -164,38 +154,16 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     }
 
     private boolean listIsAtTop() {
-        if (swipeListView.getChildCount() == 0) return true;
-        return swipeListView.getChildAt(0).getTop() == 0;
+        if (recyclerView.getChildCount() == 0) return true;
+        return recyclerView.getChildAt(0).getTop() == 0;
     }
 
     private void openFragmentPlayer() {
-        /*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Create new fragment to add (Fragment B)
-            FragmentPlayer playFrag = new FragmentPlayer();
-            playFrag.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_transform));
-            playFrag.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.explode));
-            //TODO: crash on back
-            // Our shared element (in Fragment A)
-            ImageView ivAlbumArt = (ImageView) view.findViewById(R.id.thumbnail);
-
-            // Add Fragment B
-            FragmentTransaction ft = getFragmentManager().beginTransaction()
-                    .replace(R.id.container, playFrag)
-                    .addToBackStack(null)
-                    .addSharedElement(ivAlbumArt, "MyTransition");
-            ft.commit();
-        } else {*/
         FragmentPlayer playFrag = new FragmentPlayer();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, playFrag, "FragmentPlayer")
                 .addToBackStack(null)
                 .commit();
-        // }
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
-        MainActivity.isHomeAsUpEnabled = true;
-
     }
 
     @Override
@@ -243,7 +211,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
             PlayService.addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), 0);
             ((MainActivity) getActivity()).clearSearch();
             openFragmentPlayer();
-            removeTracksInserted(position);
+            //removeTracksInserted(position);
         } else {
             try {
                 Intent spotify = new Intent(Intent.ACTION_VIEW, Uri.parse(TrackList.get(position).getTrackURI()));
@@ -253,10 +221,6 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 context.startActivity(play);
             }
         }
-    }
-
-    private void removeTracksInserted(int position) {
-        TrackList.subList(position, TrackList.size()).clear();
     }
 
     private void getSelectedPlaylistTracks(String url) {
@@ -345,7 +309,6 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
 
     @Override
     public void onSwipe(int position) {
-        //Log.i("FragmentTracks", "y: " + fabQueue.getY());
         mRefreshActionBar.refreshActionBar(0);
         if (animate) {
             fabPlay.hide(true);
@@ -370,7 +333,6 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 })
                 .withDuration(SnackBar.SHORT_SNACK)
                 .show();
-        Log.d("swipe", "dismiss");
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
         String product = sharedPref.getString(getString(R.string.product), "");
         if (product.equals("premium")) {
@@ -380,10 +342,11 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 mInitializePlayer.startNotification();
             }
             if (!TrackList.isEmpty()) {
+                Log.i(TAG, "Position: "+ position+" Track: "+TrackList.get(position).getTrack());
                 Queue.addToQueue(TrackList.get(position));
                 PlayService.addToQueue(TrackList.get(position).getTrackURI());
-                TrackList.remove(position);
-                mAdapter.notifyDataSetChanged();
+                //TrackList.remove(position);
+                //mAdapter.notifyDataSetChanged();
             }
         } else {
             try {
@@ -547,7 +510,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 mAdapter.notifyDataSetChanged();
                 refreshView.setRefreshing(false);
                 ((MainActivity) getActivity()).getRandomArtistPicture();
-                swipeListView.setEnabled(true);
+                recyclerView.setEnabled(true);
                 mRefreshActionBar.refreshActionBar(0);
             }
         }

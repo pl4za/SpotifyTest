@@ -1,6 +1,6 @@
 package com.pl4za.help;
 
-import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.pl4za.interfaces.ISwipeListener;
 import com.pl4za.spotifytest.FragmentQueue;
 import com.pl4za.spotifytest.FragmentTracks;
@@ -34,18 +33,14 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
+public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.ViewHolder> implements Filterable {
     private static final String TAG = "CustomListAdapter";
-    private List<Track> trackList;
-    private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-    private List<Track> originalTracklist = null;
-    private final Activity activity;
-    private LayoutInflater inflater;
+    private List<Track> trackList, originalTracklist;
+    private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private ISwipeListener swipeListener;
     private String direction = "right";
 
-    public CustomListAdapter(Activity activity, List<Track> trackList) {
-        this.activity = activity;
+    public CustomListAdapter(List<Track> trackList) {
         this.trackList = trackList;
     }
 
@@ -53,7 +48,9 @@ public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
         this.swipeListener = i;
     }
 
-    public void setSwipeDirection(String direction) {this.direction = direction;}
+    public void setSwipeDirection(String direction) {
+        this.direction = direction;
+    }
 
     @Override
     public int getSwipeLayoutResourceId(int position) {
@@ -61,79 +58,8 @@ public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
-        View v = LayoutInflater.from(activity).inflate(R.layout.list_view_item, null);
-        final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
-        if (direction.equals("right")) {
-            swipeLayout.addDrag(SwipeLayout.DragEdge.Left, swipeLayout.findViewById(R.id.back));
-        } else {
-            swipeLayout.addDrag(SwipeLayout.DragEdge.Right, swipeLayout.findViewById(R.id.back));
-        }
-        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
-            @Override
-            public void onOpen(SwipeLayout layout) {
-
-                swipeListener.onSwipe(position);
-                layout.close();
-            }
-        });
-        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                swipeListener.onDoubleClick(position);
-            }
-        });
-        return v;
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return trackList.size();
-    }
-
-    @Override
-    public Object getItem(int location) {
-        return trackList.get(location);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public void fillValues(int position, View convertView) {
-        ViewHolder holder = new ViewHolder();
-        holder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
-        holder.track = (TextView) convertView.findViewById(R.id.track);
-        holder.artist = (TextView) convertView.findViewById(R.id.artist);
-        holder.time = (TextView) convertView.findViewById(R.id.time);
-        holder.album = (TextView) convertView.findViewById(R.id.album);
-        holder.added = (TextView) convertView.findViewById(R.id.added);
-        if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
-        // getting movie data for the row
-        Track trackInfo = trackList.get(position);
-        String albumArt = trackInfo.getAlbumArt();
-        // thumbnail image
-        if (!trackInfo.getAlbumArt().equals(""))
-            holder.thumbNail.setImageUrl(albumArt, imageLoader);
-        // Text info
-        holder.track.setText(trackInfo.getTrack());
-        String[] artists = trackInfo.getArtist();
-        String artistText = "";
-        for (int i = 0; i < artists.length; i++) {
-            artistText = artists[i];
-            if (i + 1 < artists.length)
-                artistText += " - ";
-        }
-        holder.artist.setText(artistText);
-        holder.time.setText(convertTime(trackInfo.getTime()));
-        holder.album.setText(trackInfo.getAlbum());
-        holder.added.setText(convertAdded(trackInfo.getAdded()));
-        // Loading image with placeholder and error image
-        imageLoader.get(albumArt, ImageLoader.getImageListener(
-                holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
     }
 
     private String convertAdded(String time) {
@@ -207,7 +133,7 @@ public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
                 } else
                     oReturn.values = originalTracklist;
                 if (MainActivity.currentPage == 0) {
-                    FragmentTracks.updateTrackList((List<Track>) oReturn.values);
+                    FragmentTracks.setFilteredList((List<Track>) oReturn.values);
                 } else if (MainActivity.currentPage == 1) {
                     FragmentQueue.setFilteredList((List<Track>) oReturn.values);
                 }
@@ -216,12 +142,96 @@ public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
         };
     }
 
-    static class ViewHolder {
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_view_item, viewGroup, false);
+        ViewHolder v = new ViewHolder(view);
+        return v;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Track track = trackList.get(position);
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
+        String albumArt = track.getAlbumArt();
+        if (!track.getAlbumArt().equals(""))
+            holder.thumbNail.setImageUrl(albumArt, imageLoader);
+        holder.track.setText(track.getTrack());
+        String[] artists = track.getArtist();
+        String artistText = "";
+        for (int i = 0; i < artists.length; i++) {
+            artistText = artists[i];
+            if (i + 1 < artists.length)
+                artistText += " - ";
+        }
+        holder.artist.setText(artistText);
+        holder.time.setText(convertTime(track.getTime()));
+        holder.album.setText(track.getAlbum());
+        holder.added.setText(convertAdded(track.getAdded()));
+        imageLoader.get(albumArt, ImageLoader.getImageListener(
+                holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
+
+        if (direction.equals("right")) {
+            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.swipeLayout.findViewById(R.id.back));
+        } else {
+            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.swipeLayout.findViewById(R.id.back));
+        }
+        Log.i(TAG, "position: " + position);
+        holder.swipeLayout.addSwipeListener(new SwipeListener(position));
+        holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
+    }
+
+
+    class SwipeListener extends SimpleSwipeListener {
+
+        int position;
+
+        SwipeListener(int pos) {
+            this.position = pos;
+        }
+
+        @Override
+        public void onOpen(SwipeLayout layout) {
+            Log.i(TAG, "SWIPE: " + position);
+            layout.close(true);
+            swipeListener.onSwipe(position);
+        }
+    }
+
+    class DoubleClickListenter implements SwipeLayout.DoubleClickListener {
+
+        int position;
+
+        DoubleClickListenter(int pos) {
+            this.position = pos;
+        }
+
+        @Override
+        public void onDoubleClick(SwipeLayout swipeLayout, boolean b) {
+            swipeListener.onDoubleClick(position);
+        }
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        FixedSwipeLayout swipeLayout;
         NetworkImageView thumbNail;
         TextView track;
         TextView artist;
         TextView time;
         TextView album;
         TextView added;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            swipeLayout = (FixedSwipeLayout) itemView.findViewById(R.id.swipe);
+            thumbNail = (NetworkImageView) itemView.findViewById(R.id.thumbnail);
+            track = (TextView) itemView.findViewById(R.id.track);
+            artist = (TextView) itemView.findViewById(R.id.artist);
+            time = (TextView) itemView.findViewById(R.id.time);
+            album = (TextView) itemView.findViewById(R.id.album);
+            added = (TextView) itemView.findViewById(R.id.added);
+        }
     }
 }

@@ -107,16 +107,10 @@ public class Queue {
     }
 
     public static void removeFromQueue(int position) {
-        Log.i("Queue", "Removing from TRACK_LIST: " + position);
         TRACK_LIST.remove(position);
-        callBackRefreshTracks.refreshTrackList();
         updatedTrackNumber(position);
         queueChanged = true;
         callBackRefreshActionBar.refreshActionBar(3);
-        if (callBackRefreshQueue != null)
-            callBackRefreshQueue.refreshList();
-        if (callBackRefreshTracks != null)
-            callBackRefreshTracks.refreshTrackList();
     }
 
     public static boolean hasNext() {
