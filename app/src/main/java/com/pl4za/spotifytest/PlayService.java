@@ -17,11 +17,8 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.pl4za.interfaces.IplayerViewRefresh;
-import com.pl4za.interfaces.IqueueRefresh;
-import com.pl4za.interfaces.IrefreshToken;
-import com.pl4za.interfaces.IspotifyPlayerOptions;
-import com.pl4za.interfaces.IspotifySdkValues;
+import com.pl4za.interfaces.SpotifyPlayerOptions;
+import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.PlayConfig;
@@ -30,46 +27,55 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
-
 import java.util.List;
 
 /**
  * Created by Admin on 16/02/2015.
  */
-//TODO: initialize player on add
-public class PlayService extends Service implements PlayerNotificationCallback, ConnectionStateCallback, IqueueRefresh, IspotifyPlayerOptions, IspotifySdkValues {
+public class PlayService extends Service implements PlayerNotificationCallback, ConnectionStateCallback, SpotifyPlayerOptions, ServiceOptions {
 
     private static final String TAG = "PlayService";
+    public static String playlistName = "Spotlite";
+    public static NotificationManager mNotificationManager;
+    public static boolean notificationActive = false;
     public static Player mPlayer;
     public static boolean SKIP_NEXT = true;
     public static boolean TRACK_END = true;
     public static boolean PLAYING = false;
-    public static String playlistName = "Spotlite";
-    public static NotificationManager mNotificationManager;
-    private static IplayerViewRefresh callBackRefreshPlayer;
-    private static IrefreshToken callBackRefreshToken;
     private static boolean SHUFFLE = false;
     private static boolean REPEAT = false;
+
     private final IBinder mBinder = new LocalBinder();
-    public static boolean notificationActive = false;
     private RemoteViews contentView;
     private Notification note;
     private SwitchButtonListener switchButtonListener;
     private String access_token;
 
-    public static void addToQueue(List<String> queue, int index) {
-        Log.i(TAG, "Queue size: "+queue.size()+ " with index: "+index);
+    // interfaces
+    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
+
+    @Override
+    public void addToQueue(String trackUri) {
+        mPlayer.queue(trackUri);
+    }
+
+    @Override
+    public void addToQueue(List<String> queue, int listStart) {
+        PlayService.clearQueue();
         if (queue.size() == 1) {
             mPlayer.play(queue);
         } else {
             //Log.i("PlayService)", "Adding to TRACK_LIST: " + TRACK_LIST.get(0) + " - " + index);
-            mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(index));
+            mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(listStart));
         }
+        TRACK_END = false;
+        SKIP_NEXT = false;
     }
 
-    public static void addToQueue(String uri) {
-        Log.i("PlayService)", "Appending to TRACK_LIST");
-        mPlayer.queue(uri);
+    @Override
+    public boolean isActive() {
+        return mPlayer.isLoggedIn();
     }
 
     public static boolean isShuffled() {
@@ -87,8 +93,8 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
     }
 
-    public static void resumePause() {
-        if (mPlayer!=null) {
+    public void resumePause() {
+        if (mPlayer != null) {
             if (PLAYING) {
                 mPlayer.pause();
                 PLAYING = false;
@@ -99,18 +105,16 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
     }
 
-    public static void nextTrack() {
-        if (Queue.hasNext())
+    public void nextTrack() {
             mPlayer.skipToNext();
     }
 
-    public static void prevTrack() {
-        if (Queue.hasPrevious())
+    public void prevTrack() {
             mPlayer.skipToPrevious();
     }
 
-    public static void shuffle() {
-        if (mPlayer!=null) {
+    public void shuffle() {
+        if (mPlayer != null) {
             if (SHUFFLE) {
                 mPlayer.setShuffle(false);
                 SHUFFLE = false;
@@ -121,8 +125,8 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
     }
 
-    public static void repeat() {
-        if (mPlayer!=null) {
+    public void repeat() {
+        if (mPlayer != null) {
             if (REPEAT) {
                 mPlayer.setRepeat(false);
                 REPEAT = false;
@@ -131,14 +135,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                 REPEAT = true;
             }
         }
-    }
-
-    public static void playerRefreshListener(IplayerViewRefresh qrf) {
-        callBackRefreshPlayer = qrf;
-    }
-
-    public static void tokenRefreshListener(IrefreshToken qrf) {
-        callBackRefreshToken = qrf;
     }
 
     @Override
@@ -165,7 +161,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public IBinder onBind(Intent intent) {
         Log.i("PlayService", "Service bind..");
-        FragmentTracks.playerInitializeListener(this);
         return mBinder;
     }
 
@@ -188,10 +183,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     public void onLoginFailed(Throwable arg0) {
         Log.e("PlayService", arg0.getMessage());
         Toast.makeText(getApplicationContext(), arg0.getMessage(), Toast.LENGTH_SHORT).show();
-        if (!arg0.getMessage().equals("The operation requires a Spotify Premium account")) {
-            if (callBackRefreshToken != null)
-                callBackRefreshToken.refreshToken("PlayService");
-        }
     }
 
     @Override
@@ -209,11 +200,11 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
         if (msg.equals("TRACK_END")) {
             PLAYING = false;
-            if (Queue.queueChanged && Queue.TRACK_LIST.size() > 1) {
-                Log.i("PlayService", "Queue changed: clearing and re-ading TRACK_LIST in position " + Queue.trackNumber);
+            if (queueCtrl.isQueueChanged() && queueCtrl.hasNext()) { //Queue.TRACK_LIST.size() > 1
+                Log.i("PlayService", "Queue changed: clearing and re-ading TRACK_LIST in position " + queueCtrl.getQueuePosition());
                 mPlayer.clearQueue();
-                addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), Queue.trackNumber + 1);
-                Queue.queueChanged = false;
+                addToQueue(queueCtrl.getQueueURIList(queueCtrl.getQueue()), queueCtrl.getQueuePosition());
+                queueCtrl.setQueueChanged(false);
             }
             TRACK_END = true;
         } else if (msg.equals("TRACK_END") && TRACK_END) {
@@ -233,17 +224,16 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                 TRACK_END = false;
             }
         }
-        if (msg.equals("TRACK_START") && !Queue.TRACK_LIST.isEmpty()) {
+        if (msg.equals("TRACK_START") && queueCtrl.hasTracks()) {
             PLAYING = true;
             TRACK_END = true;
             SKIP_NEXT = true;
-            Queue.updateTrackNumberAndPlayingTrack(arg1.trackUri);
+            queueCtrl.updateTrackNumberAndPlayingTrack(arg1.trackUri);
             if (mNotificationManager == null || note == null) {
                 startNotification();
             }
             updateNotificationInfo();
-            if (callBackRefreshPlayer != null)
-                callBackRefreshPlayer.updateInfo();
+            viewCtrl.updateView();
         }
     }
 
@@ -258,11 +248,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             Toast.makeText(getApplicationContext(), "Playback error", Toast.LENGTH_SHORT).show();
             nextTrack();
         }
-    }
-
-    @Override
-    public void refreshList() {
-
     }
 
     @Override
@@ -284,9 +269,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     @Override
                     public void onError(Throwable throwable) {
                         Log.e("PlayService", "Could not initialize player: " + throwable.getMessage());
-                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                        if (callBackRefreshToken != null)
-                            callBackRefreshToken.refreshToken("PlayService");
                     }
                 });
             } else {
@@ -305,8 +287,8 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     private void updateNotificationInfo() {
         Log.i("PlayService", "Updating notification");
         contentView.setImageViewResource(R.id.image, R.drawable.no_image);
-        contentView.setTextViewText(R.id.tvTrackTitle, Queue.playingTrack.getTrack());
-        contentView.setTextViewText(R.id.tvArtistAndAlbum, Queue.playingTrack.getSimpleArtist() + " - " + Queue.playingTrack.getAlbum());
+        contentView.setTextViewText(R.id.tvTrackTitle, queueCtrl.getCurrentTrack().getTrack());
+        contentView.setTextViewText(R.id.tvArtistAndAlbum, queueCtrl.getCurrentTrack().getSimpleArtist() + " - " + queueCtrl.getCurrentTrack().getAlbum());
         mNotificationManager.notify(1, note);
     }
 
@@ -372,7 +354,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i("PlayService", intent.getAction());
-            if (!Queue.TRACK_LIST.isEmpty()) {
+            if (queueCtrl.hasTracks()) {
                 if (intent.getAction().equals(actionPlayPause)) {
                     resumePause();
                 } else if (intent.getAction().equals(actionNext)) {

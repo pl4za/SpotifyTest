@@ -1,9 +1,5 @@
 package com.pl4za.spotifytest;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,26 +7,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import com.github.mrengineer13.snackbar.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
 import com.pl4za.help.CustomListAdapter;
-import com.pl4za.interfaces.ISwipeListener;
-import com.pl4za.interfaces.IqueueRefresh;
+import com.pl4za.interfaces.ActivityOptions;
+import com.pl4za.interfaces.FragmentOptions;
 
 import java.util.List;
 
-public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeListener {
+public class FragmentQueue extends Fragment implements FragmentOptions {
     private static final String TAG = "FragmentQueue";
     private static final int SCROLL_STATE_IDLE = 0;
     public static CustomListAdapter mAdapter;
     private static RecyclerView recyclerView;
-    private static Context context;
     private static boolean animate = true;
     private static FloatingActionButton fabPlay;
     private static FloatingActionButton fabTracks;
     private static List<Track> filteredList;
+    // interfaces
+    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     public static void setFilteredList(List<Track> results) {
         filteredList = results;
@@ -39,6 +36,8 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_queue, container, false);
+        viewCtrl.setActivityView((ActivityOptions) getActivity());
+        viewCtrl.addFragmentView(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
@@ -47,27 +46,12 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
         FabClickListener fcl = new FabClickListener();
         fabPlay.setOnClickListener(fcl);
         fabTracks.setOnClickListener(fcl);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == SCROLL_STATE_IDLE) {
-                    fabPlay.show(true);
-                    fabTracks.show(true);
-
-                } else {
-                    fabPlay.hide(true);
-                    fabTracks.hide(true);
-                }
-            }
-        });
-        context = getActivity();
-        filteredList = Queue.TRACK_LIST;
+        recyclerView.addOnScrollListener(new ListViewScrollListener());
+        filteredList = queueCtrl.getQueue();
         mAdapter = new CustomListAdapter(filteredList);
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("left");
         recyclerView.setAdapter(mAdapter);
-        Queue.QueueRefreshListener(this);
         if (MainActivity.landscape) {
             fabTracks.setVisibility(View.INVISIBLE);
         } else {
@@ -77,19 +61,22 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
     }
 
     @Override
-    public void refreshList() {
+    public void updateView() {
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSwipe(int position) {
+        //TODO: Play service not synced with queue
+        queueCtrl.removeFromQueue(position);
+        viewCtrl.updateActionBar(true, true);
         if (animate) {
             fabPlay.hide(true);
             fabTracks.hide(true);
         }
         animate = false;
         new SnackBar.Builder(getActivity())
-                .withMessage("Removed: " + Queue.TRACK_LIST.get(position).getTrack())
+                .withMessage("Removed: " + queueCtrl.getCurrentTrack().getTrack())
                 .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
                     @Override
                     public void onShow(int i) {
@@ -107,30 +94,12 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
                 })
                 .withDuration(SnackBar.SHORT_SNACK)
                 .show();
-        Queue.removeFromQueue(position);
         mAdapter.notifyDataSetChanged();
-        ((MainActivity) getActivity()).refreshActionBar(1);
     }
 
     @Override
     public void onDoubleClick(int position) {
-        playTrack(position);
-    }
-
-    private void playTrack(int position) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String product = sharedPref.getString(getString(R.string.product), "");
-        if (product.equals("premium")) {
-            PlayService.addToQueue(Queue.getQueueURIList(filteredList), position);
-        } else {
-            try {
-                Intent spotify = new Intent(Intent.ACTION_VIEW, Uri.parse(filteredList.get(position).getTrackURI()));
-                context.startActivity(spotify);
-            } catch (Exception e) {
-                Intent play = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spotify.music"));
-                context.startActivity(play);
-            }
-        }
+        queueCtrl.addToQueue(filteredList, position);
     }
 
     private class FabClickListener implements View.OnClickListener {
@@ -151,11 +120,12 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
         }
     }
 
-    private class ListViewScrollListener implements AbsListView.OnScrollListener {
+    private class ListViewScrollListener extends RecyclerView.OnScrollListener {
 
         @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-            if (scrollState == SCROLL_STATE_IDLE) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == SCROLL_STATE_IDLE) {
                 fabPlay.show(true);
                 fabTracks.show(true);
 
@@ -163,11 +133,6 @@ public class FragmentQueue extends Fragment implements IqueueRefresh, ISwipeList
                 fabPlay.hide(true);
                 fabTracks.hide(true);
             }
-        }
-
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
         }
     }
 

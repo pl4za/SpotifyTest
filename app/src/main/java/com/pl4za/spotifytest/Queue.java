@@ -2,10 +2,6 @@ package com.pl4za.spotifytest;
 
 import android.util.Log;
 
-import com.pl4za.interfaces.IqueueRefresh;
-import com.pl4za.interfaces.IrefreshActionBar;
-import com.pl4za.interfaces.ItracksRefresh;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,47 +11,35 @@ import java.util.List;
  */
 public class Queue {
 
-    public static final List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
-    public static Track playingTrack = null;
-    public static int trackNumber = 0;
-    public static boolean queueChanged = false;
-    // Interfaces
-    private static IqueueRefresh callBackRefreshQueue;
-    private static ItracksRefresh callBackRefreshTracks;
-    private static IrefreshActionBar callBackRefreshActionBar;
+    private static final List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
+    private static Track playingTrack = null;
+    private static int trackNumber = 0;
+    private static boolean queueChanged = false;
 
-    public static void addToQueue(Track track) {
+    public void addToQueue(Track track) {
         if (TRACK_LIST.isEmpty()) {
             playingTrack = track;
         }
         TRACK_LIST.add(track);
-        if (callBackRefreshQueue != null) {
-            callBackRefreshQueue.refreshList();
-        }
-        callBackRefreshActionBar.refreshActionBar(-1);
     }
 
-    public static void addToQueue(List<Track> queue) {
+    public void addToQueue(List<Track> queue) {
         trackNumber = 0;
         playingTrack = queue.get(0);
         TRACK_LIST.addAll(queue);
-        callBackRefreshQueue.refreshList();
-        callBackRefreshActionBar.refreshActionBar(-1);
     }
 
-    public static boolean isEmpty() {
+    public boolean isEmpty() {
         return TRACK_LIST.isEmpty();
     }
 
-    public static void clearQueue() {
+    public void clearQueue() {
         TRACK_LIST.clear();
-        callBackRefreshTracks.refreshTrackList();
-        callBackRefreshQueue.refreshList();
         trackNumber = 0;
     }
 
-    public static void updateTrackNumberAndPlayingTrack(String uri) {
-        if (TRACK_LIST.size()> 0) {
+    public void updateTrackNumberAndPlayingTrack(String uri) {
+        if (TRACK_LIST.size() > 0) {
             int i = 0;
             for (Track a : TRACK_LIST) {
                 if (a.getTrackURI().equals(uri)) {
@@ -72,7 +56,7 @@ public class Queue {
         }
     }
 
-    private static void updatedTrackNumber(int removedPosition) {
+    private void updatedTrackNumber(int removedPosition) {
         if (TRACK_LIST.size() > 0) {
             if (removedPosition > trackNumber) {
                 Log.i("Queue", "Removed after playing track");
@@ -86,7 +70,7 @@ public class Queue {
                     trackNumber--;
                 } else {
                     Log.i("Queue", "Next track");
-                    PlayService.nextTrack();
+                    //PlayService.nextTrack();
                     //playingTrack = TRACK_LIST.get(trackNumber);
                 }
             }
@@ -97,33 +81,31 @@ public class Queue {
         }
     }
 
-    public static List<String> getQueueURIList(List<Track> queueToList) {
-        Log.i("Queue", "Receiving TRACK_LIST");
-        List<String> uriQueue = new ArrayList<>();
-        for (Track t : queueToList) {
-            uriQueue.add(t.getTrackURI());
-        }
-        return uriQueue;
-    }
-
-    public static void removeFromQueue(int position) {
+    public void removeFromQueue(int position) {
         TRACK_LIST.remove(position);
         updatedTrackNumber(position);
         queueChanged = true;
-        callBackRefreshActionBar.refreshActionBar(3);
     }
 
-    public static boolean hasNext() {
+    public boolean hasNext() {
         Log.i("Queue", trackNumber + 1 + " - " + TRACK_LIST.size());
         return trackNumber + 1 < TRACK_LIST.size();
     }
 
-    public static boolean hasPrevious() {
+    public boolean hasPrevious() {
         Log.i("Queue", "Track number: " + trackNumber);
         return trackNumber > 0;
     }
 
-    public static int getPosition(String trackURI) {
+    public List<Track> getQueue() {
+        return TRACK_LIST;
+    }
+
+    public int getQueuePosition() {
+        return trackNumber;
+    }
+
+    public int getQueuePosition(String trackURI) {
         if (TRACK_LIST.size() > 0) {
             int i = 0;
             for (Track a : TRACK_LIST) {
@@ -139,16 +121,15 @@ public class Queue {
         return 0;
     }
 
-    public static void QueueRefreshListener(IqueueRefresh qrf) {
-        callBackRefreshQueue = qrf;
+    public boolean queueChanged() {
+        return queueChanged;
     }
 
-    public static void TracksRefreshListener(ItracksRefresh trf) {
-        callBackRefreshTracks = trf;
+    public void setQueueChanged(boolean changed) {
+        queueChanged=changed;
     }
 
-    public static void refreshActionBarListener(IrefreshActionBar qrf) {
-        callBackRefreshActionBar = qrf;
+    public Track getCurrentTrack() {
+        return TRACK_LIST.get(trackNumber);
     }
-
 }

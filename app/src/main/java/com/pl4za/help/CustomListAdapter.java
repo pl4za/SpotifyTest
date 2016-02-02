@@ -14,7 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
-import com.pl4za.interfaces.ISwipeListener;
+import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.spotifytest.FragmentQueue;
 import com.pl4za.spotifytest.FragmentTracks;
 import com.pl4za.spotifytest.MainActivity;
@@ -37,14 +37,14 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
     private static final String TAG = "CustomListAdapter";
     private List<Track> trackList, originalTracklist;
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-    private ISwipeListener swipeListener;
+    private FragmentOptions swipeListener;
     private String direction = "right";
 
     public CustomListAdapter(List<Track> trackList) {
         this.trackList = trackList;
     }
 
-    public void setSwipeListener(ISwipeListener i) {
+    public void setSwipeListener(FragmentOptions i) {
         this.swipeListener = i;
     }
 

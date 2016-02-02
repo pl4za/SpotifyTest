@@ -1,9 +1,7 @@
 package com.pl4za.spotifytest;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -33,11 +30,8 @@ import com.github.mrengineer13.snackbar.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
 import com.pl4za.help.CustomListAdapter;
 import com.pl4za.help.ListComparator;
-import com.pl4za.interfaces.ISwipeListener;
-import com.pl4za.interfaces.IrefreshActionBar;
-import com.pl4za.interfaces.IrefreshToken;
-import com.pl4za.interfaces.IspotifyPlayerOptions;
-import com.pl4za.interfaces.ItracksRefresh;
+import com.pl4za.interfaces.ActivityOptions;
+import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.volley.AppController;
 
 import org.json.JSONArray;
@@ -50,20 +44,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeListener {
+public class FragmentTracks extends Fragment implements FragmentOptions {
 
     private static final String TAG = "FragmentTracks";
     private static final int SCROLL_STATE_IDLE = 0;
     private final static int MY_SOCKET_TIMEOUT_MS = 7000;
     public static List<Track> TrackList = new ArrayList<>();
-    private static IspotifyPlayerOptions mInitializePlayer;
     public CustomListAdapter mAdapter;
-    private IrefreshToken mRefreshToken;
-    private IrefreshActionBar mRefreshActionBar;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private String globalUrl = "";
     private int statusCode = 0;
-    private Context context;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
     private boolean animate = true;
@@ -71,20 +61,18 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     private View view;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
+    // interfaces
+    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     public static void setFilteredList(List<Track> TrackListUpdated) {
         TrackList = TrackListUpdated;
     }
 
-    public static void playerInitializeListener(IspotifyPlayerOptions listener) {
-        mInitializePlayer = listener;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context = getActivity();
-        mRefreshToken = (IrefreshToken) context;
-        mRefreshActionBar = (IrefreshActionBar) context;
+        viewCtrl.setActivityView((ActivityOptions) getActivity());
+        viewCtrl.addFragmentView(this);
         view = inflater.inflate(R.layout.fragment_tracks, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -142,7 +130,6 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
-        Queue.TracksRefreshListener(this);
         if (MainActivity.landscape) {
             fabPlay.setVisibility(View.INVISIBLE);
             fabQueue.setVisibility(View.INVISIBLE);
@@ -196,40 +183,12 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
         globalUrl = "https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks";
     }
 
-    private void PlayOnSpotify(int position) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String product = sharedPref.getString(getString(R.string.product), "");
-        if (product.equals("premium")) {
-            if (PlayService.mPlayer == null || PlayService.mPlayer.isShutdown()) {
-                Toast.makeText(context, "Player not initialized.. Please wait or restart.", Toast.LENGTH_SHORT).show();
-                mInitializePlayer.initializePlayer();
-                mInitializePlayer.startNotification();
-            }
-            Queue.clearQueue();
-            Queue.addToQueue(TrackList.subList(position, TrackList.size()));
-            PlayService.clearQueue();
-            PlayService.addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), 0);
-            ((MainActivity) getActivity()).clearSearch();
-            openFragmentPlayer();
-            //removeTracksInserted(position);
-        } else {
-            try {
-                Intent spotify = new Intent(Intent.ACTION_VIEW, Uri.parse(TrackList.get(position).getTrackURI()));
-                context.startActivity(spotify);
-            } catch (Exception e) {
-                Intent play = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spotify.music"));
-                context.startActivity(play);
-            }
-        }
-    }
-
     private void getSelectedPlaylistTracks(String url) {
         Listener<String> jsonListerner = new Response.Listener<String>() {
             @Override
             public void onResponse(String list) {
                 if (statusCode == 200) {
                     JSONObject json = createJsonFromString(list);
-                    ////Log.i("FragmentTracks", list);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new fillListViewAndQueue(json).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
@@ -243,11 +202,8 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
             public void onErrorResponse(VolleyError error) {
                 Log.e("Volley Error", "Code: " + statusCode + " - " + error.toString());
                 if (statusCode != 304) {
-                    if (mRefreshToken != null)
-                        mRefreshToken.refreshToken("getTracksFailed");
+                    //TODO: refresh token
                 }
-                //AppController.getInstance().getRequestQueue().getCache().remove(globalUrl);
-                //AppController.getInstance().getRequestQueue().getCache().clear();
             }
         };
 
@@ -256,7 +212,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                SharedPreferences sharedPrefCache = context.getSharedPreferences(getString(R.string.SpotifyCache), Context.MODE_PRIVATE);
+                SharedPreferences sharedPrefCache = getActivity().getSharedPreferences(getString(R.string.SpotifyCache), Context.MODE_PRIVATE);
                 String access_token = sharedPref.getString(getString(R.string.access_token), "");
                 String etag = sharedPrefCache.getString(globalUrl, "");
                 //Log.i("FragmentTracks", "Access Token for tracks: " + access_token + "\n" + "etag: " + etag);
@@ -287,7 +243,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     }
 
     private void saveLastModified(String eTag) {
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyCache), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyCache), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(globalUrl, eTag);
         editor.apply();
@@ -303,20 +259,22 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     }
 
     @Override
-    public void refreshTrackList() {
+    public void updateView() {
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSwipe(int position) {
-        mRefreshActionBar.refreshActionBar(0);
+        Track track = TrackList.get(position);
+        queueCtrl.addToQueue(track);
         if (animate) {
             fabPlay.hide(true);
             fabQueue.hide(true);
         }
+        viewCtrl.updateActionBar(true, true);
         animate = false;
         new SnackBar.Builder(getActivity())
-                .withMessage("Queued: " + TrackList.get(position).getTrack())
+                .withMessage("Queued: " + track.getTrack())
                 .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
                     @Override
                     public void onShow(int i) {
@@ -333,38 +291,16 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 })
                 .withDuration(SnackBar.SHORT_SNACK)
                 .show();
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String product = sharedPref.getString(getString(R.string.product), "");
-        if (product.equals("premium")) {
-            if (PlayService.mPlayer == null || PlayService.mPlayer.isShutdown()) {
-                Toast.makeText(context, "Initializing player", Toast.LENGTH_SHORT).show();
-                mInitializePlayer.initializePlayer();
-                mInitializePlayer.startNotification();
-            }
-            if (!TrackList.isEmpty()) {
-                Log.i(TAG, "Position: "+ position+" Track: "+TrackList.get(position).getTrack());
-                Queue.addToQueue(TrackList.get(position));
-                PlayService.addToQueue(TrackList.get(position).getTrackURI());
-                //TrackList.remove(position);
-                //mAdapter.notifyDataSetChanged();
-            }
-        } else {
-            try {
-                Intent spotify = new Intent(Intent.ACTION_VIEW, Uri.parse(TrackList.get(position).getTrackURI()));
-                context.startActivity(spotify);
-            } catch (Exception e) {
-                Intent play = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spotify.music"));
-                context.startActivity(play);
-            }
-        }
     }
 
     @Override
     public void onDoubleClick(int position) {
-        Log.d("swipe", String.format("onClickFrontView %d", position));
-        PlayService.TRACK_END = false;
-        PlayService.SKIP_NEXT = false;
-        PlayOnSpotify(position);
+        FragmentPlayer playFrag = new FragmentPlayer();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, playFrag, "FragmentPlayer")
+                .addToBackStack(null)
+                .commit();
+        queueCtrl.addToQueue(TrackList.subList(position, TrackList.size()), 0);
     }
 
     private class checkCache extends AsyncTask<Void, Void, JSONObject> {
@@ -511,7 +447,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 refreshView.setRefreshing(false);
                 ((MainActivity) getActivity()).getRandomArtistPicture();
                 recyclerView.setEnabled(true);
-                mRefreshActionBar.refreshActionBar(0);
+                viewCtrl.updateActionBar(true, true);
             }
         }
     }

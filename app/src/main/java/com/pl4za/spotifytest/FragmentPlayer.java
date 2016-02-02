@@ -11,11 +11,10 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.pl4za.interfaces.IplayerViewRefresh;
-import com.pl4za.interfaces.IrefreshActionBar;
+import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.volley.AppController;
 
-public class FragmentPlayer extends Fragment implements View.OnClickListener, IplayerViewRefresh {
+public class FragmentPlayer extends Fragment implements View.OnClickListener, FragmentOptions {
 
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private View view;
@@ -26,13 +25,19 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Ip
     private ImageView ivRepeat;
     private NetworkImageView ivAlbumArt;
 
+    // Interfaces
+    private PlayCtrl playCtrl = PlayCtrl.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        viewCtrl.addFragmentView(this);
         view = inflater.inflate(R.layout.fragment_player, container, false);
-        IrefreshActionBar mRefreshActionBar = (IrefreshActionBar) getActivity();
+        viewCtrl.updateActionBar(false, false);
         setButtonsListeners();
-        if (Queue.TRACK_LIST != null && !Queue.TRACK_LIST.isEmpty()) {
-            updateInfo();
+        if (queueCtrl.hasTracks()) {
+            updateView();
         } else {
             ivPlayPause.setImageAlpha(30);
             ivAlbumArt.setImageAlpha(30);
@@ -44,8 +49,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Ip
             ivAlbumArt.setDefaultImageResId(R.drawable.no_image);
             ivAlbumArt.setErrorImageResId(R.drawable.no_image);
         }
-        mRefreshActionBar.refreshActionBar(2);
-        PlayService.playerRefreshListener(this);
         return view;
     }
 
@@ -84,58 +87,22 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Ip
             } else {
                 ivPlayPause.setImageResource(R.drawable.pause_selector);
             }
-            PlayService.resumePause();
+            playCtrl.resumePause();
         } else if (v.getId() == R.id.ivNext) {
             //Log.i("Player", "NextTrack Event");
-            PlayService.nextTrack();
+            playCtrl.nextTrack();
         } else if (v.getId() == R.id.ivPrevious) {
             //Log.i("Player", "PreviousTrack Event");
-            PlayService.prevTrack();
+            playCtrl.prevTrack();
         } else if (v.getId() == R.id.ivShuffle) {
             //Log.i("Player", "Shuffle Event");
-            PlayService.shuffle();
+            playCtrl.shuffle();
             checkOptions();
         } else if (v.getId() == R.id.ivRepeat) {
             //Log.i("Player", "Repeat Event");
-            PlayService.repeat();
+            playCtrl.repeat();
             checkOptions();
         }
-    }
-
-    @Override
-    public void updateInfo() {
-        //Log.i("FragmentPlayer", "Updating info: " + Queue.getPlayingTrack().getTrack());
-        TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
-        TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
-        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-        tvTrackTitle.setText(Queue.playingTrack.getTrack());
-        tvAlbum.setText(Queue.playingTrack.getTrack());
-        tvArtist.setText(Queue.playingTrack.getSimpleArtist());
-        checkOptions();
-        if (Queue.TRACK_LIST.isEmpty()) {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-            ivPlayPause.setImageAlpha(30);
-            ivNext.setEnabled(false);
-            ivPrevious.setEnabled(false);
-        } else {
-            ivPlayPause.setImageAlpha(255);
-            if ((Queue.trackNumber + 1 == Queue.TRACK_LIST.size()) && !PlayService.isShuffled()) {
-                ivNext.setImageAlpha(30);
-            } else {
-                ivNext.setImageAlpha(255);
-            }
-            if (Queue.trackNumber == 0 && !PlayService.isShuffled()) {
-                ivPrevious.setImageAlpha(30);
-            } else {
-                ivPrevious.setImageAlpha(255);
-            }
-        }
-        if (PlayService.PLAYING) {
-            ivPlayPause.setImageResource(R.drawable.pause_selector);
-        } else {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-        }
-        insertImage();
     }
 
     private void checkOptions() {
@@ -155,8 +122,53 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Ip
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         NetworkImageView albumArt = (NetworkImageView) view.findViewById(R.id.albumArt);
-        albumArt.setImageUrl(Queue.playingTrack.getBigAlbumArt(), imageLoader);
-        imageLoader.get(Queue.playingTrack.getBigAlbumArt(), ImageLoader.getImageListener(albumArt, R.drawable.no_image, R.drawable.no_image));
+        albumArt.setImageUrl(queueCtrl.getCurrentTrack().getBigAlbumArt(), imageLoader);
+        imageLoader.get(queueCtrl.getCurrentTrack().getBigAlbumArt(), ImageLoader.getImageListener(albumArt, R.drawable.no_image, R.drawable.no_image));
     }
 
+    @Override
+    public void updateView() {
+        //Log.i("FragmentPlayer", "Updating info: " + Queue.getPlayingTrack().getTrack());
+        TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
+        TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
+        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
+        tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
+        tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
+        tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
+        checkOptions();
+        if (!queueCtrl.hasTracks()) {
+            ivPlayPause.setImageResource(R.drawable.play_selector);
+            ivPlayPause.setImageAlpha(30);
+            ivNext.setEnabled(false);
+            ivPrevious.setEnabled(false);
+        } else {
+            ivPlayPause.setImageAlpha(255);
+            if ((!queueCtrl.hasNext()) && !PlayService.isShuffled()) {
+                ivNext.setImageAlpha(30);
+            } else {
+                ivNext.setImageAlpha(255);
+            }
+            if (!queueCtrl.hasPrevious() && !PlayService.isShuffled()) {
+                ivPrevious.setImageAlpha(30);
+            } else {
+                ivPrevious.setImageAlpha(255);
+            }
+        }
+        if (PlayService.PLAYING) {
+            ivPlayPause.setImageResource(R.drawable.pause_selector);
+        } else {
+            ivPlayPause.setImageResource(R.drawable.play_selector);
+        }
+        insertImage();
+    }
+
+    @Override
+    public void onSwipe(int position) {
+
+    }
+
+    @Override
+    public void onDoubleClick(int position) {
+
+    }
 }
