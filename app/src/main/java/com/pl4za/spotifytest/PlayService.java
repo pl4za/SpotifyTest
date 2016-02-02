@@ -62,13 +62,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (queue.size() == 1) {
             mPlayer.play(queue);
         } else {
-            //Log.i("PlayService)", "Adding to queue: " + queue.get(0) + " - " + index);
+            //Log.i("PlayService)", "Adding to TRACK_LIST: " + TRACK_LIST.get(0) + " - " + index);
             mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(index));
         }
     }
 
     public static void addToQueue(String uri) {
-        Log.i("PlayService)", "Appending to queue");
+        Log.i("PlayService)", "Appending to TRACK_LIST");
         mPlayer.queue(uri);
     }
 
@@ -166,7 +166,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     public IBinder onBind(Intent intent) {
         Log.i("PlayService", "Service bind..");
         FragmentTracks.playerInitializeListener(this);
-        FragmentQueue.playerInitializeListener(this);
         return mBinder;
     }
 
@@ -210,10 +209,10 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
         if (msg.equals("TRACK_END")) {
             PLAYING = false;
-            if (Queue.queueChanged && Queue.queue.size() > 1) {
-                Log.i("PlayService", "Queue changed: clearing and re-ading queue in position " + Queue.trackNumber);
+            if (Queue.queueChanged && Queue.TRACK_LIST.size() > 1) {
+                Log.i("PlayService", "Queue changed: clearing and re-ading TRACK_LIST in position " + Queue.trackNumber);
                 mPlayer.clearQueue();
-                addToQueue(Queue.getQueue(Queue.queue), Queue.trackNumber + 1);
+                addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), Queue.trackNumber + 1);
                 Queue.queueChanged = false;
             }
             TRACK_END = true;
@@ -234,7 +233,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                 TRACK_END = false;
             }
         }
-        if (msg.equals("TRACK_START") && !Queue.queue.isEmpty()) {
+        if (msg.equals("TRACK_START") && !Queue.TRACK_LIST.isEmpty()) {
             PLAYING = true;
             TRACK_END = true;
             SKIP_NEXT = true;
@@ -254,10 +253,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         Toast.makeText(getApplicationContext(), arg0.toString(), Toast.LENGTH_SHORT).show();
         if (arg0.toString().equals("TRACK_UNAVAILABLE")) {
             Queue.removeFromQueue(Queue.trackNumber);
-            addToQueue(Queue.getQueue(Queue.queue), Queue.trackNumber);
         } else if (arg0.toString().equals("ERROR_PLAYBACK")) {
-            if (!Queue.queue.isEmpty()) {
-                addToQueue(Queue.getQueue(Queue.queue), Queue.trackNumber + 1);
+            if (!Queue.TRACK_LIST.isEmpty()) {
+                addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), Queue.trackNumber + 1);
             }
         }
     }
@@ -374,7 +372,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i("PlayService", intent.getAction());
-            if (!Queue.queue.isEmpty()) {
+            if (!Queue.TRACK_LIST.isEmpty()) {
                 if (intent.getAction().equals(actionPlayPause)) {
                     resumePause();
                 } else if (intent.getAction().equals(actionNext)) {

@@ -209,7 +209,7 @@ public class CustomListAdapter extends BaseSwipeAdapter implements Filterable {
                 if (MainActivity.currentPage == 0) {
                     FragmentTracks.updateTrackList((List<Track>) oReturn.values);
                 } else if (MainActivity.currentPage == 1) {
-                    FragmentQueue.updateQueueList((List<Track>) oReturn.values);
+                    FragmentQueue.setFilteredList((List<Track>) oReturn.values);
                 }
                 return oReturn;
             }

@@ -238,10 +238,9 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 mInitializePlayer.startNotification();
             }
             Queue.clearQueue();
-            Queue.addToQueue(TrackList);
-            Queue.updateQueue(position);
+            Queue.addToQueue(TrackList.subList(position, TrackList.size()));
             PlayService.clearQueue();
-            PlayService.addToQueue(Queue.getQueue(Queue.queue), 0);
+            PlayService.addToQueue(Queue.getQueueURIList(Queue.TRACK_LIST), 0);
             ((MainActivity) getActivity()).clearSearch();
             openFragmentPlayer();
             removeTracksInserted(position);
@@ -347,6 +346,7 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
     @Override
     public void onSwipe(int position) {
         //Log.i("FragmentTracks", "y: " + fabQueue.getY());
+        mRefreshActionBar.refreshActionBar(0);
         if (animate) {
             fabPlay.hide(true);
             fabQueue.hide(true);
@@ -546,10 +546,9 @@ public class FragmentTracks extends Fragment implements ItracksRefresh, ISwipeLi
                 refreshView.setEnabled(true);
                 mAdapter.notifyDataSetChanged();
                 refreshView.setRefreshing(false);
-                MainActivity.ENABLE_SEARCH = !TrackList.isEmpty();
-                mRefreshActionBar.refreshActionBar();
                 ((MainActivity) getActivity()).getRandomArtistPicture();
                 swipeListView.setEnabled(true);
+                mRefreshActionBar.refreshActionBar(0);
             }
         }
     }

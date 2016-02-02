@@ -31,7 +31,6 @@ import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -88,13 +87,12 @@ import java.util.Random;
 public class MainActivity extends ActionBarActivity implements IrefreshToken, IrefreshActionBar {
 
     private static final int MY_SOCKET_TIMEOUT_MS = 8000;
-    public static boolean ENABLE_UNDO_VALUE = false;
     public static int currentPage = 0;
     public static boolean isHomeAsUpEnabled = false;
     public static MyViewPager mViewPager;
-    public static boolean ENABLE_SEARCH = false;
-    public static boolean ENABLE_CLEAR = false;
-    public static boolean ENABLE_REFRESH = true;
+    private static boolean ENABLE_SEARCH = false;
+    private static boolean ENABLE_CLEAR = false;
+    private static boolean ENABLE_REFRESH = true;
     public static boolean landscape = false;
     private static boolean DISABLE_LOGIN = false;
     private static boolean PLAYLISTS_EXIST = false;
@@ -127,6 +125,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
     private Intent serviceIntent;
     private Context context;
     private int oldPosition = -1;
+    private static int currentPager = 0;
 
     private static String makeFragmentName(int index) {
         return "android:switcher:" + R.id.pager + ":" + index;
@@ -143,35 +142,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
         mViewPager.setOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
-                mDrawerToggle.syncState();
-                clearSearch();
-                currentPage = position;
-                if (position == 0) {
-                    if (mViewPager.getAdapter() != null) {
-                        ENABLE_CLEAR = false;
-                        ENABLE_REFRESH = true;
-                        ENABLE_SEARCH = !FragmentTracks.TrackList.isEmpty();
-                        //ENABLE_UNDO = false;
-                        if (PLAYLISTS_EXIST)
-                            setTitle(PlayService.playlistName);
-                    }
-                } else if (position == 1) {
-                    setTitle("Queue");
-                    ENABLE_REFRESH = false;
-                    ENABLE_SEARCH = !Queue.queue.isEmpty();
-                    //ENABLE_UNDO = true && ENABLE_UNDO_VALUE;
-                    if (!Queue.queue.isEmpty())
-                        ENABLE_CLEAR = true;
-                }/* else if (position == 2) {
-                    ENABLE_REFRESH = false;
-                    ENABLE_SEARCH = false;
-                    ENABLE_CLEAR = false;
-                    //ENABLE_UNDO = false;
-                    setTitle("Playing");
-                }*/
-                refreshActionBar();
+                currentPager = position;
             }
 
             @Override
@@ -227,7 +198,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
     @Override
     protected void onStart() {
         super.onStart();
-        if (!Queue.queue.isEmpty()) {
+        if (!Queue.TRACK_LIST.isEmpty()) {
             FragmentPlayer playFrag = new FragmentPlayer();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, playFrag, "FragmentPlayer")
@@ -271,7 +242,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
             } else {
                 setTitle("Queue");
                 ENABLE_REFRESH = false;
-                if (!Queue.queue.isEmpty()) {
+                if (!Queue.TRACK_LIST.isEmpty()) {
                     ENABLE_SEARCH = true;
                     ENABLE_CLEAR = true;
                 } else {
@@ -407,7 +378,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
                     ENABLE_REFRESH = true;
                     setTitle(PlayService.playlistName);
                 } else {
-                    if (!Queue.queue.isEmpty()) {
+                    if (!Queue.TRACK_LIST.isEmpty()) {
                         ENABLE_SEARCH = true;
                         ENABLE_CLEAR = true;
                     } else {
@@ -417,7 +388,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
                     ENABLE_REFRESH = false;
                     setTitle("Queue");
                 }
-                refreshActionBar();
+                refreshActionBar(3);
                 isHomeAsUpEnabled = false;
                 return true;
             }
@@ -443,7 +414,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
             }
             ENABLE_CLEAR = false;
             ENABLE_SEARCH = false;
-            refreshActionBar();
+            refreshActionBar(3);
         }
         /*
         if (id == R.id.action_undo) {
@@ -460,11 +431,51 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
     }
 
     private void copyTracklistBack() {
-        FragmentTracks.TrackList.addAll(Queue.queue);
+        FragmentTracks.TrackList.addAll(Queue.TRACK_LIST);
     }
 
     @Override
-    public void refreshActionBar() {
+    public void refreshActionBar(int i) {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        clearSearch();
+        if (landscape) {
+            if (i == 2) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                setTitle("Playing");
+                ENABLE_CLEAR = false;
+                ENABLE_REFRESH = false;
+                ENABLE_SEARCH = false;
+            } else {
+                ENABLE_CLEAR = !Queue.isEmpty();
+                ENABLE_REFRESH = true;
+                ENABLE_SEARCH = !FragmentTracks.TrackList.isEmpty() || !Queue.isEmpty();
+                //ENABLE_UNDO = false;
+                if (PLAYLISTS_EXIST)
+                    setTitle(PlayService.playlistName);
+            }
+        } else {
+            if (i != 2) {
+                if (currentPager == 0) {
+                    if (mViewPager.getAdapter() != null) {
+                        ENABLE_CLEAR = false;
+                        ENABLE_REFRESH = true;
+                        ENABLE_SEARCH = !FragmentTracks.TrackList.isEmpty();
+                        //ENABLE_UNDO = false;
+                        if (PLAYLISTS_EXIST)
+                            setTitle(PlayService.playlistName);
+                    }
+                } else if (currentPager == 1) {
+                    setTitle("Queue");
+                    ENABLE_REFRESH = false;
+                    ENABLE_SEARCH = !Queue.isEmpty();
+                    //ENABLE_UNDO = true && ENABLE_UNDO_VALUE;
+                    if (!Queue.isEmpty())
+                        ENABLE_CLEAR = true;
+                }
+            }
+        }
+        mDrawerToggle.syncState();
         supportInvalidateOptionsMenu();
     }
 
@@ -472,7 +483,6 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
     public void setTitle(CharSequence title) {
         String mTitle = title.toString();
         getSupportActionBar().setTitle(mTitle);
-        refreshActionBar();
     }
 
     @Override
@@ -517,12 +527,12 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
 
     private void startApp() {
         if (tokenExists()) {
-            refreshActionBar();
+            refreshActionBar(3);
             Playlists.clear();
             DISABLE_LOGIN = true;
             getPlaylistsFromSettings();
             if (PLAYLISTS_EXIST) {
-                if (Queue.queue.isEmpty()) {
+                if (Queue.TRACK_LIST.isEmpty()) {
                     openDrawer();
                 }
             }
@@ -690,8 +700,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
             }
             Queue.refreshActionBarListener(this);
         }
-        ENABLE_SEARCH = true;
-        refreshActionBar();
+        refreshActionBar(3);
     }
 
     private String[] convertListToArray(List<Playlist> Playlists) {
@@ -743,7 +752,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
                     hidePDialog();
                     getCurrentUserProfile();
                     DISABLE_LOGIN = true;
-                    refreshActionBar();
+                    refreshActionBar(3);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -902,7 +911,7 @@ public class MainActivity extends ActionBarActivity implements IrefreshToken, Ir
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Adding request to request queue
+        // Adding request to request TRACK_LIST
         AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_getCurrentUserProfile));
     }
 

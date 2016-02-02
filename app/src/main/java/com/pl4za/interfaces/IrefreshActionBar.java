@@ -5,5 +5,5 @@ package com.pl4za.interfaces;
  */
 public interface IrefreshActionBar {
 
-    void refreshActionBar();
+    void refreshActionBar(int i);
 }

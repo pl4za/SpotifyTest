@@ -29,7 +29,7 @@ public final class R {
 		public static final int sb__tablet_bkgnd = 0x7f020078;
 	}
 	public static final class id {
-		public static final int snackBar = 0x7f0e0097;
+		public static final int snackBar = 0x7f0e0098;
 		public static final int snackButton = 0x7f0e0008;
 		public static final int snackContainer = 0x7f0e0009;
 		public static final int snackMessage = 0x7f0e000a;
