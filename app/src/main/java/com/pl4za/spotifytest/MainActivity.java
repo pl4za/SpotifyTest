@@ -1,13 +1,11 @@
 package com.pl4za.spotifytest;
 
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,8 +13,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -42,40 +38,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
 import com.pl4za.help.CustomListAdapterDrawer;
 import com.pl4za.help.MyViewPager;
 import com.pl4za.help.PageAdapter;
+import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
-import com.pl4za.interfaces.SpotifyPlayerOptions;
+import com.pl4za.interfaces.FragmentOptions;
+import com.pl4za.interfaces.NetworkRequests;
 import com.pl4za.volley.AppController;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 //TODO: finish undo option
 //TODO: Logout & login in webview
@@ -83,68 +62,46 @@ import java.util.Random;
 //TODO: animations and shadows (material design)
 //TODO: custom audio controler
 //TODO: transactions crash
-public class MainActivity extends ActionBarActivity implements ActivityOptions {
+public class MainActivity extends ActionBarActivity implements ActivityOptions, NetworkRequests {
 
-    private static final int MY_SOCKET_TIMEOUT_MS = 8000;
-    public static int currentPage = 0;
-    public static boolean isHomeAsUpEnabled = false;
-    public static MyViewPager mViewPager;
     private static boolean ENABLE_SEARCH = false;
     private static boolean ENABLE_CLEAR = false;
     private static boolean ENABLE_REFRESH = true;
-    public static boolean landscape = false;
     private static boolean DISABLE_LOGIN = false;
-    private static boolean PLAYLISTS_EXIST = false;
-    private static boolean PLAYLISTS_FORCE_WEBLOAD = false;
+
+    public int currentPage, oldPosition = 0;
+    public static boolean isHomeAsUpEnabled = false;
+    public static MyViewPager mViewPager;
     private final List<Playlist> Playlists = new ArrayList<>();
     public String randomArtistPictureURL;
-    Handler mHandler;
+    public static boolean landscape = false;
     private boolean mBound = false;
-    private SpotifyPlayerOptions mSpotifyPlayerOptions;
     private SearchView searchView;
     private DrawerLayout mDrawerLayout;
-    private RelativeLayout mDrawerRelativeLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private ProgressDialog pDialog;
-    private PlayService playService;
+    private Intent serviceIntent;
+    private Context context;
+
     private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             PlayService.LocalBinder binder = (PlayService.LocalBinder) service;
-            playService = binder.getService();
-            mSpotifyPlayerOptions = playService;
+            playCtrl.setService(binder.getService());
             mBound = true;
-            checkPremium();
+            playCtrl.initializePlayer();
         }
 
         public void onServiceDisconnected(ComponentName className) {
             mBound = false;
         }
     };
-    private Intent serviceIntent;
-    private Context context;
-    private int oldPosition = -1;
-    private static int currentPager = 0;
 
-    // Interfaces
+    // Delegators
     private PlayCtrl playCtrl = PlayCtrl.getInstance();
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-
-    private static String makeFragmentName(int index) {
-        return "android:switcher:" + R.id.pager + ":" + index;
-    }
-
-    private void checkPremium() {
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String product = sharedPref.getString(getString(R.string.product), "");
-        if (product.equals("premium")) {
-            if (PlayService.mPlayer == null || PlayService.mPlayer.isShutdown()) {
-                Toast.makeText(context, "Initializing player", Toast.LENGTH_SHORT).show();
-                playCtrl.initializePlayer();
-                playCtrl.startNotification();
-            }
-        }
-    }
+    private SettingsManager settings = SettingsManager.getInstance();
+    private SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         mViewPager.setOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                currentPager = position;
+                currentPage = position;
             }
 
             @Override
@@ -173,7 +130,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerRelativeLayout = (RelativeLayout) findViewById(R.id.rlDrawerListView);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.pager, new PlaceholderFragment()).commit();
         }
@@ -194,19 +150,25 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mHandler = new Handler();
         checkOrientation();
-        startApp();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
-    }
-
-    private void checkOrientation() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            landscape = true;
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            landscape = false;
+        settings.setContext(this);
+        spotifyNetwork.addNetworkListener(this);
+        /*
+        App start
+         */
+        if (!settings.getUserID().isEmpty()) {
+            updateActionBar(false, false);
+            DISABLE_LOGIN = true;
+            supportInvalidateOptionsMenu();
+            populateDrawer(settings.getPlaylistsNames());
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        }
+        else {
+            Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
+            //TODO: disable drawer
         }
     }
 
@@ -226,9 +188,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
     @Override
     protected void onResume() {
         super.onResume();
-        PLAYLISTS_FORCE_WEBLOAD = false;
-        if (tokenExists()) {
-            startService();
+        if (!settings.getUserID().isEmpty()) {
+            spotifyNetwork.refreshToken(settings.getRefreshToken());
         }
     }
 
@@ -246,8 +207,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             landscape = false;
         }
-        //PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-        //mViewPager.setAdapter(viewPagerAdapter);
     }
 
     @Override
@@ -262,7 +221,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
     @Override
     protected void onPause() {
         super.onPause();
-        hidePDialog();
+        if (!playCtrl.isActive()) {
+            playCtrl.destroyPlayer();
+        }
     }
 
     @Override
@@ -272,17 +233,16 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
             unbindService(mConnection);
             mBound = false;
         }
-        hidePDialog();
-        AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_exchangeCodeForToken));
-        AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getCurrentUserProfile));
-        AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getCurrentUserPlaylists));
-        AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_refreshToken));
-        AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getArtistID));
-        if (serviceIntent != null) {
-            if (!playService.notificationActive) {
-                stopService(serviceIntent);
-            }
+        if (!playCtrl.isActive()) {
+            playCtrl.destroyPlayer();
+            stopService(serviceIntent);
         }
+        AppController.getInstance().cancelPendingRequests(Params.TAG_exchangeCodeForToken);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfile);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfilePicture);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_refreshToken);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getArtistID);
     }
 
     @Override
@@ -291,7 +251,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         menu.findItem(R.id.action_login).setVisible(!DISABLE_LOGIN);
         menu.findItem(R.id.action_search).setVisible(ENABLE_SEARCH);
         menu.findItem(R.id.action_refresh).setVisible(ENABLE_REFRESH);
-        //menu.findItem(R.id.action_undo).setVisible(ENABLE_UNDO);
         menu.findItem(R.id.action_clear_queue).setVisible(ENABLE_CLEAR);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
@@ -316,14 +275,14 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
 
             public void search(String query) {
                 ////Log.i("MainActivity", "Search: "+ query+" - "+size);
-                if (currentPage == 0) {
-                    FragmentTracks fragment = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
+                if (currentPage == 0 || landscape) {
+                    FragmentOptions fragment = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
                     if (fragment != null)
-                        fragment.mAdapter.getFilter().filter(query);
-                } else if (currentPage == 1) {
-                    FragmentQueue fragment = (FragmentQueue) getSupportFragmentManager().findFragmentByTag(makeFragmentName(1));
+                        fragment.updateFilter(query);
+                } else if (currentPage == 1 || landscape) {
+                    FragmentOptions fragment = (FragmentQueue) getSupportFragmentManager().findFragmentByTag(makeFragmentName(1));
                     if (fragment != null)
-                        fragment.mAdapter.getFilter().filter(query);
+                        fragment.updateFilter(query);
                 }
             }
 
@@ -345,22 +304,13 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
             return true;
         }
         if (id == R.id.action_refresh) {
-            AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getCurrentUserPlaylists));
-            PLAYLISTS_EXIST = false;
-            PLAYLISTS_FORCE_WEBLOAD = true;
-            startApp();
+            AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clearQueue();
             updateActionBar(false, false);
         }
-        /*
-        if (id == R.id.action_undo) {
-            Queue.restoreLast();
-            ENABLE_UNDO_VALUE = false;
-            ENABLE_UNDO = false;
-            refreshActionBar();
-        }*/
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -377,25 +327,16 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        //Log.i("MainActivity", "1: " + Intent.ACTION_SEARCH + " - " + intent.getAction());
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            //Log.i("MainActivity", "SEARCHING!");
             String query = intent.getStringExtra(SearchManager.QUERY);
-            if (currentPage == 0) {
-                FragmentTracks fragment = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
-                if (fragment != null)
-                    fragment.mAdapter.getFilter().filter(query);
-            } else if (currentPage == 1) {
-                FragmentQueue fragment = (FragmentQueue) getSupportFragmentManager().findFragmentByTag(makeFragmentName(1));
-                if (fragment != null)
-                    fragment.mAdapter.getFilter().filter(query);
-            }
-        } else {
+            viewCtrl.updateFilter(query);
+        } else { // Browser login
             Uri uri = intent.getData();
             if (uri != null) {
-                String code = getAndSaveCodeAndState(uri.toString());
-                //Log.i("MainActivity", "Login: " + code);
-                exchangeCodeForToken(code);
+                String[] parts = uri.toString().split("&");
+                String code = parts[0].split("=")[1];
+                String state = parts[1].split("=")[1];
+                spotifyNetwork.exchangeCodeForToken(code);
             }
         }
     }
@@ -414,33 +355,42 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         randomArtistPictureURL = savedInstanceState.getString("ARTIST_PICTURE_URL");
     }
 
-    private void startApp() {
-        if (tokenExists()) {
-            updateActionBar(false, false);
-            Playlists.clear();
-            DISABLE_LOGIN = true;
-            getPlaylistsFromSettings();
-            if (PLAYLISTS_EXIST) {
-                openDrawer();
-            }
-        }
-        if (isNetworkOnline()) {
-            if (tokenExists()) {
-                getCurrentUserPlaylists();
-            } else {
-                Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
-            }
+    @Override
+    public void updateActionBar(boolean search, boolean clear) {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        clearSearch();
+        if (landscape) {
+            ENABLE_CLEAR = clear;
+            ENABLE_REFRESH = false;
+            ENABLE_SEARCH = search;
         } else {
-            Toast.makeText(context, "Internet connection required.", Toast.LENGTH_SHORT).show();
+            ENABLE_CLEAR = clear;
+            ENABLE_REFRESH = false;
+            ENABLE_SEARCH = search;
         }
-        populateDrawer(convertListToArray(Playlists));
+        if (!Playlists.isEmpty())
+            setTitle(PlayService.playlistName);
+        mDrawerToggle.syncState();
+        supportInvalidateOptionsMenu();
+    }
+
+    private static String makeFragmentName(int index) {
+        return "android:switcher:" + R.id.pager + ":" + index;
+    }
+
+    private void checkOrientation() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            landscape = true;
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            landscape = false;
+        }
     }
 
     private void populateDrawer(String[] list) {
         String path = getAplicationPath().toString();
         Bitmap profilepicture = loadImageFromStorage(path);
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, sharedPref.getString("user_id", "Spot"), sharedPref.getString("product", "Please login.."), profilepicture);
+        CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
         mDrawerList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         if (oldPosition != -1) {
@@ -482,69 +432,11 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
-    private void savePlaylistsToSettings() {
-        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.Playlists), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("list_size", Playlists.size());
-        int i = 0;
-        for (Playlist a : Playlists) {
-            //Log.i("MainActivity", a.getName());
-            editor.putString("playlist_" + i, a.getName());
-            editor.putString("playlistID_" + i, a.getid());
-            editor.putString("playlistUSERID_" + i, a.getUserID());
-            i++;
-        }
-        editor.apply();
-    }
-
-    private void getPlaylistsFromSettings() {
-        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.Playlists), Context.MODE_PRIVATE);
-        int size = sharedPref.getInt("list_size", 0);
-        //Log.i("MainActivity", "Size: " + String.valueOf(size));
-        for (int i = 0; i < size; i++) {
-            String name = sharedPref.getString("playlist_" + i, null);
-            String id = sharedPref.getString("playlistID_" + i, null);
-            String userId = sharedPref.getString("playlistUSERID_" + i, null);
-            Playlists.add(new Playlist(id, name, userId));
-        }
-        PLAYLISTS_EXIST = Playlists.size() > 0;
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
-    }
-
-    private void createPDialog(String text) {
-        if (pDialog == null) {
-            pDialog = new ProgressDialog(this);
-            pDialog.setMessage(text);
-            // pDialog.setCancelable(false);
-            pDialog.show();
-        } else {
-            pDialog.show();
-        }
-    }
-
-    private boolean tokenExists() {
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String access_token = sharedPref.getString(getString(R.string.access_token), "");
-        return !access_token.equals("");
-    }
-
     private void startService() {
-        if (playService == null) {
-            SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-            String access_token = sharedPref.getString(getString(R.string.access_token), "");
-            Bundle b = new Bundle();
-            b.putString("acess_token", access_token);
+        if (!playCtrl.hasInstance()) {
             serviceIntent = new Intent(this, PlayService.class);
-            serviceIntent.putExtras(b);
             this.startService(serviceIntent);
             bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
-            playCtrl.setService(playService);
         }
     }
 
@@ -560,8 +452,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
             }
             PlayService.playlistName = Playlists.get(position).getName();
             setTitle(PlayService.playlistName);
-            AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getCurrentUserPlaylists));
-            AppController.getInstance().cancelPendingRequests(getString(R.string.TAG_getSelectedPlaylistTracks));
+            AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+            AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
             String playlistID = Playlists.get(position).getid();
             String userID = Playlists.get(position).getUserID();
             //Log.i("MainActivity", Playlists.get(position).getid() + " - " + Playlists.get(position).getUserID() + " - " + Playlists.get(position).getName());
@@ -577,345 +469,23 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         if (FragmentTracks != null) {
             FragmentTracks.setURL(userID, playlistID);
             if (reset) {
-                com.pl4za.spotifytest.FragmentTracks.TrackList.clear();
+                //TODO: com.pl4za.spotifytest.FragmentTracks.TrackList.clear();
                 FragmentTracks.load();
             }
         }
         updateActionBar(false, false);
     }
 
-    private String[] convertListToArray(List<Playlist> Playlists) {
-        String[] list = new String[Playlists.size()];
-        int i = 0;
-        for (Playlist a : Playlists) {
-            list[i] = a.getName();
-            i++;
-        }
-        return list;
-    }
-
     private void authorization() {
-        String url = "https://accounts.spotify.com/authorize/" + "?client_id=" + getString(R.string.CLIENT_ID) + "&response_type=code" + "&redirect_uri=" + getString(R.string.REDIRECT_URI) + "&scope=" + getString(R.string.SCOPES) + "&state=34fFs29kd09";
+        String url = "https://accounts.spotify.com/authorize/" + "?client_id=" + Params.CLIENT_ID + "&response_type=code" + "&redirect_uri=" + Params.REDIRECT_URI + "&scope=" + Params.SCOPES + "&state=34fFs29kd09";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
-    }
-
-    private String getAndSaveCodeAndState(String uri) {
-        String[] parts = uri.split("&");
-        String CODE = parts[0].split("=")[1];
-        String STATE = parts[1].split("=")[1];
-        Context context = this;
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.code), CODE);
-        editor.putString(getString(R.string.state), STATE);
-        editor.apply();
-        return CODE;
-    }
-
-    private void exchangeCodeForToken(final String code) {
-        String url = "https://accounts.spotify.com/api/token";
-        createPDialog("Loading...");
-        Listener<String> jsonListerner = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String list) {
-                try {
-                    JSONObject jsonObj = new JSONObject(list);
-                    String access_token = jsonObj.getString("access_token");
-                    String refresh_token = jsonObj.getString("refresh_token");
-                    // Save to prefs
-                    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.access_token), access_token);
-                    editor.putString(getString(R.string.refresh_token), refresh_token);
-                    ////Log.i("exchangeCodeForToken", "Acess token :" + access_token + "\n" + "Refresh token :" + refresh_token);
-                    editor.apply();
-                    hidePDialog();
-                    getCurrentUserProfile();
-                    DISABLE_LOGIN = true;
-                    updateActionBar(false, false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(getString(R.string.TAG_exchangeCodeForToken), "Error: " + error.getMessage());
-                hidePDialog();
-            }
-        };
-
-        StringRequest fileRequest = new StringRequest(Request.Method.POST, url, jsonListerner, errorListener) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("grant_type", "authorization_code");
-                params.put("code", code);
-                params.put("redirect_uri", getString(R.string.REDIRECT_URI));
-                params.put("client_id", getString(R.string.CLIENT_ID));
-                params.put("client_secret", getString(R.string.CLIENT_SECRET));
-                return params;
-            }
-        };
-        fileRequest.setShouldCache(false);
-        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_exchangeCodeForToken));
-    }
-
-    public void refreshToken(final String location) {
-        String url = "https://accounts.spotify.com/api/token";
-        Listener<String> jsonListerner = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String list) {
-                try {
-                    JSONObject jsonObj = new JSONObject(list);
-                    String access_token = jsonObj.getString("access_token");
-                    // Save to prefs
-                    SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(context.getString(R.string.access_token), access_token);
-                    //Log.i("RefreshToken", "New token: " + access_token);
-                    editor.apply();
-                    switch (location) {
-                        case "getTracksFailed":
-                            updatePlaylistTracks();
-                            break;
-                        case "getCurrentUserPlaylists":
-                            getCurrentUserPlaylists();
-                            break;
-                        case "PlayService":
-                            mSpotifyPlayerOptions.initializePlayer();
-                            break;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(getString(R.string.TAG_refreshToken), "Error: " + error.getMessage());
-            }
-        };
-
-        StringRequest fileRequest = new StringRequest(Request.Method.POST, url, jsonListerner, errorListener) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                String refresh_token = sharedPref.getString(context.getString(R.string.refresh_token), "");
-                ////Log.i("RefreshToken", "Refresh Token: " + refresh_token);
-                Map<String, String> params = new HashMap<>();
-                params.put("grant_type", "refresh_token");
-                params.put("refresh_token", refresh_token);
-                params.put("client_id", getString(R.string.CLIENT_ID));
-                params.put("client_secret", getString(R.string.CLIENT_SECRET));
-                return params;
-            }
-        };
-        fileRequest.setShouldCache(false);
-        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_refreshToken));
-    }
-
-    private void getCurrentUserProfile() {
-        String url = "https://api.spotify.com/v1/me";
-        //createPDialog("Loading user...");
-        Listener<String> jsonListerner = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String list) {
-                try {
-                    JSONObject jsonObj = new JSONObject(list);
-                    String userID = jsonObj.getString("id");
-                    String product = jsonObj.getString("product");
-                    String profilePicture = "";
-                    try {
-                        JSONArray profilePictures = jsonObj.getJSONArray("images");
-                        profilePicture = profilePictures.getJSONObject(0).getString("url");
-                    } catch (JSONException e) {
-                        Log.e("json", "No profile image uri.");
-                    }
-                    // Save to prefs
-                    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.user_id), userID);
-                    editor.putString(getString(R.string.product), product);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        new getProfilePicture(profilePicture).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    } else {
-                        new getProfilePicture(profilePicture).execute();
-                    }
-                    //Log.i("GetCurrentUser", "User id: " + userID + " Product: " + product + " Image: " + profilePicture);
-                    editor.apply();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(getString(R.string.TAG_getCurrentUserProfile), "Error: " + error.getMessage());
-                //hidePDialog();
-                refreshToken("getUserFailed");
-            }
-        };
-
-        StringRequest fileRequest = new StringRequest(Request.Method.GET, url, jsonListerner, errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                String access_token = sharedPref.getString(getString(R.string.access_token), "");
-                //Log.i("GetCurrentUser", "Access Token: " + access_token);
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + access_token);
-                return headers;
-            }
-
-            @Override
-            public Priority getPriority() {
-                return Priority.HIGH;
-            }
-        };
-        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Adding request to request TRACK_LIST
-        AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_getCurrentUserProfile));
-    }
-
-    private void getCurrentUserPlaylists() {
-        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String user_id = sharedPref.getString(getString(R.string.user_id), "");
-        String url = "https://api.spotify.com/v1/users/" + user_id + "/playlists";
-        if (PLAYLISTS_FORCE_WEBLOAD)
-            createPDialog("Fetching playlists...");
-        //Log.i("GetCurrentUserPlaylists", "Getting playlists...");
-        Listener<String> jsonListerner = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String list) {
-                try {
-                    Playlists.clear();
-                    JSONObject json = new JSONObject(list);
-                    JSONArray playlists = json.getJSONArray("items");
-                    int size = playlists.length();
-                    for (int i = 0; i < size; i++) {
-                        JSONObject ids = playlists.getJSONObject(i);
-                        //Log.i("MainActivity", ids.getString("id") + " - " + ids.getString("name") + " - " + ids.getJSONObject("owner").getString("id"));
-                        Playlists.add(new Playlist(ids.getString("id"), ids.getString("name"), ids.getJSONObject("owner").getString("id")));
-                    }
-                    if (Playlists.size() > 0) {
-                        PLAYLISTS_EXIST = true;
-                        String[] Arrayplaylists = convertListToArray(Playlists);
-                        savePlaylistsToSettings();
-                        populateDrawer(Arrayplaylists);
-                        if (!mDrawerLayout.isDrawerOpen(mDrawerRelativeLayout)) {
-                            if (PLAYLISTS_FORCE_WEBLOAD) {
-                                openDrawer();
-                            }
-                        }
-                    }
-                    PLAYLISTS_FORCE_WEBLOAD = false;
-                    hidePDialog();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(getString(R.string.TAG_getCurrentUserPlaylists), "Error: " + error.getMessage());
-                hidePDialog();
-                PLAYLISTS_FORCE_WEBLOAD = false;
-                refreshToken("getCurrentUserPlaylists");
-            }
-        };
-        StringRequest fileRequest = new StringRequest(Request.Method.GET, url, jsonListerner, errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-                String access_token = sharedPref.getString(getString(R.string.access_token), "");
-                ////Log.i("GetCurrentUserPlaylists", "Access Token for playlists: " + access_token);
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + access_token);
-                return headers;
-            }
-        };
-        fileRequest.setShouldCache(false);
-        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_getCurrentUserPlaylists));
-    }
-
-    public void getRandomArtistPicture() {
-        if (!FragmentTracks.TrackList.isEmpty()) {
-            String url = "https://api.spotify.com/v1/artists/" + getRandomArtistId();
-            Listener<String> jsonListerner = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String list) {
-                    try {
-                        JSONObject json = new JSONObject(list);
-                        try {
-                            JSONArray artistImages = json.getJSONArray("images");
-                            JSONObject artistimageObject = artistImages.getJSONObject(1);
-                            setPictureinDrawer(artistimageObject.getString("url"));
-                            randomArtistPictureURL = artistimageObject.getString("url");
-                        } catch (JSONException e) {
-                            Log.e("json", "No artist image...");
-                            getRandomArtistPicture();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    getRandomArtistPicture();
-                }
-            };
-            StringRequest fileRequest = new StringRequest(Request.Method.GET, url, jsonListerner, errorListener);
-            fileRequest.setShouldCache(false);
-            fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    MY_SOCKET_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            AppController.getInstance().addToRequestQueue(fileRequest, getString(R.string.TAG_getArtistID));
-        }
-    }
-
-    private void updatePlaylistTracks() {
-        FragmentTracks FragmentTracks = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
-        if (FragmentTracks != null) {
-            //Log.i("MainActivity", "Updating tracks after token refresh");
-            com.pl4za.spotifytest.FragmentTracks.TrackList.clear();
-            FragmentTracks.load();
-        }
     }
 
     private void saveToInternalSorage(Bitmap bitmapImage) {
         // path to /data/data/yourapp/app_data/imageDir
         File directory = getAplicationPath();
-        // Create imageDir
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-        String userId = sharedPref.getString(getString(R.string.user_id), "profile.jpg");
-        File mypath = new File(directory, userId);
+        File mypath = new File(directory, settings.getUserID());
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(mypath);
@@ -929,9 +499,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
 
     private Bitmap loadImageFromStorage(String path) {
         try {
-            SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.SpotifyPreferences), Context.MODE_PRIVATE);
-            String userId = sharedPref.getString(getString(R.string.user_id), "profile.jpg");
-            File f = new File(path, userId);
+            File f = new File(path, settings.getUserID());
             return BitmapFactory.decodeStream(new FileInputStream(f));
         } catch (FileNotFoundException e) {
             Log.e("MainActivity", "Profile image not found");
@@ -944,14 +512,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
         return cw.getDir("imageDir", Context.MODE_PRIVATE);
     }
 
-    public String getRandomArtistId() {
-        Random rand = new Random();
-        return FragmentTracks.TrackList.get((rand.nextInt(FragmentTracks.TrackList.size()))).getID();
-    }
-
     private void setPictureinDrawer(String pictureinDrawer) {
         final String str = pictureinDrawer;
-        mHandler.post(new Runnable() {
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 View view = getViewByPosition(0, mDrawerList);
@@ -978,7 +541,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
     private void setListItemChecked(int position, boolean configurationChanged) {
         final int pos = position;
         final boolean confChanged = configurationChanged;
-        mHandler.post(new Runnable() {
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 if (pos > 0) {
@@ -986,7 +549,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
                     if (oldPosition != -1 && !confChanged) {
                         getViewByPosition(oldPosition, mDrawerList).setBackgroundColor(Color.WHITE);
                         tv = (TextView) getViewByPosition(oldPosition, mDrawerList).findViewById(R.id.tvPlaylist);
-                        tv.setTextColor(getResources().getColor(R.color.darkgrey));
+                        //tv.setTextColor(getResources().getColor(R.color.darkgrey));
                     }
                     tv = (TextView) getViewByPosition(pos, mDrawerList).findViewById(R.id.tvPlaylist);
                     tv.setTextColor(Color.WHITE);
@@ -998,84 +561,72 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions {
 
     }
 
+    /*
+    Spotify network related requests
+     */
+
     @Override
-    public void updateActionBar(boolean search, boolean clear) {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        clearSearch();
-        if (landscape) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setTitle("Playing");
-            ENABLE_CLEAR = clear;
-            ENABLE_REFRESH = false;
-            ENABLE_SEARCH = search;
-            if (PLAYLISTS_EXIST)
-                setTitle(PlayService.playlistName);
-        } else {
-            if (currentPager == 0) {
-                if (mViewPager.getAdapter() != null) {
-                    ENABLE_CLEAR = false;
-                    ENABLE_REFRESH = true;
-                    ENABLE_SEARCH = !FragmentTracks.TrackList.isEmpty();
-                    //ENABLE_UNDO = false;
-                    if (PLAYLISTS_EXIST)
-                        setTitle(PlayService.playlistName);
-                }
-            } else if (currentPager == 1) {
-                setTitle("Queue");
-                ENABLE_REFRESH = false;
-                ENABLE_SEARCH = clear;
-                //ENABLE_UNDO = true && ENABLE_UNDO_VALUE;
-                ENABLE_CLEAR = clear;
-            }
+    public void onProfilePictureReceived(Bitmap image) {
+        if (image!=null) {
+            saveToInternalSorage(image);
         }
-        mDrawerToggle.syncState();
-        supportInvalidateOptionsMenu();
+        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        startService();
     }
+
+    @Override
+    public void onTokenReceived(String acessToken, String refreshToken) {
+        settings.setAcessToken(acessToken);
+        settings.setRefreshToken(refreshToken);
+        spotifyNetwork.getCurrentUserProfile(acessToken);
+        DISABLE_LOGIN = true;
+    }
+
+    @Override
+    public void onTokenRefresh(String newToken) {
+        settings.setAcessToken(newToken);
+        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        startService();
+    }
+
+    @Override
+    public void onProfileReceived(String userID, String product, String userPictureURL) {
+        settings.setUserID(userID);
+        settings.setProduct(product);
+        spotifyNetwork.getProfilePicture(userPictureURL);
+    }
+
+    @Override
+    public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
+        if (playlists.size() > 0) {
+            settings.setPlayLists(playlists);
+            populateDrawer(settings.getPlaylistsNames());
+            openDrawer();
+        }
+    }
+
+    @Override
+    public void onRandomArtistPictureURLReceived(String artistPictureURL) {
+        setPictureinDrawer(artistPictureURL);
+        randomArtistPictureURL = artistPictureURL;
+    }
+
+    @Override
+    public void onPlaylistTracksReceived(String json) {
+
+    }
+
+    @Override
+    public void onEtagUpdate(String etag) {
+
+    }
+
 
     public static class PlaceholderFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_main, container, false);
-        }
-    }
-
-    private class getProfilePicture extends AsyncTask<Void, Void, Void> {
-
-        final String url;
-
-        public getProfilePicture(String url) {
-            this.url = url;
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            URL formedUrl = null;
-            try {
-                formedUrl = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            if (formedUrl != null) {
-                try {
-                    Bitmap image = BitmapFactory.decodeStream(formedUrl.openConnection().getInputStream());
-                    saveToInternalSorage(image);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            hidePDialog();
-            PLAYLISTS_FORCE_WEBLOAD = true;
-            getCurrentUserPlaylists();
-            startService();
         }
     }
 

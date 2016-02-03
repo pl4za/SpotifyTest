@@ -29,10 +29,6 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
-    public static void setFilteredList(List<Track> results) {
-        filteredList = results;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_queue, container, false);
@@ -63,6 +59,16 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     @Override
     public void updateView() {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateFilter(String query) {
+        mAdapter.getFilter().filter(query);
+    }
+
+    @Override
+    public void setList(List<Track> list) {
+        filteredList = list;
     }
 
     @Override

@@ -7,6 +7,11 @@ import java.util.List;
  */
 public interface ServiceOptions {
 
+    String actionPlayPause = "com.example.spotifytest.action.playpause";
+    String actionNext = "com.example.spotifytest.action.next";
+    String actionDismiss = "com.example.spotifytest.action.dismiss";
+    String CLIENT_ID = "6d4eddf8161c434994500be4a48cab9b";
+
     void initializePlayer();
 
     void startNotification();
@@ -26,4 +31,6 @@ public interface ServiceOptions {
     void addToQueue(List<String> queue, int listStart);
 
     boolean isActive();
+
+    void destroyPlayer();
 }

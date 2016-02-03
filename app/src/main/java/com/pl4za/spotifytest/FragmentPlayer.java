@@ -14,6 +14,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.volley.AppController;
 
+import java.util.List;
+
 public class FragmentPlayer extends Fragment implements View.OnClickListener, FragmentOptions {
 
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
@@ -160,6 +162,16 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             ivPlayPause.setImageResource(R.drawable.play_selector);
         }
         insertImage();
+    }
+
+    @Override
+    public void updateFilter(String query) {
+
+    }
+
+    @Override
+    public void setList(List<Track> list) {
+
     }
 
     @Override

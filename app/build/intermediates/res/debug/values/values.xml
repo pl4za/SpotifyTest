@@ -310,24 +310,6 @@
     <integer name="abc_max_action_buttons">2</integer>
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
-    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
-    <string name="CLIENT_ID">6d4eddf8161c434994500be4a48cab9b</string>
-    <string name="CLIENT_SECRET">5ddc0c1b67c2446993ca2306eeb90149</string>
-    <string name="Etag">ETag</string>
-    <string name="Playlists">SpotifyCache</string>
-    <string name="REDIRECT_URI">spotify-feed://callback</string>
-    <string name="SCOPES">user-follow-read playlist-read-private streaming user-read-private</string>
-    <string name="SpotifyCache">SpotifyCache</string>
-    <string name="SpotifyPreferences">SpotifyPreferences</string>
-    <string name="TAG_exchangeCodeForToken">exchangeCodeForToken</string>
-    <string name="TAG_getArtistID">getSelectedPlaylistTracks</string>
-    <string name="TAG_getCurrentUserPlaylists">getCurrentUserPlaylists</string>
-    <string name="TAG_getCurrentUserProfile">getCurrentUserProfile</string>
-    <string name="TAG_getSelectedPlaylistTracks">getSelectedPlaylistTracks</string>
-    <string name="TAG_refreshToken">refreshToken</string>
-    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
-    <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -349,7 +331,6 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="access_token">access_token</string>
     <string name="action_clear">Clear queue</string>
     <string name="action_login">Login</string>
     <string name="action_queue">Queue</string>
@@ -358,7 +339,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_undo">Undo</string>
     <string name="app_name">Spotlite</string>
-    <string name="code">code</string>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.spotify.sdk/spotify-auth/1.0.0-beta12/res/values/values.xml -->
     <eat-comment/>
     <string name="com_spotify_sdk_login_progress">Loading…</string>
@@ -383,19 +363,10 @@
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="list_row_transition">list_row_transition</string>
-    <string name="product">product</string>
-    <string name="profile_picture">profile_picture</string>
-    <string name="refresh_token">refresh_token</string>
     <string name="search_hint">Search by artist, track or album</string>
-    <string name="state">state</string>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
-    <string name="user_id">user_id</string>
-    <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
-    <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>

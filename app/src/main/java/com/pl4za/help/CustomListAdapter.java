@@ -20,6 +20,7 @@ import com.pl4za.spotifytest.FragmentTracks;
 import com.pl4za.spotifytest.MainActivity;
 import com.pl4za.spotifytest.R;
 import com.pl4za.spotifytest.Track;
+import com.pl4za.spotifytest.ViewCtrl;
 import com.pl4za.volley.AppController;
 
 import org.joda.time.DateTime;
@@ -39,6 +40,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private FragmentOptions swipeListener;
     private String direction = "right";
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     public CustomListAdapter(List<Track> trackList) {
         this.trackList = trackList;
@@ -132,11 +134,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
                     oReturn.values = results;
                 } else
                     oReturn.values = originalTracklist;
-                if (MainActivity.currentPage == 0) {
-                    FragmentTracks.setFilteredList((List<Track>) oReturn.values);
-                } else if (MainActivity.currentPage == 1) {
-                    FragmentQueue.setFilteredList((List<Track>) oReturn.values);
-                }
+                viewCtrl.setList((List<Track>) oReturn.values);
                 return oReturn;
             }
         };

@@ -4,6 +4,7 @@ import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jasoncosta on 2/2/2016.
@@ -39,6 +40,20 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
     public void updateView() {
         for (FragmentOptions f : fragmentsOptions) {
             f.updateView();
+        }
+    }
+
+    @Override
+    public void updateFilter(String query) {
+        for (FragmentOptions f : fragmentsOptions) {
+            f.updateFilter(query);
+        }
+    }
+
+    @Override
+    public void setList(List<Track> list) {
+        for (FragmentOptions f : fragmentsOptions) {
+            f.setList(list);
         }
     }
 

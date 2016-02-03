@@ -23,6 +23,10 @@ public class PlayCtrl implements ServiceOptions {
         return INSTANCE;
     }
 
+    public boolean hasInstance() {
+        return service!=null;
+    }
+
     @Override
     public void initializePlayer() {
         service.initializePlayer();
@@ -71,5 +75,12 @@ public class PlayCtrl implements ServiceOptions {
     @Override
     public boolean isActive() {
         return service!=null && service.isActive();
+    }
+
+    @Override
+    public void destroyPlayer() {
+        if (service!=null) {
+            service.destroyPlayer();
+        }
     }
 }
