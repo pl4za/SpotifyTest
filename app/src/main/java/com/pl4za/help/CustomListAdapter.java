@@ -134,6 +134,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
                     oReturn.values = results;
                 } else
                     oReturn.values = originalTracklist;
+                //TODO: FIX
                 viewCtrl.setList((List<Track>) oReturn.values);
                 return oReturn;
             }
@@ -175,11 +176,9 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.swipeLayout.findViewById(R.id.back));
         }
-        Log.i(TAG, "position: " + position);
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
     }
-
 
     class SwipeListener extends SimpleSwipeListener {
 

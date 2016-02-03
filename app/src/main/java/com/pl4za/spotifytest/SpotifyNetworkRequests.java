@@ -287,7 +287,7 @@ public class SpotifyNetworkRequests {
         AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserPlaylists);
     }
 
-    public void getRandomArtistPicture(String artistID) {
+    public void getArtistPicture(String artistID) {
         String url = "https://api.spotify.com/v1/artists/" + artistID;
         Response.Listener<String> jsonListerner = new Response.Listener<String>() {
             @Override

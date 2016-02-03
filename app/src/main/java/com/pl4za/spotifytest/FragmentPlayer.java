@@ -166,21 +166,26 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
 
     @Override
     public void updateFilter(String query) {
-
+        // Not implemented
     }
 
     @Override
     public void setList(List<Track> list) {
-
+        // Not implemented
     }
 
     @Override
     public void onSwipe(int position) {
-
+        // Not implemented
     }
 
     @Override
     public void onDoubleClick(int position) {
+        // Not implemented
+    }
 
+    @Override
+    public void loadTracks(String userID, String playlistID) {
+        // Not implemented
     }
 }

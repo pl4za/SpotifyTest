@@ -19,4 +19,5 @@ public interface FragmentOptions {
 
     void onDoubleClick(int position);
 
+    void loadTracks(String userID, String playlistID);
 }

@@ -33,7 +33,7 @@ public class QueueCtrl implements QueueOptions {
 
     @Override
     public void addToQueue(List<Track> tracklist, int listStart) {
-        queue.addToQueue(tracklist.subList(listStart, tracklist.size()));
+        queue.addToQueue(tracklist, listStart);
         playCtrl.addToQueue(getQueueURIList(tracklist), listStart);
     }
 

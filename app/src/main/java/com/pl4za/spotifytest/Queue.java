@@ -23,10 +23,12 @@ public class Queue {
         TRACK_LIST.add(track);
     }
 
-    public void addToQueue(List<Track> queue) {
-        trackNumber = 0;
-        playingTrack = queue.get(0);
-        TRACK_LIST.addAll(queue);
+    public void addToQueue(List<Track> tracklist, int position) {
+        trackNumber = position;
+        List<Track> temp = new ArrayList<>(tracklist);
+        clearQueue();
+        TRACK_LIST.addAll(temp);
+        playingTrack = tracklist.get(position);
     }
 
     public boolean isEmpty() {
@@ -132,4 +134,5 @@ public class Queue {
     public Track getCurrentTrack() {
         return TRACK_LIST.get(trackNumber);
     }
+
 }

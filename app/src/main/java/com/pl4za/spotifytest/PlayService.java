@@ -32,7 +32,6 @@ import java.util.List;
 public class PlayService extends Service implements PlayerNotificationCallback, ConnectionStateCallback, ServiceOptions {
 
     private static final String TAG = "PlayService";
-    public static String playlistName = "Spotlite";
     public static NotificationManager mNotificationManager;
     public static boolean notificationActive = false;
     public static Player mPlayer;
@@ -59,11 +58,10 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     @Override
     public void addToQueue(List<String> queue, int listStart) {
-        PlayService.clearQueue();
+        clearQueue();
         if (queue.size() == 1) {
             mPlayer.play(queue);
         } else {
-            //Log.i("PlayService)", "Adding to TRACK_LIST: " + TRACK_LIST.get(0) + " - " + index);
             mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(listStart));
         }
         TRACK_END = false;
@@ -255,7 +253,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         return REPEAT;
     }
 
-    public static void clearQueue() {
+    public void clearQueue() {
         if (mPlayer.isInitialized()) {
             mPlayer.pause();
             mPlayer.clearQueue();

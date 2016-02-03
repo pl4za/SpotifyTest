@@ -24,7 +24,7 @@ public class PlayCtrl implements ServiceOptions {
     }
 
     public boolean hasInstance() {
-        return service!=null;
+        return service != null;
     }
 
     @Override
@@ -64,22 +64,22 @@ public class PlayCtrl implements ServiceOptions {
 
     @Override
     public void addToQueue(String trackUri) {
-
+        service.addToQueue(trackUri);
     }
 
     @Override
     public void addToQueue(List<String> queue, int listStart) {
-
+        service.addToQueue(queue, listStart);
     }
 
     @Override
     public boolean isActive() {
-        return service!=null && service.isActive();
+        return service != null && service.isActive();
     }
 
     @Override
     public void destroyPlayer() {
-        if (service!=null) {
+        if (service != null) {
             service.destroyPlayer();
         }
     }

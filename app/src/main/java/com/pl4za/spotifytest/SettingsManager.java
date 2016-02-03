@@ -2,6 +2,7 @@ package com.pl4za.spotifytest;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.pl4za.help.Params;
 
@@ -13,9 +14,9 @@ import java.util.HashMap;
  */
 public class SettingsManager {
 
-    private Context context;
+    private static final String TAG = "SettingsManager";
 
-    private SettingsManager settingsManager = SettingsManager.getInstance();
+    private Context context;
 
     private static final SettingsManager INSTANCE = new SettingsManager();
 
@@ -72,15 +73,13 @@ public class SettingsManager {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.Playlists, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("list_size", playlists.size());
-        int i = 0;
-        for (Playlist a : playlists) {
+        for (int i = 0; i < playlists.size(); i++) {
             //Log.i("MainActivity", a.getName());
-            editor.putString("playlist_" + i, a.getName());
-            editor.putString("playlistID_" + i, a.getid());
-            editor.putString("playlistUSERID_" + i, a.getUserID());
-            i++;
+            editor.putString("playlist_" + i, playlists.get(i).getName());
+            editor.putString("playlistID_" + i, playlists.get(i).getid());
+            editor.putString("playlistUSERID_" + i, playlists.get(i).getUserID());
+            editor.apply();
         }
-        editor.apply();
     }
     /*
     Get
@@ -113,12 +112,13 @@ public class SettingsManager {
     public ArrayList<HashMap<String, String>> getPlaylists() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.Playlists, Context.MODE_PRIVATE);
         int size = sharedPref.getInt("list_size", 0);
-        HashMap<String, String> hm = new HashMap<String, String>();
+        HashMap<String, String> hm;
         ArrayList<HashMap<String, String>> al = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            hm.put("name", sharedPref.getString("playlist_" + i, null));
-            hm.put("id", sharedPref.getString("playlistID_" + i, null));
-            hm.put("userID", sharedPref.getString("playlistUSERID_" + i, null));
+            hm = new HashMap<>();
+            hm.put(Params.playlist_name, sharedPref.getString("playlist_" + i, null));
+            hm.put(Params.playlist_id, sharedPref.getString("playlistID_" + i, null));
+            hm.put(Params.playlist_user_id, sharedPref.getString("playlistUSERID_" + i, null));
             al.add(hm);
         }
         return al;
@@ -130,7 +130,7 @@ public class SettingsManager {
         String[] list = new String[size];
         int i = 0;
         for (HashMap<String, String> hm : getPlaylists()) {
-            list[i] = hm.get("name");
+            list[i] = hm.get(Params.playlist_name);
             i++;
         }
         return list;

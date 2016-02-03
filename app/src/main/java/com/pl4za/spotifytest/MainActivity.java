@@ -72,7 +72,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public int currentPage, oldPosition = 0;
     public static boolean isHomeAsUpEnabled = false;
     public static MyViewPager mViewPager;
-    private final List<Playlist> Playlists = new ArrayList<>();
     public String randomArtistPictureURL;
     public static boolean landscape = false;
     private boolean mBound = false;
@@ -369,8 +368,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             ENABLE_REFRESH = false;
             ENABLE_SEARCH = search;
         }
-        if (!Playlists.isEmpty())
-            setTitle(PlayService.playlistName);
+        // TODO: setTitle(PlayService.playlistName);
         mDrawerToggle.syncState();
         supportInvalidateOptionsMenu();
     }
@@ -441,39 +439,18 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     private void selectItem(int position) {
-        //Log.i("MainActivity", "Tamanho playlist: " + Playlists.size());
-        if (position >= 0 && position < Playlists.size()) {
+        if (position >= 0) {
             mDrawerList.setSelection(position);
             mDrawerList.setSelected(true);
-            boolean reset = false;
-            //Log.i("MainActivity", PlayService.playlistName + " - " + Playlists.get(position).getName());
-            if (!PlayService.playlistName.equals(Playlists.get(position).getName())) {
-                reset = true;
-            }
-            PlayService.playlistName = Playlists.get(position).getName();
-            setTitle(PlayService.playlistName);
-            AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
-            AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-            String playlistID = Playlists.get(position).getid();
-            String userID = Playlists.get(position).getUserID();
-            //Log.i("MainActivity", Playlists.get(position).getid() + " - " + Playlists.get(position).getUserID() + " - " + Playlists.get(position).getName());
+            //setTitle(PlayService.playlistName);
             PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(viewPagerAdapter);
-            selectPlaylist(userID, playlistID, reset);
+            String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
+            String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
+            viewCtrl.loadTracks(userID, playlistID);
+            updateActionBar(false, false);
             mDrawerLayout.closeDrawers();
         }
-    }
-
-    private void selectPlaylist(String userID, String playlistID, boolean reset) {
-        FragmentTracks FragmentTracks = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
-        if (FragmentTracks != null) {
-            FragmentTracks.setURL(userID, playlistID);
-            if (reset) {
-                //TODO: com.pl4za.spotifytest.FragmentTracks.TrackList.clear();
-                FragmentTracks.load();
-            }
-        }
-        updateActionBar(false, false);
     }
 
     private void authorization() {
@@ -549,7 +526,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                     if (oldPosition != -1 && !confChanged) {
                         getViewByPosition(oldPosition, mDrawerList).setBackgroundColor(Color.WHITE);
                         tv = (TextView) getViewByPosition(oldPosition, mDrawerList).findViewById(R.id.tvPlaylist);
-                        //tv.setTextColor(getResources().getColor(R.color.darkgrey));
+                        //TODO: tv.setTextColor(getResources().getColor(R.color.darkgrey));
                     }
                     tv = (TextView) getViewByPosition(pos, mDrawerList).findViewById(R.id.tvPlaylist);
                     tv.setTextColor(Color.WHITE);

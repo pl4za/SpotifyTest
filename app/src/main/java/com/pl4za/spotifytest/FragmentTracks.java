@@ -39,17 +39,17 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     private static final String TAG = "FragmentTracks";
     private static final int SCROLL_STATE_IDLE = 0;
-    private static List<Track> TrackList = new ArrayList<>();
+    private static List<Track> trackList = new ArrayList<>();
+    private static List<Track> tempTrackList = new ArrayList<>();
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
-    private String globalUrl = "";
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
     private boolean animate = true;
-    private boolean isCacheNull = true;
     private View view;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
+    String userID, playlistID;
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
@@ -68,9 +68,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             @Override
             public void onRefresh() {
                 AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-                TrackList.clear();
-                mAdapter.notifyDataSetChanged();
-                load();
+                loadTracks(userID, playlistID);
             }
         });
         refreshView.setColorScheme(android.R.color.holo_blue_bright,
@@ -112,7 +110,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             }
         });
         recyclerView.setEnabled(false);
-        mAdapter = new CustomListAdapter(TrackList);
+        mAdapter = new CustomListAdapter(trackList);
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
@@ -153,12 +151,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void setList(List<Track> list) {
-        TrackList = list;
+        trackList = list;
     }
 
     @Override
     public void onSwipe(int position) {
-        Track track = TrackList.get(position);
+        Track track = trackList.get(position);
         queueCtrl.addToQueue(track);
         if (animate) {
             fabPlay.hide(true);
@@ -193,7 +191,20 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .replace(R.id.container, playFrag, "FragmentPlayer")
                 .addToBackStack(null)
                 .commit();
-        queueCtrl.addToQueue(TrackList.subList(position, TrackList.size()), 0);
+        queueCtrl.addToQueue(trackList.subList(position, trackList.size()), 0);
+    }
+
+    @Override
+    public void loadTracks(String userID, String playlistID) {
+        this.userID = userID;
+        this.playlistID = playlistID;
+        String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
+        if (taskCheckCache != null) {
+            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
+                taskCheckCache.cancel(true);
+            }
+        }
+        taskCheckCache = new checkCache(url).execute();
     }
 
     private class checkCache extends AsyncTask<Void, Void, JSONObject> {
@@ -206,15 +217,13 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
         @Override
         protected void onPreExecute() {
-            if (TrackList.isEmpty()) {
-                refreshView.setEnabled(false);
-                refreshView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshView.setRefreshing(true);
-                    }
-                });
-            }
+            refreshView.setEnabled(true);
+            refreshView.post(new Runnable() {
+                @Override
+                public void run() {
+                    refreshView.setRefreshing(true);
+                }
+            });
             super.onPreExecute();
         }
 
@@ -237,37 +246,32 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             if (jsonObject != null) {
-                isCacheNull = false;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new fillListViewAndQueue(jsonObject).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new parseJsonToList(jsonObject).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
-                    new fillListViewAndQueue(jsonObject).execute();
+                    new parseJsonToList(jsonObject).execute();
                 }
             } else {
-                Log.i("FragmentTracks", "Cache is null..");
-                isCacheNull = true;
+                Log.i(TAG, "Cache is null..");
+                spotifyNetwork.getSelectedPlaylistTracks(url, settings.getAccessToken(), settings.getEtag(url));
             }
-            globalUrl = url;
-            getSelectedPlaylistTracks(url);
         }
     }
 
-    private class fillListViewAndQueue extends AsyncTask<Void, Void, String> {
+    private class parseJsonToList extends AsyncTask<Void, Void, String> {
 
         final JSONObject json;
 
-        public fillListViewAndQueue(JSONObject jsonObject) {
+        public parseJsonToList(JSONObject jsonObject) {
             this.json = jsonObject;
         }
 
         @Override
         protected String doInBackground(Void... params) {
-            //Log.i("fillListView", "Loading track page...............................");
             try {
                 if (json != null) {
                     JSONArray playlists = json.getJSONArray("items");
                     for (int i = 0; i < playlists.length(); i++) {
-                        //Log.i("json", "Track n: " + i);
                         JSONObject ids = playlists.getJSONObject(i);
                         JSONObject tracks = ids.getJSONObject("track");
                         try {
@@ -296,16 +300,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                         } catch (JSONException e) {
                             Log.e("json", "No album art or No artists");
                         }
-                        TrackList.add(new Track(tracks.getString("name"), artists, artistID, tracks.getString("duration_ms"), tracks.getJSONObject("album").getString("name"),
+                        tempTrackList.add(new Track(tracks.getString("name"), artists, artistID, tracks.getString("duration_ms"), tracks.getJSONObject("album").getString("name"),
                                 ids.getString("added_at"), tracks.getString("uri"), albumArt, bigAlbumArt));
                     }
-                    /*
-                    if (TrackList.isEmpty()) {
-                        //Log.i("FragmentTracks", "Empty tracklist: " + TrackList.size());
-                        AppController.getInstance().getRequestQueue().getCache().clear();
-                        getSelectedPlaylistTracks(globalUrl);
-                    }
-                    */
                     return json.getString("next");
                 }
             } catch (JSONException e) {
@@ -317,55 +314,38 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         @Override
         protected void onPostExecute(String next) {
             super.onPostExecute(next);
-            //Log.i("FragmentTracks", "Tracklist: " + TrackList.size() + " next: " + next);
+            //Log.i(TAG, "Tracklist: " + trackList.size() + " next: " + next);
             if (!next.equals("null")) {
-                Log.i("json", "Loading next page");
+                Log.i(TAG, "Loading next page");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     taskCheckCache = new checkCache(next).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
                     taskCheckCache = new checkCache(next).execute();
                 }
             } else {
-                Log.i("json", "No more pages");
-                if (!TrackList.isEmpty()) {
-                    Collections.sort(TrackList, new ListComparator());
+                Log.i(TAG, "No more pages");
+                if (!tempTrackList.isEmpty()) {
+                    Collections.sort(tempTrackList, new ListComparator());
                     int i = 0;
-                    for (Track s : TrackList) {
+                    for (Track s : tempTrackList) {
                         s.setPosition(i);
                         i++;
                     }
                 }
                 refreshView.setEnabled(true);
-                mAdapter.notifyDataSetChanged();
                 refreshView.setRefreshing(false);
                 Random rand = new Random();
-                String ranArtist = TrackList.get((rand.nextInt(FragmentTracks.TrackList.size()))).getID();
-                spotifyNetwork.getRandomArtistPicture(ranArtist);
+                String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                spotifyNetwork.getArtistPicture(ranArtist);
                 recyclerView.setEnabled(true);
                 viewCtrl.updateActionBar(true, true);
+                trackList.clear();
+                trackList.addAll(tempTrackList);
+                tempTrackList.clear();
+                tempTrackList = new ArrayList<>();
+                //mAdapter.notifyDataSetChanged();
             }
         }
-    }
-
-    public void load() {
-        if (taskCheckCache != null) {
-            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
-                taskCheckCache.cancel(true);
-            }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            taskCheckCache = new checkCache(globalUrl).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            taskCheckCache = new checkCache(globalUrl).execute();
-        }
-    }
-
-    public void setURL(String user_id, String playlist_id) {
-        globalUrl = "https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks";
-    }
-
-    private void getSelectedPlaylistTracks(String url) {
-        spotifyNetwork.getSelectedPlaylistTracks(url, settings.getAccessToken(), settings.getEtag(url));
     }
 
     private boolean listIsAtTop() {
@@ -412,7 +392,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onRandomArtistPictureURLReceived(String artistPictureURL) {
-
+        if (artistPictureURL.equals("none")) {
+            Random rand = new Random();
+            String ranArtist = trackList.get((rand.nextInt(trackList.size()))).getID();
+            spotifyNetwork.getArtistPicture(ranArtist);
+        }
     }
 
     @Override
@@ -420,9 +404,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         try {
             JSONObject list = new JSONObject(json);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new fillListViewAndQueue(list).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new parseJsonToList(list).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else {
-                new fillListViewAndQueue(list).execute();
+                new parseJsonToList(list).execute();
             }
         } catch (JSONException e) {
             e.printStackTrace();

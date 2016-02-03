@@ -59,11 +59,18 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
 
     @Override
     public void onSwipe(int position) {
-
+        //Not implemented
     }
 
     @Override
     public void onDoubleClick(int position) {
+        //Not implemented
+    }
 
+    @Override
+    public void loadTracks(String userID, String playlistID) {
+        for (FragmentOptions f : fragmentsOptions) {
+            f.loadTracks(userID, playlistID);
+        }
     }
 }
