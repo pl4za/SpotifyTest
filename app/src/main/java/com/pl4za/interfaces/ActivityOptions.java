@@ -5,6 +5,6 @@ package com.pl4za.interfaces;
  */
 public interface ActivityOptions {
 
-    void updateActionBar(boolean search, boolean clear);
+    void updateActionBar(int position);
 
 }

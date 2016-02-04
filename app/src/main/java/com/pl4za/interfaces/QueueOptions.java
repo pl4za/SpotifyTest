@@ -7,27 +7,13 @@ import java.util.List;
 /**
  * Created by jasoncosta on 2/2/2016.
  */
-public interface QueueOptions {
-
-    void addToQueue(Track track);
-
-    void addToQueue(List<Track> queue, int listStart);
-
-    void removeFromQueue(int position);
-
-    void clearQueue();
-
-    boolean hasTracks();
-
-    boolean hasNext();
-
-    boolean hasPrevious();
+public interface QueueOptions extends TracklistOptions {
 
     void updateTrackNumberAndPlayingTrack(String trackURI);
 
-    List<Track> getQueue();
+    List<Track> getTrackList();
 
-    List<String> getQueueURIList(List<Track> queueToList);
+    List<String> getTrackURIList(List<Track> queueToList);
 
     Track getCurrentTrack();
 
@@ -36,4 +22,10 @@ public interface QueueOptions {
     boolean isQueueChanged();
 
     void setQueueChanged(boolean changed);
+
+    int getTrackNumberUpdate();
+
+    boolean hasNext();
+
+    boolean hasPrevious();
 }

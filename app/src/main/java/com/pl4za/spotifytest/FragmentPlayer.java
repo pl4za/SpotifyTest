@@ -36,7 +36,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewCtrl.addFragmentView(this);
         view = inflater.inflate(R.layout.fragment_player, container, false);
-        viewCtrl.updateActionBar(false, false);
+        viewCtrl.updateActionBar(2);
         setButtonsListeners();
         if (queueCtrl.hasTracks()) {
             updateView();
@@ -83,7 +83,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.albumArt) {
-            //Log.i("Player", "PlayPause Event");
             if (PlayService.PLAYING) {
                 ivPlayPause.setImageResource(R.drawable.play_selector);
             } else {
@@ -91,23 +90,70 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             }
             playCtrl.resumePause();
         } else if (v.getId() == R.id.ivNext) {
-            //Log.i("Player", "NextTrack Event");
             playCtrl.nextTrack();
+            ivNext.setImageAlpha(30);
+            ivNext.setEnabled(false);
         } else if (v.getId() == R.id.ivPrevious) {
-            //Log.i("Player", "PreviousTrack Event");
             playCtrl.prevTrack();
+            ivPrevious.setImageAlpha(30);
+            ivPrevious.setEnabled(false);
         } else if (v.getId() == R.id.ivShuffle) {
-            //Log.i("Player", "Shuffle Event");
             playCtrl.shuffle();
-            checkOptions();
+            checkRepeatAndShuffle();
         } else if (v.getId() == R.id.ivRepeat) {
-            //Log.i("Player", "Repeat Event");
             playCtrl.repeat();
-            checkOptions();
+            checkRepeatAndShuffle();
         }
     }
 
-    private void checkOptions() {
+    private void insertImage() {
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
+        ivAlbumArt.setImageUrl(queueCtrl.getCurrentTrack().getBigAlbumArt(), imageLoader);
+        imageLoader.get(queueCtrl.getCurrentTrack().getBigAlbumArt(), ImageLoader.getImageListener(ivAlbumArt, R.drawable.no_image, R.drawable.no_image));
+    }
+
+    @Override
+    public void updateView() {
+        TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
+        TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
+        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
+        tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
+        tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
+        tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
+        checkRepeatAndShuffle();
+        //
+        if (!queueCtrl.hasTracks()) {
+            ivPlayPause.setImageResource(R.drawable.play_selector);
+            ivPlayPause.setImageAlpha(30);
+            ivNext.setEnabled(false);
+            ivPrevious.setEnabled(false);
+        } else {
+            ivPlayPause.setImageAlpha(255);
+            if ((!queueCtrl.hasNext()) && !PlayService.isShuffled()) {
+                ivNext.setImageAlpha(30);
+                ivNext.setEnabled(false);
+            } else {
+                ivNext.setImageAlpha(255);
+                ivNext.setEnabled(true);
+            }
+            if (!queueCtrl.hasPrevious() && !PlayService.isShuffled()) {
+                ivPrevious.setImageAlpha(30);
+                ivPrevious.setEnabled(false);
+            } else {
+                ivPrevious.setImageAlpha(255);
+                ivPrevious.setEnabled(true);
+            }
+        }
+        if (PlayService.PLAYING) {
+            ivPlayPause.setImageResource(R.drawable.pause_selector);
+        } else {
+            ivPlayPause.setImageResource(R.drawable.play_selector);
+        }
+        insertImage();
+    }
+
+    private void checkRepeatAndShuffle() {
         if (PlayService.isShuffled()) {
             ivShuffle.setImageAlpha(255);
         } else {
@@ -118,50 +164,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
         } else {
             ivRepeat.setImageAlpha(30);
         }
-    }
-
-    private void insertImage() {
-        if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView albumArt = (NetworkImageView) view.findViewById(R.id.albumArt);
-        albumArt.setImageUrl(queueCtrl.getCurrentTrack().getBigAlbumArt(), imageLoader);
-        imageLoader.get(queueCtrl.getCurrentTrack().getBigAlbumArt(), ImageLoader.getImageListener(albumArt, R.drawable.no_image, R.drawable.no_image));
-    }
-
-    @Override
-    public void updateView() {
-        //Log.i("FragmentPlayer", "Updating info: " + Queue.getPlayingTrack().getTrack());
-        TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
-        TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
-        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-        tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
-        tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
-        tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
-        checkOptions();
-        if (!queueCtrl.hasTracks()) {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-            ivPlayPause.setImageAlpha(30);
-            ivNext.setEnabled(false);
-            ivPrevious.setEnabled(false);
-        } else {
-            ivPlayPause.setImageAlpha(255);
-            if ((!queueCtrl.hasNext()) && !PlayService.isShuffled()) {
-                ivNext.setImageAlpha(30);
-            } else {
-                ivNext.setImageAlpha(255);
-            }
-            if (!queueCtrl.hasPrevious() && !PlayService.isShuffled()) {
-                ivPrevious.setImageAlpha(30);
-            } else {
-                ivPrevious.setImageAlpha(255);
-            }
-        }
-        if (PlayService.PLAYING) {
-            ivPlayPause.setImageResource(R.drawable.pause_selector);
-        } else {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-        }
-        insertImage();
     }
 
     @Override

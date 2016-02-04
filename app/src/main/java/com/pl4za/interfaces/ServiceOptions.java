@@ -33,4 +33,6 @@ public interface ServiceOptions {
     boolean isActive();
 
     void destroyPlayer();
+
+    void clearQueue();
 }

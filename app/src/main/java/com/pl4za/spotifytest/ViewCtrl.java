@@ -32,8 +32,8 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
     }
 
     @Override
-    public void updateActionBar(boolean search, boolean clear) {
-        activityOptions.updateActionBar(search, clear);
+    public void updateActionBar(int position) {
+        activityOptions.updateActionBar(position);
     }
 
     @Override

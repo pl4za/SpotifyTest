@@ -26,30 +26,57 @@ public class QueueCtrl implements QueueOptions {
     }
 
     @Override
-    public void addToQueue(Track track) {
+    public void addTrack(Track track) {
         queue.addToQueue(track);
         playCtrl.addToQueue(track.getTrackURI());
     }
 
     @Override
-    public void addToQueue(List<Track> tracklist, int listStart) {
+    public void addTrackList(List<Track> tracklist, int listStart) {
         queue.addToQueue(tracklist, listStart);
-        playCtrl.addToQueue(getQueueURIList(tracklist), listStart);
+        playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
     }
 
     @Override
-    public void removeFromQueue(int position) {
+    public Track getTrack(int position) {
+        return null;
+    }
+
+    @Override
+    public void removeFromList(int position) {
+        int oldPos = queue.getQueuePosition();
+        if(position==oldPos) {
+            queue.setTrackNumberUpdate(0);
+            /*
+            if (!queue.hasNext()) {
+                queue.setTrackNumberUpdate(-1);
+            }*/
+            playCtrl.nextTrack();
+        } else {
+            queue.setTrackNumberUpdate(1);
+        }
         queue.removeFromQueue(position);
     }
 
     @Override
-    public void clearQueue() {
+    public int getTrackNumberUpdate() {
+        return queue.getTrackNumberUpdate();
+    }
+
+    @Override
+    public void clear() {
         queue.clearQueue();
+        playCtrl.clearQueue();
     }
 
     @Override
     public boolean hasTracks() {
         return !queue.isEmpty();
+    }
+
+    @Override
+    public void setTrackList(List<Track> newTrackList) {
+
     }
 
     @Override
@@ -68,7 +95,7 @@ public class QueueCtrl implements QueueOptions {
     }
 
     @Override
-    public List<Track> getQueue() {
+    public List<Track> getTrackList() {
         return queue.getQueue();
     }
 
@@ -92,7 +119,7 @@ public class QueueCtrl implements QueueOptions {
         queue.setQueueChanged(changed);
     }
 
-    public List<String> getQueueURIList(List<Track> queueToList) {
+    public List<String> getTrackURIList(List<Track> queueToList) {
         Log.i("Queue", "Receiving TRACK_LIST");
         List<String> uriQueue = new ArrayList<>();
         for (Track t : queueToList) {

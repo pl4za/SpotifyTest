@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         fabPlay.setOnClickListener(fcl);
         fabTracks.setOnClickListener(fcl);
         recyclerView.addOnScrollListener(new ListViewScrollListener());
-        mAdapter = new CustomListAdapter(queueCtrl.getQueue());
+        mAdapter = new CustomListAdapter(queueCtrl.getTrackList());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("left");
         recyclerView.setAdapter(mAdapter);
@@ -74,7 +73,6 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     @Override
     public void onSwipe(int position) {
         //TODO: Play service not synced with queue?
-        viewCtrl.updateActionBar(true, true);
         if (animate) {
             fabPlay.hide(true);
             fabTracks.hide(true);
@@ -99,13 +97,13 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
                 })
                 .withDuration(SnackBar.SHORT_SNACK)
                 .show();
-        queueCtrl.removeFromQueue(position);
+        queueCtrl.removeFromList(position);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDoubleClick(int position) {
-        queueCtrl.addToQueue(queueCtrl.getQueue(), position);
+        queueCtrl.addTrackList(queueCtrl.getTrackList(), position);
     }
 
     @Override

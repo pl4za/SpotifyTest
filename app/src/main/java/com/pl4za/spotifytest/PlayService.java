@@ -132,13 +132,15 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
         if (msg.equals("TRACK_END")) {
             PLAYING = false;
-            if (queueCtrl.isQueueChanged() && queueCtrl.hasNext()) { //Queue.TRACK_LIST.size() > 1
-                Log.i(TAG, "Queue changed: clearing and re-ading TRACK_LIST in position " + queueCtrl.getQueuePosition());
+            if (queueCtrl.isQueueChanged() && queueCtrl.hasNext()) {
+                Log.i(TAG, "Queue changed: clearing and re-ading TRACK_LIST");
                 mPlayer.clearQueue();
-                addToQueue(queueCtrl.getQueueURIList(queueCtrl.getQueue()), queueCtrl.getQueuePosition());
+                addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() + queueCtrl.getTrackNumberUpdate());
                 queueCtrl.setQueueChanged(false);
             }
             TRACK_END = true;
+            viewCtrl.updateView();
+
         } else if (msg.equals("TRACK_END") && TRACK_END) {
             Log.i(TAG, "SKIPPING TO NEXT AUTOMATICALLY");
             TRACK_END = true;
@@ -166,6 +168,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
             updateNotificationInfo();
             viewCtrl.updateView();
+
         }
     }
 
@@ -174,10 +177,10 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         Log.e("Playback", arg1 + " " + arg0.toString());
         if (arg0.toString().equals("TRACK_UNAVAILABLE")) {
             Toast.makeText(getApplicationContext(), "Track unavailable", Toast.LENGTH_SHORT).show();
-            nextTrack();
+            //nextTrack();
         } else if (arg0.toString().equals("ERROR_PLAYBACK")) {
             Toast.makeText(getApplicationContext(), "Playback error", Toast.LENGTH_SHORT).show();
-            nextTrack();
+            //nextTrack();
         }
     }
 
@@ -273,11 +276,15 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void nextTrack() {
-        mPlayer.skipToNext();
+        if (queueCtrl.hasNext()) {
+            mPlayer.skipToNext();
+        }
     }
 
     public void prevTrack() {
-        mPlayer.skipToPrevious();
+        if (queueCtrl.hasPrevious()) {
+            mPlayer.skipToPrevious();
+        }
     }
 
     public void shuffle() {

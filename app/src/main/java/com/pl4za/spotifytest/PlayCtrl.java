@@ -83,4 +83,9 @@ public class PlayCtrl implements ServiceOptions {
             service.destroyPlayer();
         }
     }
+
+    @Override
+    public void clearQueue() {
+        service.clearQueue();
+    }
 }

@@ -39,8 +39,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     private static final String TAG = "FragmentTracks";
     private static final int SCROLL_STATE_IDLE = 0;
-    private static List<Track> trackList = new ArrayList<>();
-    private static List<Track> tempTrackList = new ArrayList<>();
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private RecyclerView recyclerView;
@@ -50,8 +48,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
     String userID, playlistID;
+    private static List<Track> tempTrackList = new ArrayList<>();
+
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
     private SettingsManager settings = SettingsManager.getInstance();
     private SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
@@ -110,7 +111,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             }
         });
         recyclerView.setEnabled(false);
-        mAdapter = new CustomListAdapter(trackList);
+        mAdapter = new CustomListAdapter(tracklistCtrl.getTrackList());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
@@ -151,18 +152,18 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void setList(List<Track> list) {
-        trackList = list;
+        //tracklistCtrl.setTrackList(list);
     }
 
     @Override
     public void onSwipe(int position) {
-        Track track = trackList.get(position);
-        queueCtrl.addToQueue(track);
+        Track track = tracklistCtrl.getTrack(position);
+        queueCtrl.addTrack(track);
+        viewCtrl.updateActionBar(0);
         if (animate) {
             fabPlay.hide(true);
             fabQueue.hide(true);
         }
-        viewCtrl.updateActionBar(true, true);
         animate = false;
         new SnackBar.Builder(getActivity())
                 .withMessage("Queued: " + track.getTrack())
@@ -191,7 +192,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .replace(R.id.container, playFrag, "FragmentPlayer")
                 .addToBackStack(null)
                 .commit();
-        queueCtrl.addToQueue(trackList.subList(position, trackList.size()), 0);
+        queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
     }
 
     @Override
@@ -326,6 +327,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 Log.i(TAG, "No more pages");
                 if (!tempTrackList.isEmpty()) {
                     Collections.sort(tempTrackList, new ListComparator());
+                    Random rand = new Random();
+                    String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                    spotifyNetwork.getArtistPicture(ranArtist);
                     int i = 0;
                     for (Track s : tempTrackList) {
                         s.setPosition(i);
@@ -334,16 +338,13 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 }
                 refreshView.setEnabled(true);
                 refreshView.setRefreshing(false);
-                Random rand = new Random();
-                String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
-                spotifyNetwork.getArtistPicture(ranArtist);
                 recyclerView.setEnabled(true);
-                viewCtrl.updateActionBar(true, true);
-                trackList.clear();
-                trackList.addAll(tempTrackList);
+                tracklistCtrl.clear();
+                tracklistCtrl.addTrackList(tempTrackList, 0);
                 tempTrackList.clear();
                 tempTrackList = new ArrayList<>();
-                //mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+                viewCtrl.updateActionBar(0);
             }
         }
     }
@@ -394,7 +395,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onRandomArtistPictureURLReceived(String artistPictureURL) {
         if (artistPictureURL.equals("none")) {
             Random rand = new Random();
-            String ranArtist = trackList.get((rand.nextInt(trackList.size()))).getID();
+            String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
             spotifyNetwork.getArtistPicture(ranArtist);
         }
     }

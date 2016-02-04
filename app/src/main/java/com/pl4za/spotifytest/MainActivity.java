@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +44,6 @@ import com.pl4za.help.MyViewPager;
 import com.pl4za.help.PageAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
-import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.interfaces.NetworkRequests;
 import com.pl4za.volley.AppController;
 
@@ -54,7 +52,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 //TODO: finish undo option
 //TODO: Logout & login in webview
@@ -66,10 +63,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     private static boolean ENABLE_SEARCH = false;
     private static boolean ENABLE_CLEAR = false;
-    private static boolean ENABLE_REFRESH = true;
+    private static boolean ENABLE_REFRESH = false;
     private static boolean DISABLE_LOGIN = false;
 
-    public int currentPage, oldPosition = 0;
+    public int lastSelectedDrawerItem = 0;
     public static boolean isHomeAsUpEnabled = false;
     public static MyViewPager mViewPager;
     public String randomArtistPictureURL;
@@ -98,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     // Delegators
     private PlayCtrl playCtrl = PlayCtrl.getInstance();
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
     private SettingsManager settings = SettingsManager.getInstance();
     private SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
@@ -113,7 +111,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         mViewPager.setOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                currentPage = position;
+                updateActionBar(position);
             }
 
             @Override
@@ -140,8 +138,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (oldPosition != -1) {
-                    setListItemChecked(oldPosition, true);
+                if (lastSelectedDrawerItem != -1) {
+                    setListItemChecked(lastSelectedDrawerItem, true);
                 }
                 if (randomArtistPictureURL != null) {
                     setPictureinDrawer(randomArtistPictureURL);
@@ -159,8 +157,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         App start
          */
         if (!settings.getUserID().isEmpty()) {
-            updateActionBar(false, false);
+            updateActionBar(3);
             DISABLE_LOGIN = true;
+            ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
             populateDrawer(settings.getPlaylistsNames());
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
@@ -168,6 +167,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         else {
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
             //TODO: disable drawer
+            ENABLE_REFRESH = false;
+            DISABLE_LOGIN = false;
         }
     }
 
@@ -180,7 +181,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                     .replace(R.id.container, playFrag, "FragmentPlayer")
                     .addToBackStack(null)
                     .commit();
-            updateActionBar(false, false);
+            updateActionBar(3);
         }
     }
 
@@ -273,16 +274,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             }
 
             public void search(String query) {
-                ////Log.i("MainActivity", "Search: "+ query+" - "+size);
-                if (currentPage == 0 || landscape) {
-                    FragmentOptions fragment = (FragmentTracks) getSupportFragmentManager().findFragmentByTag(makeFragmentName(0));
-                    if (fragment != null)
-                        fragment.updateFilter(query);
-                } else if (currentPage == 1 || landscape) {
-                    FragmentOptions fragment = (FragmentQueue) getSupportFragmentManager().findFragmentByTag(makeFragmentName(1));
-                    if (fragment != null)
-                        fragment.updateFilter(query);
-                }
+                viewCtrl.updateFilter(query);
             }
 
         });
@@ -307,8 +299,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         }
         if (id == R.id.action_clear_queue) {
-            queueCtrl.clearQueue();
-            updateActionBar(false, false);
+            queueCtrl.clear();
+            updateActionBar(1);
+            clearSearch();
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -342,7 +335,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("PLAYLIST_NUMBER", oldPosition);
+        savedInstanceState.putInt("PLAYLIST_NUMBER", lastSelectedDrawerItem);
         savedInstanceState.putString("ARTIST_PICTURE_URL", randomArtistPictureURL);
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -350,23 +343,31 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        oldPosition = savedInstanceState.getInt("PLAYLIST_NUMBER");
+        lastSelectedDrawerItem = savedInstanceState.getInt("PLAYLIST_NUMBER");
         randomArtistPictureURL = savedInstanceState.getString("ARTIST_PICTURE_URL");
     }
 
     @Override
-    public void updateActionBar(boolean search, boolean clear) {
+    public void updateActionBar(int position) {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        clearSearch();
+        boolean clear = queueCtrl.hasTracks();
         if (landscape) {
+            ENABLE_SEARCH = tracklistCtrl.hasTracks() || queueCtrl.hasTracks();
             ENABLE_CLEAR = clear;
-            ENABLE_REFRESH = false;
-            ENABLE_SEARCH = search;
         } else {
-            ENABLE_CLEAR = clear;
-            ENABLE_REFRESH = false;
-            ENABLE_SEARCH = search;
+            if (position == 0) {
+                boolean search = tracklistCtrl.hasTracks();
+                ENABLE_SEARCH = search;
+                ENABLE_CLEAR = false;
+            } else if (position == 1) {
+                boolean search = queueCtrl.hasTracks();
+                ENABLE_SEARCH = search;
+                ENABLE_CLEAR = clear;
+            } else if (position == 2) {
+                ENABLE_SEARCH = false;
+                ENABLE_CLEAR = false;
+            }
         }
         // TODO: setTitle(PlayService.playlistName);
         mDrawerToggle.syncState();
@@ -391,8 +392,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
         mDrawerList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        if (oldPosition != -1) {
-            setListItemChecked(oldPosition, true);
+        if (lastSelectedDrawerItem != -1) {
+            setListItemChecked(lastSelectedDrawerItem, true);
         }
         if (randomArtistPictureURL != null) {
             setPictureinDrawer(randomArtistPictureURL);
@@ -448,7 +449,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
             String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
             viewCtrl.loadTracks(userID, playlistID);
-            updateActionBar(false, false);
+            updateActionBar(0);
             mDrawerLayout.closeDrawers();
         }
     }
@@ -523,15 +524,15 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             public void run() {
                 if (pos > 0) {
                     TextView tv;
-                    if (oldPosition != -1 && !confChanged) {
-                        getViewByPosition(oldPosition, mDrawerList).setBackgroundColor(Color.WHITE);
-                        tv = (TextView) getViewByPosition(oldPosition, mDrawerList).findViewById(R.id.tvPlaylist);
+                    if (lastSelectedDrawerItem != -1 && !confChanged) {
+                        getViewByPosition(lastSelectedDrawerItem, mDrawerList).setBackgroundColor(Color.WHITE);
+                        tv = (TextView) getViewByPosition(lastSelectedDrawerItem, mDrawerList).findViewById(R.id.tvPlaylist);
                         //TODO: tv.setTextColor(getResources().getColor(R.color.darkgrey));
                     }
                     tv = (TextView) getViewByPosition(pos, mDrawerList).findViewById(R.id.tvPlaylist);
                     tv.setTextColor(Color.WHITE);
                     getViewByPosition(pos, mDrawerList).setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-                    oldPosition = pos;
+                    lastSelectedDrawerItem = pos;
                 }
             }
         });
@@ -557,6 +558,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         settings.setRefreshToken(refreshToken);
         spotifyNetwork.getCurrentUserProfile(acessToken);
         DISABLE_LOGIN = true;
+        ENABLE_REFRESH = true;
     }
 
     @Override

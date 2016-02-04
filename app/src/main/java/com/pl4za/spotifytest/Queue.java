@@ -12,14 +12,11 @@ import java.util.List;
 public class Queue {
 
     private static final List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
-    private static Track playingTrack = null;
     private static int trackNumber = 0;
+    private static int trackNumberUpdate = 0;
     private static boolean queueChanged = false;
 
     public void addToQueue(Track track) {
-        if (TRACK_LIST.isEmpty()) {
-            playingTrack = track;
-        }
         TRACK_LIST.add(track);
     }
 
@@ -28,11 +25,18 @@ public class Queue {
         List<Track> temp = new ArrayList<>(tracklist);
         clearQueue();
         TRACK_LIST.addAll(temp);
-        playingTrack = tracklist.get(position);
     }
 
     public boolean isEmpty() {
         return TRACK_LIST.isEmpty();
+    }
+
+    public void setTrackNumberUpdate(int update) {
+        trackNumberUpdate = update;
+    }
+
+    public int getTrackNumberUpdate() {
+        return trackNumberUpdate;
     }
 
     public void clearQueue() {
@@ -45,52 +49,39 @@ public class Queue {
             int i = 0;
             for (Track a : TRACK_LIST) {
                 if (a.getTrackURI().equals(uri)) {
-                    Log.i("Queue", "found track: " + i + " " + a.getTrack());
                     trackNumber = i;
-                    playingTrack = a;
                     break;
                 }
                 i++;
             }
         } else {
             trackNumber = 0;
-            playingTrack = null;
         }
     }
 
     private void updatedTrackNumber(int removedPosition) {
         if (TRACK_LIST.size() > 0) {
             if (removedPosition > trackNumber) {
-                Log.i("Queue", "Removed after playing track");
             } else if (removedPosition < trackNumber) {
-                Log.i("Queue", "Removed before playing track");
                 //updateTrackNumberAndPlayingTrack(playingTrack.getTrackURI());
                 trackNumber--;
             } else if (removedPosition == trackNumber) {
-                Log.i("Queue", "Removed playing track");
                 if (removedPosition == TRACK_LIST.size()) {
                     trackNumber--;
-                } else {
-                    Log.i("Queue", "Next track");
-                    //PlayService.nextTrack();
-                    //playingTrack = TRACK_LIST.get(trackNumber);
                 }
             }
-            Log.i("Queue", "Current: " + playingTrack.getTrack());
         } else {
-            Log.i("Queue", "3");
             trackNumber = 0;
         }
     }
 
     public void removeFromQueue(int position) {
         TRACK_LIST.remove(position);
+        queueChanged=true;
         updatedTrackNumber(position);
-        queueChanged = true;
     }
 
     public boolean hasNext() {
-        Log.i("Queue", trackNumber + 1 + " - " + TRACK_LIST.size());
         return trackNumber + 1 < TRACK_LIST.size();
     }
 
@@ -105,22 +96,6 @@ public class Queue {
 
     public int getQueuePosition() {
         return trackNumber;
-    }
-
-    public int getQueuePosition(String trackURI) {
-        if (TRACK_LIST.size() > 0) {
-            int i = 0;
-            for (Track a : TRACK_LIST) {
-                if (a.getTrackURI().equals(trackURI)) {
-                    Log.i("Queue", "found track: " + i + " " + a.getTrack());
-                    return i;
-                }
-                i++;
-            }
-        } else {
-            return 0;
-        }
-        return 0;
     }
 
     public boolean queueChanged() {
