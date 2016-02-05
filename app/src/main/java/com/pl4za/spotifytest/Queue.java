@@ -1,7 +1,5 @@
 package com.pl4za.spotifytest;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +19,11 @@ public class Queue {
     }
 
     public void addToQueue(List<Track> tracklist, int position) {
+        if (isEmpty()) {
+            List<Track> temp = new ArrayList<>(tracklist);
+            TRACK_LIST.addAll(temp);
+        }
         trackNumber = position;
-        List<Track> temp = new ArrayList<>(tracklist);
-        clearQueue();
-        TRACK_LIST.addAll(temp);
     }
 
     public boolean isEmpty() {
@@ -86,7 +85,6 @@ public class Queue {
     }
 
     public boolean hasPrevious() {
-        Log.i("Queue", "Track number: " + trackNumber);
         return trackNumber > 0;
     }
 

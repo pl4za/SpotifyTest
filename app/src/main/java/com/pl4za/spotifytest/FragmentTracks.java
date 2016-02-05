@@ -192,6 +192,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .replace(R.id.container, playFrag, "FragmentPlayer")
                 .addToBackStack(null)
                 .commit();
+        queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
     }
 

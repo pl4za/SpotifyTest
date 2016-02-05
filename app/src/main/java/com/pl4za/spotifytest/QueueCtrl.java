@@ -47,10 +47,9 @@ public class QueueCtrl implements QueueOptions {
         int oldPos = queue.getQueuePosition();
         if(position==oldPos) {
             queue.setTrackNumberUpdate(0);
-            /*
             if (!queue.hasNext()) {
-                queue.setTrackNumberUpdate(-1);
-            }*/
+                playCtrl.prevTrack();
+            }
             playCtrl.nextTrack();
         } else {
             queue.setTrackNumberUpdate(1);
