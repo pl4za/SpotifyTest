@@ -152,14 +152,15 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void setList(List<Track> list) {
-        //tracklistCtrl.setTrackList(list);
+        tracklistCtrl.setTrackList(list);
     }
 
     @Override
     public void onSwipe(int position) {
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
-        viewCtrl.updateActionBar(0);
+        //viewCtrl.updateActionBar(0);
+        viewCtrl.updateView();
         if (animate) {
             fabPlay.hide(true);
             fabQueue.hide(true);
@@ -346,6 +347,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 tempTrackList = new ArrayList<>();
                 mAdapter.notifyDataSetChanged();
                 viewCtrl.updateActionBar(0);
+                recyclerView.scrollToPosition(0);
             }
         }
     }

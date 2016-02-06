@@ -24,7 +24,6 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     private static boolean animate = true;
     private static FloatingActionButton fabPlay;
     private static FloatingActionButton fabTracks;
-    private static List<Track> filteredList;
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
@@ -67,7 +66,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
 
     @Override
     public void setList(List<Track> list) {
-        filteredList = list;
+        queueCtrl.setTrackList(list);
     }
 
     @Override

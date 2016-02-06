@@ -1,6 +1,6 @@
 package com.pl4za.spotifytest;
 
-import com.pl4za.interfaces.TracklistOptions;
+import com.pl4za.interfaces.PlaylistOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,10 @@ import java.util.List;
 /**
  * Created by jasoncosta on 2/2/2016.
  */
-public class TracklistCtrl implements TracklistOptions {
+public class TracklistCtrl implements PlaylistOptions {
 
     private static List<Track> trackList;
+    private String trackListName;
 
     private static final TracklistCtrl INSTANCE = new TracklistCtrl();
 
@@ -60,6 +61,16 @@ public class TracklistCtrl implements TracklistOptions {
     @Override
     public List<Track> getTrackList() {
         return trackList;
+    }
+
+    @Override
+    public String getPlaylistName() {
+        return trackListName;
+    }
+
+    @Override
+    public void setPlaylistName(String tracklistName) {
+        this.trackListName = tracklistName;
     }
 
 }

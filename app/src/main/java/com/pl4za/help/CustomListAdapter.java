@@ -40,7 +40,6 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private FragmentOptions swipeListener;
     private String direction = "right";
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     public CustomListAdapter(List<Track> trackList) {
         this.trackList = trackList;
@@ -135,7 +134,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
                 } else
                     oReturn.values = originalTracklist;
                 //TODO: FIX
-                viewCtrl.setList((List<Track>) oReturn.values);
+                swipeListener.setList((List<Track>) oReturn.values);
                 return oReturn;
             }
         };
@@ -194,6 +193,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
             layout.close(true);
             swipeListener.onSwipe(position);
         }
+
     }
 
     class DoubleClickListenter implements SwipeLayout.DoubleClickListener {

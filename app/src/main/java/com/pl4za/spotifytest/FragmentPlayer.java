@@ -153,6 +153,18 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
         insertImage();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewCtrl.updateActionBar(2);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        viewCtrl.updateActionBar(1);
+    }
+
     private void checkRepeatAndShuffle() {
         if (PlayService.isShuffled()) {
             ivShuffle.setImageAlpha(255);
@@ -165,6 +177,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             ivRepeat.setImageAlpha(30);
         }
     }
+
 
     @Override
     public void updateFilter(String query) {

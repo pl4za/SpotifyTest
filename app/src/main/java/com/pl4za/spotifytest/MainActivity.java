@@ -65,6 +65,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private static boolean ENABLE_CLEAR = false;
     private static boolean ENABLE_REFRESH = false;
     private static boolean DISABLE_LOGIN = false;
+    private static boolean REFRESH = false;
 
     public int lastSelectedDrawerItem = 0;
     public static boolean isHomeAsUpEnabled = false;
@@ -112,6 +113,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 updateActionBar(position);
+                clearSearch();
             }
 
             @Override
@@ -163,8 +165,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             supportInvalidateOptionsMenu();
             populateDrawer(settings.getPlaylistsNames());
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-        }
-        else {
+        } else {
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
             //TODO: disable drawer
             ENABLE_REFRESH = false;
@@ -296,12 +297,12 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
         if (id == R.id.action_refresh) {
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+            REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
             updateActionBar(1);
-            clearSearch();
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -348,28 +349,42 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     @Override
-    public void updateActionBar(int position) {
+    public void updateActionBar(int fragment) {
+        //0: tracks, 1: queue, 2: player
+        int index = mViewPager.getCurrentItem();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         boolean clear = queueCtrl.hasTracks();
         if (landscape) {
-            ENABLE_SEARCH = tracklistCtrl.hasTracks() || queueCtrl.hasTracks();
+            //ENABLE_SEARCH = tracklistCtrl.hasTracks() || queueCtrl.hasTracks();
+            ENABLE_SEARCH = true;
             ENABLE_CLEAR = clear;
+            if (tracklistCtrl.hasTracks()) {
+                setTitle(tracklistCtrl.getPlaylistName());
+            }
+            if (fragment == 2) {
+                clearSearch();
+                ENABLE_SEARCH = false;
+                ENABLE_CLEAR = false;
+            }
         } else {
-            if (position == 0) {
+            if (index == 0) {
                 boolean search = tracklistCtrl.hasTracks();
+                if (tracklistCtrl.hasTracks()) {
+                    setTitle(tracklistCtrl.getPlaylistName());
+                }
                 ENABLE_SEARCH = search;
                 ENABLE_CLEAR = false;
-            } else if (position == 1) {
+            } else if (index == 1) {
                 boolean search = queueCtrl.hasTracks();
                 ENABLE_SEARCH = search;
                 ENABLE_CLEAR = clear;
-            } else if (position == 2) {
+                setTitle("Queue");
+            } else if (fragment == 2) {
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
             }
         }
-        // TODO: setTitle(PlayService.playlistName);
         mDrawerToggle.syncState();
         supportInvalidateOptionsMenu();
     }
@@ -387,16 +402,22 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     private void populateDrawer(String[] list) {
-        String path = getAplicationPath().toString();
-        Bitmap profilepicture = loadImageFromStorage(path);
-        CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
-        mDrawerList.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        if (lastSelectedDrawerItem != -1) {
-            setListItemChecked(lastSelectedDrawerItem, true);
-        }
-        if (randomArtistPictureURL != null) {
-            setPictureinDrawer(randomArtistPictureURL);
+        if (list.length > 0) {
+            String path = getAplicationPath().toString();
+            Bitmap profilepicture = loadImageFromStorage(path);
+            CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
+            mDrawerList.setAdapter(mAdapter);
+            updateActionBar(0);
+            mAdapter.notifyDataSetChanged();
+            if (lastSelectedDrawerItem != -1) {
+                setListItemChecked(lastSelectedDrawerItem, true);
+            }
+            if (randomArtistPictureURL != null) {
+                setPictureinDrawer(randomArtistPictureURL);
+            }
+            if (!playCtrl.isActive()) {
+                openDrawer();
+            }
         }
     }
 
@@ -443,9 +464,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         if (position >= 0) {
             mDrawerList.setSelection(position);
             mDrawerList.setSelected(true);
-            //setTitle(PlayService.playlistName);
+            tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
             PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(viewPagerAdapter);
+            mViewPager.setCurrentItem(0);
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
             String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
             viewCtrl.loadTracks(userID, playlistID);
@@ -545,7 +567,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onProfilePictureReceived(Bitmap image) {
-        if (image!=null) {
+        if (image != null) {
             saveToInternalSorage(image);
         }
         spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
@@ -580,7 +602,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         if (playlists.size() > 0) {
             settings.setPlayLists(playlists);
             populateDrawer(settings.getPlaylistsNames());
+        }
+        if (settings.getPlaylists().isEmpty() || REFRESH) {
             openDrawer();
+            REFRESH = false;
         }
     }
 

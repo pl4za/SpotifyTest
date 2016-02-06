@@ -52,9 +52,7 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
 
     @Override
     public void setList(List<Track> list) {
-        for (FragmentOptions f : fragmentsOptions) {
-            f.setList(list);
-        }
+        // Not implemented
     }
 
     @Override
