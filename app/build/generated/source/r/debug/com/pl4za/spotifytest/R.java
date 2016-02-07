@@ -1917,7 +1917,7 @@ containing a value of this type.
         public static final int end_padder=0x7f0e0093;
         public static final int expand_activities_button=0x7f0e0030;
         public static final int expanded_menu=0x7f0e0043;
-        public static final int fab=0x7f0e007c;
+        public static final int fab=0x7f0e007d;
         public static final int fabPlay=0x7f0e007a;
         public static final int fabQueue=0x7f0e007e;
         public static final int fabTracks=0x7f0e007b;
@@ -1999,7 +1999,7 @@ containing a value of this type.
         public static final int status_bar_latest_event_content=0x7f0e008a;
         public static final int submit_area=0x7f0e0057;
         public static final int swipe=0x7f0e007f;
-        public static final int swipe_container=0x7f0e007d;
+        public static final int swipe_container=0x7f0e007c;
         public static final int tabMode=0x7f0e000f;
         public static final int text=0x7f0e0091;
         public static final int text2=0x7f0e008f;

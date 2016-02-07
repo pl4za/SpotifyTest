@@ -10,8 +10,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +37,7 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.help.CustomListAdapterDrawer;
 import com.pl4za.help.MyViewPager;
 import com.pl4za.help.PageAdapter;
@@ -67,11 +66,11 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private static boolean DISABLE_LOGIN = false;
     private static boolean REFRESH = false;
 
-    public int lastSelectedDrawerItem = 0;
-    public static boolean isHomeAsUpEnabled = false;
-    public static MyViewPager mViewPager;
-    public String randomArtistPictureURL;
-    public static boolean landscape = false;
+    private int lastSelectedDrawerItem = -1;
+    private static boolean isHomeAsUpEnabled = false;
+    private static MyViewPager mViewPager;
+    private String randomArtistPictureURL;
+    private static boolean landscape = false;
     private boolean mBound = false;
     private SearchView searchView;
     private DrawerLayout mDrawerLayout;
@@ -150,47 +149,41 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         checkOrientation();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerToggle.syncState();
+        if (savedInstanceState != null) {
+            lastSelectedDrawerItem = savedInstanceState.getInt("PLAYLIST_NUMBER");
+            randomArtistPictureURL = savedInstanceState.getString("ARTIST_PICTURE_URL");
+        }
         settings.setContext(this);
         spotifyNetwork.addNetworkListener(this);
-        /*
-        App start
-         */
-        if (!settings.getUserID().isEmpty()) {
-            updateActionBar(3);
-            DISABLE_LOGIN = true;
-            ENABLE_REFRESH = true;
-            supportInvalidateOptionsMenu();
-            populateDrawer(settings.getPlaylistsNames());
-            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-        } else {
-            Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
-            //TODO: disable drawer
-            ENABLE_REFRESH = false;
-            DISABLE_LOGIN = false;
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (playCtrl.isActive()) {
-            FragmentPlayer playFrag = new FragmentPlayer();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, playFrag, "FragmentPlayer")
-                    .addToBackStack(null)
-                    .commit();
-            updateActionBar(3);
-        }
+        viewCtrl.setActivityView(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!settings.getUserID().isEmpty()) {
+            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+            viewPagerAdapter.setViewCtrl(viewCtrl);
+            mViewPager.setAdapter(viewPagerAdapter);
+            updateActionBar(3);
+            DISABLE_LOGIN = true;
+            ENABLE_REFRESH = true;
+            supportInvalidateOptionsMenu();
+            populateDrawer(settings.getPlaylistsNames());
+            selectItem(lastSelectedDrawerItem - 1);
+            REFRESH = false;
             spotifyNetwork.refreshToken(settings.getRefreshToken());
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        } else {
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
+            //TODO: disable drawer
+            ENABLE_REFRESH = false;
+            DISABLE_LOGIN = false;
         }
     }
 
@@ -208,6 +201,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             landscape = false;
         }
+        PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+        viewPagerAdapter.setViewCtrl(viewCtrl);
+        mViewPager.setAdapter(viewPagerAdapter);
     }
 
     @Override
@@ -236,7 +232,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
         if (!playCtrl.isActive()) {
             playCtrl.destroyPlayer();
-            stopService(serviceIntent);
         }
         AppController.getInstance().cancelPendingRequests(Params.TAG_exchangeCodeForToken);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfile);
@@ -289,7 +284,13 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             return true;
         }
         if (id == android.R.id.home) {
-            Log.i("MainActivity", "status: " + isHomeAsUpEnabled);
+            if (!mDrawerToggle.isDrawerIndicatorEnabled()) {
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+                onBackPressed();
+                return false;
+            }
         }
         if (id == R.id.action_login) {
             authorization();
@@ -299,6 +300,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+            playCtrl.initializePlayer();
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
@@ -342,18 +344,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        lastSelectedDrawerItem = savedInstanceState.getInt("PLAYLIST_NUMBER");
-        randomArtistPictureURL = savedInstanceState.getString("ARTIST_PICTURE_URL");
-    }
-
-    @Override
     public void updateActionBar(int fragment) {
         //0: tracks, 1: queue, 2: player
         int index = mViewPager.getCurrentItem();
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         boolean clear = queueCtrl.hasTracks();
         if (landscape) {
             //ENABLE_SEARCH = tracklistCtrl.hasTracks() || queueCtrl.hasTracks();
@@ -366,6 +359,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 clearSearch();
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
             }
         } else {
             if (index == 0) {
@@ -383,14 +377,40 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             } else if (fragment == 2) {
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
             }
         }
         mDrawerToggle.syncState();
         supportInvalidateOptionsMenu();
     }
 
-    private static String makeFragmentName(int index) {
-        return "android:switcher:" + R.id.pager + ":" + index;
+    @Override
+    public void showSnackBar(String text) {
+        new SnackBar.Builder(this)
+                .withMessage(text)
+                .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
+                    @Override
+                    public void onShow(int i) {
+                        viewCtrl.hideFab(true);
+                    }
+
+                    @Override
+                    public void onHide(int i) {
+                        viewCtrl.hideFab(false);
+                    }
+                })
+                .withDuration(SnackBar.SHORT_SNACK)
+                .show();
+    }
+
+    @Override
+    public void setViewPagerPosition(int position) {
+        MainActivity.mViewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public boolean isLandscape() {
+        return landscape;
     }
 
     private void checkOrientation() {
@@ -428,26 +448,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
     }
 
-    private boolean isNetworkOnline() {
-        boolean status = false;
-        try {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getNetworkInfo(0);
-            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                status = true;
-            } else {
-                netInfo = cm.getNetworkInfo(1);
-                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
-                    status = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return status;
-
-    }
-
     private void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
@@ -462,10 +462,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     private void selectItem(int position) {
         if (position >= 0) {
-            mDrawerList.setSelection(position);
-            mDrawerList.setSelected(true);
             tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
             PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+            viewPagerAdapter.setViewCtrl(viewCtrl);
             mViewPager.setAdapter(viewPagerAdapter);
             mViewPager.setCurrentItem(0);
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
@@ -538,27 +537,24 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
     }
 
-    private void setListItemChecked(int position, boolean configurationChanged) {
-        final int pos = position;
-        final boolean confChanged = configurationChanged;
+    private void setListItemChecked(final int position, final boolean confChange) {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                if (pos > 0) {
+                if (position > 0) { //Playlist not header
                     TextView tv;
-                    if (lastSelectedDrawerItem != -1 && !confChanged) {
+                    if (lastSelectedDrawerItem != -1 && !confChange) {
                         getViewByPosition(lastSelectedDrawerItem, mDrawerList).setBackgroundColor(Color.WHITE);
                         tv = (TextView) getViewByPosition(lastSelectedDrawerItem, mDrawerList).findViewById(R.id.tvPlaylist);
-                        //TODO: tv.setTextColor(getResources().getColor(R.color.darkgrey));
+                        tv.setTextColor(getResources().getColor(R.color.darkgrey));
                     }
-                    tv = (TextView) getViewByPosition(pos, mDrawerList).findViewById(R.id.tvPlaylist);
+                    tv = (TextView) getViewByPosition(position, mDrawerList).findViewById(R.id.tvPlaylist);
                     tv.setTextColor(Color.WHITE);
-                    getViewByPosition(pos, mDrawerList).setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-                    lastSelectedDrawerItem = pos;
+                    getViewByPosition(position, mDrawerList).setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+                    lastSelectedDrawerItem = position;
                 }
             }
         });
-
     }
 
     /*
@@ -607,6 +603,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             openDrawer();
             REFRESH = false;
         }
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -624,7 +624,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public void onEtagUpdate(String etag) {
 
     }
-
 
     public static class PlaceholderFragment extends Fragment {
 

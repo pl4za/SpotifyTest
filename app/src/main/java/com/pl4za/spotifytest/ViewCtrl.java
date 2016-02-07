@@ -27,6 +27,11 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
         this.activityOptions = a;
     }
 
+    @Override
+    public void showSnackBar(String text) {
+        activityOptions.showSnackBar(text);
+    }
+
     public void addFragmentView(FragmentOptions f) {
         fragmentsOptions.add(f);
     }
@@ -41,6 +46,22 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
         for (FragmentOptions f : fragmentsOptions) {
             f.updateView();
         }
+    }
+
+    @Override
+    public void hideFab(boolean hide) {
+        for (FragmentOptions f : fragmentsOptions) {
+            f.hideFab(hide);
+        }
+    }
+
+    public void setViewPagerPosition(int position) {
+        activityOptions.setViewPagerPosition(position);
+    }
+
+    @Override
+    public boolean isLandscape() {
+        return activityOptions.isLandscape();
     }
 
     @Override

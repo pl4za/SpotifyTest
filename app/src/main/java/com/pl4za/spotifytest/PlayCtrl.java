@@ -88,4 +88,9 @@ public class PlayCtrl implements ServiceOptions {
     public void clearQueue() {
         service.clearQueue();
     }
+
+    @Override
+    public boolean isPlaying() {
+        return service.isPlaying();
+    }
 }

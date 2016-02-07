@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mrengineer13.snackbar.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
 import com.pl4za.help.CustomListAdapter;
 import com.pl4za.interfaces.ActivityOptions;
@@ -21,7 +20,6 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     private static final int SCROLL_STATE_IDLE = 0;
     public static CustomListAdapter mAdapter;
     private static RecyclerView recyclerView;
-    private static boolean animate = true;
     private static FloatingActionButton fabPlay;
     private static FloatingActionButton fabTracks;
     // interfaces
@@ -46,7 +44,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("left");
         recyclerView.setAdapter(mAdapter);
-        if (MainActivity.landscape) {
+        if (viewCtrl.isLandscape()) {
             fabTracks.setVisibility(View.INVISIBLE);
         } else {
             fabTracks.setVisibility(View.VISIBLE);
@@ -57,6 +55,16 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     @Override
     public void updateView() {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void hideFab(boolean hide) {
+        fabPlay.hide(hide);
+        fabTracks.hide(hide);
+        if (!hide) {
+            fabPlay.show(true);
+            fabTracks.show(true);
+        }
     }
 
     @Override
@@ -72,30 +80,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     @Override
     public void onSwipe(int position) {
         //TODO: Play service not synced with queue?
-        if (animate) {
-            fabPlay.hide(true);
-            fabTracks.hide(true);
-        }
-        animate = false;
-        new SnackBar.Builder(getActivity())
-                .withMessage("Removed: " + queueCtrl.getCurrentTrack().getTrack())
-                .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
-                    @Override
-                    public void onShow(int i) {
-
-                    }
-
-                    @Override
-                    public void onHide(int i) {
-                        if (!animate) {
-                            fabPlay.show(true);
-                            fabTracks.show(true);
-                            animate = true;
-                        }
-                    }
-                })
-                .withDuration(SnackBar.SHORT_SNACK)
-                .show();
+        viewCtrl.showSnackBar("Removed: " + queueCtrl.getCurrentTrack().getTrack());
         queueCtrl.removeFromList(position);
         mAdapter.notifyDataSetChanged();
     }
@@ -115,15 +100,13 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.fabTracks) {
-                MainActivity.mViewPager.setCurrentItem(0);
+                viewCtrl.setViewPagerPosition(0);
             } else if (v.getId() == R.id.fabPlay) {
                 FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, playFrag, "FragmentPlayer")
                         .addToBackStack(null)
                         .commit();
-                ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                MainActivity.isHomeAsUpEnabled = true;
             }
         }
     }
@@ -134,12 +117,10 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == SCROLL_STATE_IDLE) {
-                fabPlay.show(true);
-                fabTracks.show(true);
+                hideFab(false);
 
             } else {
-                fabPlay.hide(true);
-                fabTracks.hide(true);
+                hideFab(true);
             }
         }
     }

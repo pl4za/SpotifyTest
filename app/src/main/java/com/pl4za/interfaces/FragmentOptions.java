@@ -11,6 +11,8 @@ public interface FragmentOptions {
 
     void updateView();
 
+    void hideFab(boolean hide);
+
     void updateFilter(String query);
 
     void setList(List<Track> list);

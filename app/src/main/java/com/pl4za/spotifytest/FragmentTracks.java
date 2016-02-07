@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.daimajia.swipe.util.Attributes;
-import com.github.mrengineer13.snackbar.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
 import com.pl4za.help.CustomListAdapter;
 import com.pl4za.help.ListComparator;
@@ -43,12 +42,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
-    private boolean animate = true;
     private View view;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
     String userID, playlistID;
-    private static List<Track> tempTrackList = new ArrayList<>();
 
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
@@ -88,35 +85,17 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         fabQueue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.mViewPager.setCurrentItem(1);
+                viewCtrl.setViewPagerPosition(1);
             }
         });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == SCROLL_STATE_IDLE) {
-                    fabPlay.show(true);
-                    fabQueue.show(true);
-
-                } else {
-                    fabPlay.hide(true);
-                    fabQueue.hide(true);
-                }
-                if (listIsAtTop()) {
-                    refreshView.setEnabled(true);
-                } else {
-                    refreshView.setEnabled(false);
-                }
-            }
-        });
+        recyclerView.addOnScrollListener(new ListViewScrollListener());
         recyclerView.setEnabled(false);
         mAdapter = new CustomListAdapter(tracklistCtrl.getTrackList());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
-        if (MainActivity.landscape) {
+        if (viewCtrl.isLandscape()) {
             fabPlay.setVisibility(View.INVISIBLE);
             fabQueue.setVisibility(View.INVISIBLE);
         } else {
@@ -146,6 +125,16 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     }
 
     @Override
+    public void hideFab(boolean hide) {
+        fabPlay.hide(hide);
+        fabQueue.hide(hide);
+        if (!hide) {
+            fabPlay.show(true);
+            fabQueue.show(true);
+        }
+    }
+
+    @Override
     public void updateFilter(String query) {
         mAdapter.getFilter().filter(query);
     }
@@ -159,31 +148,8 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onSwipe(int position) {
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
-        //viewCtrl.updateActionBar(0);
         viewCtrl.updateView();
-        if (animate) {
-            fabPlay.hide(true);
-            fabQueue.hide(true);
-        }
-        animate = false;
-        new SnackBar.Builder(getActivity())
-                .withMessage("Queued: " + track.getTrack())
-                .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
-                    @Override
-                    public void onShow(int i) {
-                    }
-
-                    @Override
-                    public void onHide(int i) {
-                        if (!animate) {
-                            fabPlay.show(true);
-                            fabQueue.show(true);
-                            animate = true;
-                        }
-                    }
-                })
-                .withDuration(SnackBar.SHORT_SNACK)
-                .show();
+        viewCtrl.showSnackBar("Queued: " + track.getTrack());
     }
 
     @Override
@@ -198,7 +164,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     }
 
     @Override
-    public void loadTracks(String userID, String playlistID) {
+    public synchronized void loadTracks(String userID, String playlistID) {
         this.userID = userID;
         this.playlistID = playlistID;
         String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
@@ -264,9 +230,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private class parseJsonToList extends AsyncTask<Void, Void, String> {
 
         final JSONObject json;
+        List<Track> tempTrackList = new ArrayList<>();
 
         public parseJsonToList(JSONObject jsonObject) {
             this.json = jsonObject;
+            tempTrackList.clear();
+            tempTrackList = new ArrayList<>();
         }
 
         @Override
@@ -344,17 +313,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 tracklistCtrl.clear();
                 tracklistCtrl.addTrackList(tempTrackList, 0);
                 tempTrackList.clear();
-                tempTrackList = new ArrayList<>();
                 mAdapter.notifyDataSetChanged();
                 viewCtrl.updateActionBar(0);
                 recyclerView.scrollToPosition(0);
             }
         }
-    }
-
-    private boolean listIsAtTop() {
-        if (recyclerView.getChildCount() == 0) return true;
-        return recyclerView.getChildAt(0).getTop() == 0;
     }
 
     private void openFragmentPlayer() {
@@ -420,6 +383,20 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     @Override
     public void onEtagUpdate(String etag) {
         settings.setEtag(etag);
+    }
+
+    private class ListViewScrollListener extends RecyclerView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == SCROLL_STATE_IDLE) {
+                hideFab(false);
+
+            } else {
+                hideFab(true);
+            }
+        }
     }
 
 }

@@ -15,12 +15,8 @@ import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.pl4za.interfaces.FragmentOptions;
-import com.pl4za.spotifytest.FragmentQueue;
-import com.pl4za.spotifytest.FragmentTracks;
-import com.pl4za.spotifytest.MainActivity;
 import com.pl4za.spotifytest.R;
 import com.pl4za.spotifytest.Track;
-import com.pl4za.spotifytest.ViewCtrl;
 import com.pl4za.volley.AppController;
 
 import org.joda.time.DateTime;
@@ -143,8 +139,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_view_item, viewGroup, false);
-        ViewHolder v = new ViewHolder(view);
-        return v;
+        return new ViewHolder(view);
     }
 
     @Override

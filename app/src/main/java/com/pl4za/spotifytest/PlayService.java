@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -113,6 +114,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void onLoginFailed(Throwable arg0) {
         Log.e(TAG, arg0.getMessage());
+        if (arg0.getMessage().equals("Temporary connection error occurred")) {
+            viewCtrl.showSnackBar("No connection");
+        }
         Toast.makeText(getApplicationContext(), arg0.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
@@ -126,6 +130,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         String msg = arg0.toString();
         Log.i(TAG, "Evento: " + arg0 + " playing: " + PLAYING);
         if (msg.equals("PLAY") || msg.equals("PAUSE")) {
+            PLAYING=true;
             if (notification != null) {
                 updateNotificationButtons();
             }
@@ -225,7 +230,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void initializePlayer() {
-        if ((mPlayer == null || mPlayer.isShutdown())) {
+        if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
             if (settings.getProduct().equals("premium")) {
                 Log.i(TAG, "Initializing player");
                 Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
@@ -252,6 +257,10 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         return SHUFFLE;
     }
 
+    public boolean isPlaying() {
+        return PLAYING;
+    }
+
     public static boolean isRepeating() {
         return REPEAT;
     }
@@ -261,6 +270,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             mPlayer.pause();
             mPlayer.clearQueue();
         }
+        PLAYING = false;
     }
 
     public void resumePause() {
@@ -316,6 +326,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (notificationActive) {
             mNotificationManager.cancel(1);
         }
+        PLAYING=false;
         stopSelf();
     }
 

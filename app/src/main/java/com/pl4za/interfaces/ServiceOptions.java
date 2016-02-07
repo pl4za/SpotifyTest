@@ -35,4 +35,6 @@ public interface ServiceOptions {
     void destroyPlayer();
 
     void clearQueue();
+
+    boolean isPlaying();
 }

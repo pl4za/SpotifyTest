@@ -154,6 +154,11 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     }
 
     @Override
+    public void hideFab(boolean hide) {
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         viewCtrl.updateActionBar(2);
@@ -177,7 +182,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             ivRepeat.setImageAlpha(30);
         }
     }
-
 
     @Override
     public void updateFilter(String query) {
