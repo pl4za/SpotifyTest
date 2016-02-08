@@ -74,20 +74,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        fabPlay = (FloatingActionButton) view.findViewById(R.id.fab);
+        fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
         fabQueue = (FloatingActionButton) view.findViewById(R.id.fabQueue);
-        fabPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFragmentPlayer();
-            }
-        });
-        fabQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewCtrl.setViewPagerPosition(1);
-            }
-        });
+        FabClickListener fabClick = new FabClickListener();
+        fabPlay.setOnClickListener(fabClick);
+        fabQueue.setOnClickListener(fabClick);
         recyclerView.addOnScrollListener(new ListViewScrollListener());
         recyclerView.setEnabled(false);
         mAdapter = new CustomListAdapter(tracklistCtrl.getTrackList());
@@ -161,6 +152,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .commit();
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
+        viewCtrl.updateActionBar(2);
     }
 
     @Override
@@ -320,14 +312,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
     }
 
-    private void openFragmentPlayer() {
-        FragmentPlayer playFrag = new FragmentPlayer();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, playFrag, "FragmentPlayer")
-                .addToBackStack(null)
-                .commit();
-    }
-
     /*
     Spotify network related requests
      */
@@ -399,4 +383,21 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
     }
 
+    private class FabClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.fabQueue) {
+                viewCtrl.setViewPagerPosition(1);
+                viewCtrl.updateActionBar(1);
+            } else if (v.getId() == R.id.fabPlay) {
+                FragmentPlayer playFrag = new FragmentPlayer();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .addToBackStack("ViewPager")
+                        .replace(R.id.container, playFrag, "FragmentPlayer")
+                        .commit();
+                viewCtrl.updateActionBar(2);
+            }
+        }
+    }
 }

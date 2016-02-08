@@ -101,12 +101,14 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         public void onClick(View v) {
             if (v.getId() == R.id.fabTracks) {
                 viewCtrl.setViewPagerPosition(0);
+                viewCtrl.updateActionBar(0);
             } else if (v.getId() == R.id.fabPlay) {
                 FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()
+                        .addToBackStack("ViewPager")
                         .replace(R.id.container, playFrag, "FragmentPlayer")
-                        .addToBackStack(null)
                         .commit();
+                viewCtrl.updateActionBar(2);
             }
         }
     }

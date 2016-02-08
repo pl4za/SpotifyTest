@@ -29,47 +29,54 @@ public class PlayCtrl implements ServiceOptions {
 
     @Override
     public void initializePlayer() {
-        service.initializePlayer();
+        if (service != null)
+            service.initializePlayer();
     }
 
     @Override
     public void startNotification() {
-        service.startNotification();
+        if (service != null)
+            service.startNotification();
     }
 
     @Override
     public void resumePause() {
-        service.resumePause();
+        if (service != null) service.resumePause();
     }
 
     @Override
     public void nextTrack() {
-        service.nextTrack();
+        if (service != null) service.nextTrack();
     }
 
     @Override
     public void prevTrack() {
-        service.prevTrack();
+        if (service != null)
+            service.prevTrack();
     }
 
     @Override
     public void shuffle() {
-        service.shuffle();
+        if (service != null)
+            service.shuffle();
     }
 
     @Override
     public void repeat() {
-        service.repeat();
+        if (service != null)
+            service.repeat();
     }
 
     @Override
     public void addToQueue(String trackUri) {
-        service.addToQueue(trackUri);
+        if (service != null)
+            service.addToQueue(trackUri);
     }
 
     @Override
     public void addToQueue(List<String> queue, int listStart) {
-        service.addToQueue(queue, listStart);
+        if (service != null)
+            service.addToQueue(queue, listStart);
     }
 
     @Override
@@ -86,11 +93,12 @@ public class PlayCtrl implements ServiceOptions {
 
     @Override
     public void clearQueue() {
-        service.clearQueue();
+        if (service != null)
+            service.clearQueue();
     }
 
     @Override
     public boolean isPlaying() {
-        return service.isPlaying();
+        return service != null || service.isPlaying();
     }
 }

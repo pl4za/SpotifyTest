@@ -322,7 +322,8 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void destroyPlayer() {
-        Spotify.destroyPlayer(PlayService.mPlayer);
+        mPlayer.pause();
+        Spotify.destroyPlayer(mPlayer);
         if (notificationActive) {
             mNotificationManager.cancel(1);
         }

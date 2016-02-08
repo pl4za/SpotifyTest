@@ -27,14 +27,18 @@ public class QueueCtrl implements QueueOptions {
 
     @Override
     public void addTrack(Track track) {
-        queue.addToQueue(track);
-        playCtrl.addToQueue(track.getTrackURI());
+        if (playCtrl.isActive()) {
+            queue.addToQueue(track);
+            playCtrl.addToQueue(track.getTrackURI());
+        }
     }
 
     @Override
     public void addTrackList(List<Track> tracklist, int listStart) {
-        queue.addToQueue(tracklist, listStart);
-        playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
+        if (playCtrl.isActive()) {
+            queue.addToQueue(tracklist, listStart);
+            playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
+        }
     }
 
     @Override
@@ -45,7 +49,7 @@ public class QueueCtrl implements QueueOptions {
     @Override
     public void removeFromList(int position) {
         int oldPos = queue.getQueuePosition();
-        if(position==oldPos) {
+        if (position == oldPos) {
             queue.setTrackNumberUpdate(0);
             if (!queue.hasNext()) {
                 playCtrl.prevTrack();

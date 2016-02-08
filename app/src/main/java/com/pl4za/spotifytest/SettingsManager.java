@@ -66,6 +66,13 @@ public class SettingsManager {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(Params.product, product);
+        editor.commit();
+    }
+
+    public void setRandomArtistImage(String artistURL) {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Params.artist_picture_url, artistURL);
         editor.apply();
     }
 
@@ -107,6 +114,11 @@ public class SettingsManager {
     public String getProduct() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         return sharedPref.getString(Params.product, "");
+    }
+
+    public String getRandomArtistImage() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getString(Params.artist_picture_url, "");
     }
 
     public ArrayList<HashMap<String, String>> getPlaylists() {

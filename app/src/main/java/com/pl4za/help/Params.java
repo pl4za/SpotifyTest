@@ -25,6 +25,7 @@ public class Params {
     public static final String product = "product";
     public static final String access_token = "access_token";
     public static final String refresh_token = "refresh_token";
+    public static final String artist_picture_url = "artist_picture_url";
     // Playlist
     public static final String playlist_name = "playlist_name";
     public static final String playlist_id = "playlist_id";

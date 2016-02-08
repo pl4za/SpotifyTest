@@ -167,7 +167,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     @Override
     public void onStop() {
         super.onStop();
-        viewCtrl.updateActionBar(1);
     }
 
     private void checkRepeatAndShuffle() {
