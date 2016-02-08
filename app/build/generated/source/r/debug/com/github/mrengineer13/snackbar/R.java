@@ -8,41 +8,41 @@ package com.github.mrengineer13.snackbar;
 
 public final class R {
 	public static final class color {
-		public static final int sb__button_text_color = 0x7f0d0047;
-		public static final int sb__button_text_color_green = 0x7f0d0062;
-		public static final int sb__button_text_color_red = 0x7f0d0063;
-		public static final int sb__button_text_color_yellow = 0x7f0d0064;
-		public static final int sb__default_button_text_color = 0x7f0d0065;
-		public static final int sb__dim_white = 0x7f0d0048;
-		public static final int sb__snack_alert_bkgnd = 0x7f0d0049;
-		public static final int sb__snack_bkgnd = 0x7f0d004a;
-		public static final int sb__transparent = 0x7f0d004b;
+		public static final int sb__button_text_color = 0x7f0c004b;
+		public static final int sb__button_text_color_green = 0x7f0c0062;
+		public static final int sb__button_text_color_red = 0x7f0c0063;
+		public static final int sb__button_text_color_yellow = 0x7f0c0064;
+		public static final int sb__default_button_text_color = 0x7f0c0065;
+		public static final int sb__dim_white = 0x7f0c004c;
+		public static final int sb__snack_alert_bkgnd = 0x7f0c004d;
+		public static final int sb__snack_bkgnd = 0x7f0c004e;
+		public static final int sb__transparent = 0x7f0c004f;
 	}
 	public static final class dimen {
-		public static final int activity_horizontal_margin = 0x7f0a000d;
-		public static final int activity_vertical_margin = 0x7f0a000e;
-		public static final int horizontal_margin = 0x7f0a0056;
-		public static final int vertical_margin_bottom = 0x7f0a000f;
-		public static final int vertical_margin_top = 0x7f0a0010;
+		public static final int activity_horizontal_margin = 0x7f0a000e;
+		public static final int activity_vertical_margin = 0x7f0a000f;
+		public static final int horizontal_margin = 0x7f0a0057;
+		public static final int vertical_margin_bottom = 0x7f0a0010;
+		public static final int vertical_margin_top = 0x7f0a0011;
 	}
 	public static final class drawable {
-		public static final int sb__tablet_bkgnd = 0x7f020078;
+		public static final int sb__tablet_bkgnd = 0x7f020079;
 	}
 	public static final class id {
-		public static final int snackBar = 0x7f0e0098;
+		public static final int snackBar = 0x7f0e0094;
 		public static final int snackButton = 0x7f0e0008;
 		public static final int snackContainer = 0x7f0e0009;
 		public static final int snackMessage = 0x7f0e000a;
 	}
 	public static final class layout {
-		public static final int sb__snack = 0x7f04002d;
-		public static final int sb__snack_container = 0x7f04002e;
+		public static final int sb__snack = 0x7f04002c;
+		public static final int sb__snack_container = 0x7f04002d;
 	}
 	public static final class style {
-		public static final int SnackBar = 0x7f0b0004;
+		public static final int SnackBar = 0x7f0b0006;
 		public static final int SnackBar_Button = 0x7f0b00b1;
 		public static final int SnackBar_Container = 0x7f0b00b2;
 		public static final int SnackBar_Message = 0x7f0b00b3;
-		public static final int SnackBar_SnackBar = 0x7f0b0005;
+		public static final int SnackBar_SnackBar = 0x7f0b0007;
 	}
 }

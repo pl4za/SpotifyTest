@@ -12,11 +12,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -60,6 +61,8 @@ import java.util.ArrayList;
 //TODO: transactions crash
 public class MainActivity extends ActionBarActivity implements ActivityOptions, NetworkRequests {
 
+    private static final String TAG = "MainActivity";
+
     private static boolean ENABLE_SEARCH = false;
     private static boolean ENABLE_CLEAR = false;
     private static boolean ENABLE_REFRESH = false;
@@ -67,9 +70,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private static boolean REFRESH = false;
 
     private int lastSelectedDrawerItem = -1;
-    private static boolean isHomeAsUpEnabled = false;
+    private int lastPagerPosition = 0;
+    private float x1, x2;
     private static MyViewPager mViewPager;
-    private String randomArtistPictureURL;
     private static boolean landscape = false;
     private boolean mBound = false;
     private SearchView searchView;
@@ -101,8 +104,19 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     @Override
+    public void onBackPressed() {
+        if (!settings.getUserID().isEmpty()) {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settings.setContext(this);
         context = getApplicationContext();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,7 +125,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         mViewPager.setOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                updateActionBar(position);
+                lastPagerPosition = position;
                 clearSearch();
             }
 
@@ -134,46 +148,28 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                //ActivityCompat.invalidateOptionsMenu(MainActivity.this);
             }
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (lastSelectedDrawerItem != -1) {
-                    setListItemChecked(lastSelectedDrawerItem, true);
-                }
-                if (randomArtistPictureURL != null) {
-                    setPictureinDrawer(randomArtistPictureURL);
-                }
+                setListItemChecked(lastSelectedDrawerItem, true);
             }
+
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         checkOrientation();
         if (savedInstanceState != null) {
             lastSelectedDrawerItem = savedInstanceState.getInt("PLAYLIST_NUMBER");
-            randomArtistPictureURL = savedInstanceState.getString("ARTIST_PICTURE_URL");
+            lastPagerPosition = savedInstanceState.getInt("PAGER_POSITION");
         }
-        settings.setContext(this);
         spotifyNetwork.addNetworkListener(this);
         viewCtrl.setActivityView(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (!settings.getUserID().isEmpty()) {
-            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-            viewPagerAdapter.setViewCtrl(viewCtrl);
-            mViewPager.setAdapter(viewPagerAdapter);
-            updateActionBar(3);
             DISABLE_LOGIN = true;
             ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
             populateDrawer(settings.getPlaylistsNames());
-            selectItem(lastSelectedDrawerItem - 1);
-            REFRESH = false;
-            spotifyNetwork.refreshToken(settings.getRefreshToken());
-            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+            REFRESH = true;
         } else {
             getSupportActionBar().setHomeButtonEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -181,16 +177,27 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
-            //TODO: disable drawer
             ENABLE_REFRESH = false;
             DISABLE_LOGIN = false;
         }
+        REFRESH = true;
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+    protected void onResume() {
+        super.onResume();
+        settings.setContext(this);
+        if (!settings.getUserID().isEmpty()) {
+            updateActionBar(lastPagerPosition);
+            populateDrawer(settings.getPlaylistsNames());
+            spotifyNetwork.refreshToken(settings.getRefreshToken());
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        }
+        if (tracklistCtrl.hasTracks()) {
+            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+            viewPagerAdapter.setViewCtrl(viewCtrl);
+            mViewPager.setAdapter(viewPagerAdapter);
+        }
     }
 
     @Override
@@ -201,25 +208,24 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             landscape = false;
         }
-        PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-        viewPagerAdapter.setViewCtrl(viewCtrl);
-        mViewPager.setAdapter(viewPagerAdapter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
+        if (!settings.getUserID().isEmpty() && tracklistCtrl.hasTracks()) {
+            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+            viewPagerAdapter.setViewCtrl(viewCtrl);
+            mViewPager.setAdapter(viewPagerAdapter);
+            AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (!playCtrl.isActive()) {
-            playCtrl.destroyPlayer();
+        if (mBound) {
+            if (!playCtrl.isActive()) {
+                playCtrl.destroyPlayer();
+            }
+            mBound = false;
+            unbindService(mConnection);
         }
     }
 
@@ -227,11 +233,12 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public void onDestroy() {
         super.onDestroy();
         if (mBound) {
-            unbindService(mConnection);
+            if (!playCtrl.isActive()) {
+                playCtrl.destroyPlayer();
+            } else {
+                unbindService(mConnection);
+            }
             mBound = false;
-        }
-        if (!playCtrl.isActive()) {
-            playCtrl.destroyPlayer();
         }
         AppController.getInstance().cancelPendingRequests(Params.TAG_exchangeCodeForToken);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfile);
@@ -300,7 +307,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-            playCtrl.initializePlayer();
+            if (mBound) {
+                playCtrl.initializePlayer();
+            }
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
@@ -339,7 +348,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt("PLAYLIST_NUMBER", lastSelectedDrawerItem);
-        savedInstanceState.putString("ARTIST_PICTURE_URL", randomArtistPictureURL);
+        savedInstanceState.putInt("PAGER_POSITION", lastPagerPosition);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -349,19 +358,25 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         int index = mViewPager.getCurrentItem();
         boolean clear = queueCtrl.hasTracks();
         if (landscape) {
-            //ENABLE_SEARCH = tracklistCtrl.hasTracks() || queueCtrl.hasTracks();
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
             ENABLE_SEARCH = true;
             ENABLE_CLEAR = clear;
             if (tracklistCtrl.hasTracks()) {
                 setTitle(tracklistCtrl.getPlaylistName());
             }
             if (fragment == 2) {
+                lastPagerPosition = 2;
                 clearSearch();
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
             }
         } else {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
             if (index == 0) {
                 boolean search = tracklistCtrl.hasTracks();
                 if (tracklistCtrl.hasTracks()) {
@@ -374,7 +389,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 ENABLE_SEARCH = search;
                 ENABLE_CLEAR = clear;
                 setTitle("Queue");
-            } else if (fragment == 2) {
+            }
+            if (fragment == 2) {
+                lastPagerPosition = 2;
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
@@ -427,17 +444,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             Bitmap profilepicture = loadImageFromStorage(path);
             CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
             mDrawerList.setAdapter(mAdapter);
-            updateActionBar(0);
             mAdapter.notifyDataSetChanged();
-            if (lastSelectedDrawerItem != -1) {
-                setListItemChecked(lastSelectedDrawerItem, true);
-            }
-            if (randomArtistPictureURL != null) {
-                setPictureinDrawer(randomArtistPictureURL);
-            }
-            if (!playCtrl.isActive()) {
-                openDrawer();
-            }
+            setListItemChecked(lastSelectedDrawerItem, true);
         }
     }
 
@@ -511,19 +519,30 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         return cw.getDir("imageDir", Context.MODE_PRIVATE);
     }
 
-    private void setPictureinDrawer(String pictureinDrawer) {
-        final String str = pictureinDrawer;
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                View view = getViewByPosition(0, mDrawerList);
-                NetworkImageView thumbNail = (NetworkImageView) view.findViewById(R.id.ivArtistImage);
-                ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-                thumbNail.setImageUrl(str, imageLoader);
-                imageLoader.get(str, ImageLoader.getImageListener(
-                        thumbNail, R.drawable.drawer_header, R.drawable.drawer_header));
+    private void setPictureinDrawer() {
+        if (!settings.getRandomArtistImage().equals("")) {
+            View view = getViewByPosition(0, mDrawerList);
+            NetworkImageView thumbNail = (NetworkImageView) view.findViewById(R.id.ivArtistImage);
+            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+            thumbNail.setImageUrl(settings.getRandomArtistImage(), imageLoader);
+            imageLoader.get(settings.getRandomArtistImage(), ImageLoader.getImageListener(
+                    thumbNail, R.drawable.drawer_header, R.drawable.drawer_header));
+        }
+    }
+
+    private void setListItemChecked(final int position, final boolean confChange) {
+        if (position > 0) { //Playlist not header
+            TextView tv;
+            if (lastSelectedDrawerItem != -1 && !confChange) {
+                getViewByPosition(lastSelectedDrawerItem, mDrawerList).setBackgroundColor(Color.WHITE);
+                tv = (TextView) getViewByPosition(lastSelectedDrawerItem, mDrawerList).findViewById(R.id.tvPlaylist);
+                tv.setTextColor(getResources().getColor(R.color.darkgrey));
             }
-        });
+            tv = (TextView) getViewByPosition(position, mDrawerList).findViewById(R.id.tvPlaylist);
+            tv.setTextColor(Color.WHITE);
+            getViewByPosition(position, mDrawerList).setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+            lastSelectedDrawerItem = position;
+        }
     }
 
     public View getViewByPosition(int pos, ListView listView) {
@@ -536,27 +555,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             return listView.getChildAt(childIndex);
         }
     }
-
-    private void setListItemChecked(final int position, final boolean confChange) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                if (position > 0) { //Playlist not header
-                    TextView tv;
-                    if (lastSelectedDrawerItem != -1 && !confChange) {
-                        getViewByPosition(lastSelectedDrawerItem, mDrawerList).setBackgroundColor(Color.WHITE);
-                        tv = (TextView) getViewByPosition(lastSelectedDrawerItem, mDrawerList).findViewById(R.id.tvPlaylist);
-                        tv.setTextColor(getResources().getColor(R.color.darkgrey));
-                    }
-                    tv = (TextView) getViewByPosition(position, mDrawerList).findViewById(R.id.tvPlaylist);
-                    tv.setTextColor(Color.WHITE);
-                    getViewByPosition(position, mDrawerList).setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-                    lastSelectedDrawerItem = position;
-                }
-            }
-        });
-    }
-
     /*
     Spotify network related requests
      */
@@ -577,6 +575,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         spotifyNetwork.getCurrentUserProfile(acessToken);
         DISABLE_LOGIN = true;
         ENABLE_REFRESH = true;
+        supportInvalidateOptionsMenu();
+        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        showSnackBar("Fetching playlists...");
     }
 
     @Override
@@ -595,24 +596,24 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
-        if (playlists.size() > 0) {
+        if ((settings.getPlaylists().isEmpty() && !playlists.isEmpty()) || REFRESH) {
+            openDrawer();
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            REFRESH = false;
+        }
+        if (!playlists.isEmpty()) {
             settings.setPlayLists(playlists);
             populateDrawer(settings.getPlaylistsNames());
         }
-        if (settings.getPlaylists().isEmpty() || REFRESH) {
-            openDrawer();
-            REFRESH = false;
-        }
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
     public void onRandomArtistPictureURLReceived(String artistPictureURL) {
-        setPictureinDrawer(artistPictureURL);
-        randomArtistPictureURL = artistPictureURL;
+        settings.setRandomArtistImage(artistPictureURL);
+        setPictureinDrawer();
     }
 
     @Override

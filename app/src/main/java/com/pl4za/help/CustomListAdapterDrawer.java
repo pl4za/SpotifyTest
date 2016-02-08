@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.pl4za.spotifytest.R;
+import com.pl4za.spotifytest.SettingsManager;
 import com.pl4za.volley.AppController;
 
 public class CustomListAdapterDrawer extends BaseAdapter {
@@ -86,7 +87,7 @@ public class CustomListAdapterDrawer extends BaseAdapter {
         if (viewType == TYPE_HEADER) {
             //holder.drawerHeader.setImageUrl("", imageLoader);
             holder.drawerHeader.setDefaultImageResId(R.drawable.drawer_header); // show your drawable
-            holder.drawerHeader.setImageUrl(null, imageLoader);
+            holder.drawerHeader.setImageUrl(SettingsManager.getInstance().getRandomArtistImage(), imageLoader);
             holder.drawerHeader.setDefaultImageResId(R.drawable.drawer_header);
             holder.drawerHeader.setErrorImageResId(R.drawable.drawer_header);
             holder.userId.setText(user_id);

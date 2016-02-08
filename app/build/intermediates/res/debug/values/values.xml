@@ -248,7 +248,7 @@
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
-    <dimen name="drawer_width">400dp</dimen>
+    <dimen name="drawer_width">300dp</dimen>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="fab_elevation_lollipop">8dp</dimen>
@@ -274,6 +274,7 @@
     <dimen name="notification_subtext_size">12dp</dimen>
     <!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
+    <dimen name="swipe_offset">90dp</dimen>
     <dimen name="time">12sp</dimen>
     <dimen name="tool_bar_top_padding">0dp</dimen>
     <dimen name="track">17sp</dimen>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-  <gradient
-      android:startColor="@color/drawer_bg_color"
-      android:endColor="@color/drawer_bg_color"
-      android:angle="270" />
-</shape><!-- From: file:/C:/Users/jasoncosta/Documents/AndroidstudioProjects/SpotifyTest/app/src/main/res/drawable/drawer_row_bg.xml -->
