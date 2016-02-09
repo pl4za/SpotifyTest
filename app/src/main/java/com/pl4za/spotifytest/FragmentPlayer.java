@@ -93,8 +93,12 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             playCtrl.nextTrack();
             ivNext.setImageAlpha(30);
             ivNext.setEnabled(false);
+            ivPrevious.setImageAlpha(30);
+            ivPrevious.setEnabled(false);
         } else if (v.getId() == R.id.ivPrevious) {
             playCtrl.prevTrack();
+            ivNext.setImageAlpha(30);
+            ivNext.setEnabled(false);
             ivPrevious.setImageAlpha(30);
             ivPrevious.setEnabled(false);
         } else if (v.getId() == R.id.ivShuffle) {
@@ -115,42 +119,44 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
 
     @Override
     public void updateView() {
-        TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
-        TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
-        TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-        tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
-        tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
-        tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
-        checkRepeatAndShuffle();
-        //
-        if (!queueCtrl.hasTracks()) {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-            ivPlayPause.setImageAlpha(30);
-            ivNext.setEnabled(false);
-            ivPrevious.setEnabled(false);
-        } else {
-            ivPlayPause.setImageAlpha(255);
-            if ((!queueCtrl.hasNext()) && !PlayService.isShuffled()) {
-                ivNext.setImageAlpha(30);
+        if (queueCtrl.hasTracks()) {
+            TextView tvTrackTitle = (TextView) view.findViewById(R.id.tvTrackTitle);
+            TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
+            TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
+            tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
+            tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
+            tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
+            checkRepeatAndShuffle();
+            //
+            if (!queueCtrl.hasTracks()) {
+                ivPlayPause.setImageResource(R.drawable.play_selector);
+                ivPlayPause.setImageAlpha(30);
                 ivNext.setEnabled(false);
-            } else {
-                ivNext.setImageAlpha(255);
-                ivNext.setEnabled(true);
-            }
-            if (!queueCtrl.hasPrevious() && !PlayService.isShuffled()) {
-                ivPrevious.setImageAlpha(30);
                 ivPrevious.setEnabled(false);
             } else {
-                ivPrevious.setImageAlpha(255);
-                ivPrevious.setEnabled(true);
+                ivPlayPause.setImageAlpha(255);
+                if ((!queueCtrl.hasNext()) && !PlayService.isShuffled()) {
+                    ivNext.setImageAlpha(30);
+                    ivNext.setEnabled(false);
+                } else {
+                    ivNext.setImageAlpha(255);
+                    ivNext.setEnabled(true);
+                }
+                if (!queueCtrl.hasPrevious() && !PlayService.isShuffled()) {
+                    ivPrevious.setImageAlpha(30);
+                    ivPrevious.setEnabled(false);
+                } else {
+                    ivPrevious.setImageAlpha(255);
+                    ivPrevious.setEnabled(true);
+                }
             }
+            if (PlayService.PLAYING) {
+                ivPlayPause.setImageResource(R.drawable.pause_selector);
+            } else {
+                ivPlayPause.setImageResource(R.drawable.play_selector);
+            }
+            insertImage();
         }
-        if (PlayService.PLAYING) {
-            ivPlayPause.setImageResource(R.drawable.pause_selector);
-        } else {
-            ivPlayPause.setImageResource(R.drawable.play_selector);
-        }
-        insertImage();
     }
 
     @Override

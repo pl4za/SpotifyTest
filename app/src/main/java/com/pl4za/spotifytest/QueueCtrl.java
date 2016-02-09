@@ -30,6 +30,7 @@ public class QueueCtrl implements QueueOptions {
         if (playCtrl.isActive()) {
             queue.addToQueue(track);
             playCtrl.addToQueue(track.getTrackURI());
+            setQueueChanged(true);
         }
     }
 

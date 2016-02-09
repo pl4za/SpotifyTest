@@ -46,7 +46,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
     String userID, playlistID;
-    List<Track> tempTrackList;
+    List<Track> tempTrackList, tempSortList;
 
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
@@ -282,13 +282,15 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 taskCheckCache = new checkCache(next).execute();
             } else {
                 Log.i(TAG, "No more pages");
+                tempSortList = new ArrayList<>();
                 if (!tempTrackList.isEmpty()) {
-                    Collections.sort(tempTrackList, new ListComparator());
+                    tempSortList.addAll(tempTrackList);
+                    Collections.sort(tempSortList, new ListComparator());
                     Random rand = new Random();
                     String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
                     spotifyNetwork.getArtistPicture(ranArtist);
                     int i = 0;
-                    for (Track s : tempTrackList) {
+                    for (Track s : tempSortList) {
                         s.setPosition(i);
                         i++;
                     }
@@ -297,8 +299,8 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 refreshView.setRefreshing(false);
                 recyclerView.setEnabled(true);
                 tracklistCtrl.clear();
-                tracklistCtrl.addTrackList(tempTrackList, 0);
-                tempTrackList.clear();
+                tracklistCtrl.addTrackList(tempSortList, 0);
+                tempSortList.clear();
                 mAdapter.notifyDataSetChanged();
                 viewCtrl.updateActionBar(0);
                 recyclerView.scrollToPosition(0);

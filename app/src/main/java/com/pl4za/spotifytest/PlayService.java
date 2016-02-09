@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -130,7 +129,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         String msg = arg0.toString();
         Log.i(TAG, "Evento: " + arg0 + " playing: " + PLAYING);
         if (msg.equals("PLAY") || msg.equals("PAUSE")) {
-            PLAYING=true;
+            PLAYING = true;
             if (notification != null) {
                 updateNotificationButtons();
             }
@@ -173,7 +172,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
             updateNotificationInfo();
             viewCtrl.updateView();
-
         }
     }
 
@@ -185,7 +183,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             //nextTrack();
         } else if (arg0.toString().equals("ERROR_PLAYBACK")) {
             Toast.makeText(getApplicationContext(), "Playback error", Toast.LENGTH_SHORT).show();
-            //nextTrack();
         }
     }
 
@@ -287,13 +284,16 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void nextTrack() {
         if (queueCtrl.hasNext()) {
-            mPlayer.skipToNext();
+            mPlayer.clearQueue();
+            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() + 1);
+            //mPlayer.skipToNext();
         }
     }
 
     public void prevTrack() {
         if (queueCtrl.hasPrevious()) {
-            mPlayer.skipToPrevious();
+            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() - 1);
+            //mPlayer.skipToPrevious();
         }
     }
 
@@ -327,7 +327,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (notificationActive) {
             mNotificationManager.cancel(1);
         }
-        PLAYING=false;
+        PLAYING = false;
         stopSelf();
     }
 

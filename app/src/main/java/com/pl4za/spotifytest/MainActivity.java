@@ -80,6 +80,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private ListView mDrawerList;
     private Intent serviceIntent;
     private Context context;
+    private PageAdapter viewPagerAdapter;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -179,6 +180,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
         }
         REFRESH = true;
+        viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+        viewPagerAdapter.setViewCtrl(viewCtrl);
     }
 
     @Override
@@ -187,19 +190,15 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         settings.setContext(this);
         lastSelectedDrawerItem = settings.getLastDrawerItem();
         lastPagerPosition = settings.getLastPagerPosition();
-        /*
-        if (tracklistCtrl.hasTracks()) {
-            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-            viewPagerAdapter.setViewCtrl(viewCtrl);
-            mViewPager.setAdapter(viewPagerAdapter);
-        }
-        */
         if (!settings.getUserID().isEmpty()) {
             activateDrawer(true);
             populateDrawer(settings.getPlaylistsNames());
             spotifyNetwork.refreshToken(settings.getRefreshToken());
             updateActionBar(lastPagerPosition);
             mViewPager.setCurrentItem(lastPagerPosition);
+            if (tracklistCtrl.hasTracks()) {
+                mViewPager.setAdapter(viewPagerAdapter);
+            }
         }
     }
 
@@ -225,8 +224,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             landscape = false;
         }
         if (!settings.getUserID().isEmpty() && tracklistCtrl.hasTracks()) {
-            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-            viewPagerAdapter.setViewCtrl(viewCtrl);
             mViewPager.setAdapter(viewPagerAdapter);
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
@@ -369,6 +366,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public void updateActionBar(int fragment) {
         //0: tracks, 1: queue, 2: player
         int index = mViewPager.getCurrentItem();
+        lastPagerPosition=index;
         boolean clear = queueCtrl.hasTracks();
         if (landscape) {
             mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -486,8 +484,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private void selectItem(int position) {
         if (position >= 0) {
             tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
-            PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
-            viewPagerAdapter.setViewCtrl(viewCtrl);
             mViewPager.setAdapter(viewPagerAdapter);
             mViewPager.setCurrentItem(0);
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
