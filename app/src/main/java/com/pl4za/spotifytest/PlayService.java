@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -24,6 +25,7 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,7 +131,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         String msg = arg0.toString();
         Log.i(TAG, "Evento: " + arg0 + " playing: " + PLAYING);
         if (msg.equals("PLAY") || msg.equals("PAUSE")) {
-            PLAYING = true;
+            //PLAYING=true;
             if (notification != null) {
                 updateNotificationButtons();
             }
@@ -170,8 +172,11 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             if (mNotificationManager == null || notification == null) {
                 startNotification();
             }
-            updateNotificationInfo();
             viewCtrl.updateView();
+        }
+        if (notification!=null) {
+            updateNotificationInfo();
+            updateNotificationButtons();
         }
     }
 
@@ -292,7 +297,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void prevTrack() {
         if (queueCtrl.hasPrevious()) {
-            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() - 1);
+            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition()-1);
             //mPlayer.skipToPrevious();
         }
     }
@@ -327,7 +332,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (notificationActive) {
             mNotificationManager.cancel(1);
         }
-        PLAYING = false;
+        PLAYING=false;
         stopSelf();
     }
 

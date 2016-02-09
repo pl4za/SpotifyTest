@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
     android:padding="5dp"
+    android:layout_marginTop="5dp"
     android:layout_centerVertical="true"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
@@ -10,8 +11,7 @@
     <TextView
         android:id="@+id/tvTrackTitle"
         android:textSize="20dp"
-        android:text="Millionaire"
-        android:textColor="@color/notification_text"
+        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -22,9 +22,8 @@
 
     <TextView
         android:id="@+id/tvArtistAndAlbum"
-        android:textColor="@color/notification_text_secondary"
         android:textSize="15dp"
-        android:text="Queens of the stone age"
+        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -41,10 +40,12 @@
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"
+            android:maxWidth="60dp"
+            android:maxHeight="60dp"
+            android:paddingTop="4dp"
             android:src="@drawable/next_selector"
             android:layout_centerInParent="true"
+            android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/ivClose"/>
 
         <ImageView
@@ -53,8 +54,10 @@
             android:id="@+id/ivPlayPause_2"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"
+            android:maxWidth="70dp"
+            android:maxHeight="70dp"
+            android:paddingRight="5dp"
+            android:paddingTop="4dp"
             android:src="@drawable/pause_selector"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/ivNext"/>
@@ -67,7 +70,7 @@
             android:clickable="true"
             android:maxWidth="40dp"
             android:maxHeight="40dp"
-            android:paddingTop="10dp"
+            android:paddingTop="14dp"
             android:paddingBottom="10dp"
             android:src="@drawable/close_selector"
             android:layout_centerInParent="true"
