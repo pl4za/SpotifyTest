@@ -69,6 +69,20 @@ public class SettingsManager {
         editor.commit();
     }
 
+    public void setLastDrawerItem(int item) {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(Params.last_drawer_item, item);
+        editor.commit();
+    }
+
+    public void setLastPagerPosition(int position) {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(Params.last_pager_position, position);
+        editor.commit();
+    }
+
     public void setRandomArtistImage(String artistURL) {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -114,6 +128,16 @@ public class SettingsManager {
     public String getProduct() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         return sharedPref.getString(Params.product, "");
+    }
+
+    public int getLastDrawerItem() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getInt(Params.last_drawer_item, -1);
+    }
+
+    public int getLastPagerPosition() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getInt(Params.last_pager_position, 0);
     }
 
     public String getRandomArtistImage() {

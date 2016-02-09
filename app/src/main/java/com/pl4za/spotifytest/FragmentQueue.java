@@ -82,6 +82,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         //TODO: Play service not synced with queue?
         viewCtrl.showSnackBar("Removed: " + queueCtrl.getCurrentTrack().getTrack());
         queueCtrl.removeFromList(position);
+        viewCtrl.updateActionBar(1);
         mAdapter.notifyDataSetChanged();
     }
 

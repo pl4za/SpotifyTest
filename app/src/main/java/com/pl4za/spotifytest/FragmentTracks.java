@@ -46,6 +46,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
     String userID, playlistID;
+    List<Track> tempTrackList;
 
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
@@ -141,6 +142,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         queueCtrl.addTrack(track);
         viewCtrl.updateView();
         viewCtrl.showSnackBar("Queued: " + track.getTrack());
+        viewCtrl.updateActionBar(0);
     }
 
     @Override
@@ -159,6 +161,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public synchronized void loadTracks(String userID, String playlistID) {
         this.userID = userID;
         this.playlistID = playlistID;
+        // Reset temp list
+        tempTrackList = new ArrayList<>();
+        tempTrackList.clear();
         String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
@@ -207,11 +212,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             if (jsonObject != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new parseJsonToList(jsonObject).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else {
-                    new parseJsonToList(jsonObject).execute();
-                }
+                new parseJsonToList(jsonObject).execute();
             } else {
                 Log.i(TAG, "Cache is null..");
                 spotifyNetwork.getSelectedPlaylistTracks(url, settings.getAccessToken(), settings.getEtag(url));
@@ -222,12 +223,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private class parseJsonToList extends AsyncTask<Void, Void, String> {
 
         final JSONObject json;
-        List<Track> tempTrackList = new ArrayList<>();
 
         public parseJsonToList(JSONObject jsonObject) {
             this.json = jsonObject;
-            tempTrackList.clear();
-            tempTrackList = new ArrayList<>();
         }
 
         @Override
@@ -281,11 +279,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             //Log.i(TAG, "Tracklist: " + trackList.size() + " next: " + next);
             if (!next.equals("null")) {
                 Log.i(TAG, "Loading next page");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    taskCheckCache = new checkCache(next).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else {
-                    taskCheckCache = new checkCache(next).execute();
-                }
+                taskCheckCache = new checkCache(next).execute();
             } else {
                 Log.i(TAG, "No more pages");
                 if (!tempTrackList.isEmpty()) {
@@ -354,11 +348,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onPlaylistTracksReceived(String json) {
         try {
             JSONObject list = new JSONObject(json);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new parseJsonToList(list).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else {
-                new parseJsonToList(list).execute();
-            }
+            new parseJsonToList(list).execute();
         } catch (JSONException e) {
             e.printStackTrace();
         }

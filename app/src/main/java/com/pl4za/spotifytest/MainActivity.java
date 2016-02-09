@@ -71,7 +71,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     private int lastSelectedDrawerItem = -1;
     private int lastPagerPosition = 0;
-    private float x1, x2;
     private static MyViewPager mViewPager;
     private static boolean landscape = false;
     private boolean mBound = false;
@@ -109,6 +108,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             mDrawerToggle.setDrawerIndicatorEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+            updateActionBar(1);
         }
         super.onBackPressed();
     }
@@ -148,6 +148,14 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
+                if(lastPagerPosition==2) {
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                } else {
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                }
+                mDrawerToggle.syncState();
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -156,12 +164,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             }
 
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
         checkOrientation();
-        if (savedInstanceState != null) {
-            lastSelectedDrawerItem = savedInstanceState.getInt("PLAYLIST_NUMBER");
-            lastPagerPosition = savedInstanceState.getInt("PAGER_POSITION");
-        }
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         spotifyNetwork.addNetworkListener(this);
         viewCtrl.setActivityView(this);
         if (!settings.getUserID().isEmpty()) {
@@ -169,16 +173,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
             populateDrawer(settings.getPlaylistsNames());
-            REFRESH = true;
+            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         } else {
-            getSupportActionBar().setHomeButtonEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
-            ENABLE_REFRESH = false;
-            DISABLE_LOGIN = false;
         }
         REFRESH = true;
     }
@@ -187,17 +185,35 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     protected void onResume() {
         super.onResume();
         settings.setContext(this);
-        if (!settings.getUserID().isEmpty()) {
-            updateActionBar(lastPagerPosition);
-            populateDrawer(settings.getPlaylistsNames());
-            spotifyNetwork.refreshToken(settings.getRefreshToken());
-            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-        }
+        lastSelectedDrawerItem = settings.getLastDrawerItem();
+        lastPagerPosition = settings.getLastPagerPosition();
+        /*
         if (tracklistCtrl.hasTracks()) {
             PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
             viewPagerAdapter.setViewCtrl(viewCtrl);
             mViewPager.setAdapter(viewPagerAdapter);
         }
+        */
+        if (!settings.getUserID().isEmpty()) {
+            activateDrawer(true);
+            populateDrawer(settings.getPlaylistsNames());
+            spotifyNetwork.refreshToken(settings.getRefreshToken());
+            updateActionBar(lastPagerPosition);
+            mViewPager.setCurrentItem(lastPagerPosition);
+        }
+    }
+
+    private void activateDrawer(boolean status) {
+        if (status) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+        getSupportActionBar().setHomeButtonEnabled(status);
+        getSupportActionBar().setDisplayShowHomeEnabled(status);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(status);
+        mDrawerToggle.setDrawerIndicatorEnabled(status);
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -215,6 +231,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         }
+        updateActionBar(lastPagerPosition);
     }
 
     @Override
@@ -227,6 +244,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             mBound = false;
             unbindService(mConnection);
         }
+        settings.setLastDrawerItem(lastSelectedDrawerItem);
+        settings.setLastPagerPosition(lastPagerPosition);
     }
 
     @Override
@@ -314,6 +333,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
             updateActionBar(1);
+            viewCtrl.updateView();
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -346,13 +366,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("PLAYLIST_NUMBER", lastSelectedDrawerItem);
-        savedInstanceState.putInt("PAGER_POSITION", lastPagerPosition);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
     public void updateActionBar(int fragment) {
         //0: tracks, 1: queue, 2: player
         int index = mViewPager.getCurrentItem();
@@ -372,6 +385,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
+                setTitle("Playing");
             }
         } else {
             mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -395,6 +409,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
+                setTitle("Playing");
             }
         }
         mDrawerToggle.syncState();
@@ -597,9 +612,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
         if ((settings.getPlaylists().isEmpty() && !playlists.isEmpty()) || REFRESH) {
-            openDrawer();
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             mDrawerToggle.setDrawerIndicatorEnabled(true);
+            openDrawer();
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             REFRESH = false;
