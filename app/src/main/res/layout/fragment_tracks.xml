@@ -9,34 +9,38 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
+    </FrameLayout>
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fabPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_play_float"
-            app:fab_colorNormal="@color/colorSecondary"
-            app:fab_colorPressed="@color/colorSecondary"
-            app:fab_colorRipple="@color/colorSecondary" />
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fabPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_play_float"
+        app:fab_colorNormal="@color/colorSecondary"
+        app:fab_colorPressed="@color/colorSecondary"
+        app:fab_colorRipple="@color/colorSecondary" />
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fabQueue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp"
-            android:layout_toLeftOf="@+id/fabPlay"
-            android:src="@drawable/ic_queue"
-            app:fab_colorNormal="@color/colorSecondary"
-            app:fab_colorPressed="@color/colorSecondary"
-            app:fab_colorRipple="@color/colorSecondary" />
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fabQueue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_toLeftOf="@+id/fabPlay"
+        android:src="@drawable/ic_queue"
+        app:fab_colorNormal="@color/colorSecondary"
+        app:fab_colorPressed="@color/colorSecondary"
+        app:fab_colorRipple="@color/colorSecondary" />
 
-    </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout></android.support.v4.widget.SwipeRefreshLayout>

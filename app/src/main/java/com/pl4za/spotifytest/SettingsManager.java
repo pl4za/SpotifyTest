@@ -80,7 +80,7 @@ public class SettingsManager {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(Params.last_pager_position, position);
-        editor.commit();
+        editor.apply();
     }
 
     public void setRandomArtistImage(String artistURL) {
@@ -102,6 +102,7 @@ public class SettingsManager {
             editor.apply();
         }
     }
+
     /*
     Get
      */
@@ -126,13 +127,23 @@ public class SettingsManager {
     }
 
     public String getProduct() {
-        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
-        return sharedPref.getString(Params.product, "");
+        try {
+            SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+            return sharedPref.getString(Params.product, "");
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Fetching product from settings error");
+        }
+        return "Free";
     }
 
     public int getLastDrawerItem() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         return sharedPref.getInt(Params.last_drawer_item, -1);
+    }
+
+    public int getLastPlaylistPosition() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getInt(Params.last_drawer_item, -1)-1;
     }
 
     public int getLastPagerPosition() {

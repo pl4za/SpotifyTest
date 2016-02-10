@@ -40,6 +40,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private static final int SCROLL_STATE_IDLE = 0;
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
+    private AsyncTask<Void, Void, String> parseJsonToList;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
     private View view;
@@ -95,6 +96,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabQueue.setVisibility(View.VISIBLE);
         }
         spotifyNetwork.addNetworkListener(this);
+        String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_id);
+        String userID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_user_id);
+        loadTracks(userID, playlistID);
         return view;
     }
 
@@ -147,14 +151,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onDoubleClick(int position) {
-        FragmentPlayer playFrag = new FragmentPlayer();
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, playFrag, "FragmentPlayer")
-                .addToBackStack(null)
+                .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                .addToBackStack("FragmentPlayer")
                 .commit();
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
-        viewCtrl.updateActionBar(2);
     }
 
     @Override
@@ -212,6 +214,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             if (jsonObject != null) {
+                if (parseJsonToList != null) {
+                    if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                        parseJsonToList.cancel(true);
+                    }
+                }
                 new parseJsonToList(jsonObject).execute();
             } else {
                 Log.i(TAG, "Cache is null..");
@@ -279,6 +286,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             //Log.i(TAG, "Tracklist: " + trackList.size() + " next: " + next);
             if (!next.equals("null")) {
                 Log.i(TAG, "Loading next page");
+                if (taskCheckCache != null) {
+                    if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
+                        taskCheckCache.cancel(true);
+                    }
+                }
                 taskCheckCache = new checkCache(next).execute();
             } else {
                 Log.i(TAG, "No more pages");
@@ -302,7 +314,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 tracklistCtrl.addTrackList(tempSortList, 0);
                 tempSortList.clear();
                 mAdapter.notifyDataSetChanged();
-                viewCtrl.updateActionBar(0);
                 recyclerView.scrollToPosition(0);
             }
         }
@@ -350,7 +361,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onPlaylistTracksReceived(String json) {
         try {
             JSONObject list = new JSONObject(json);
-            new parseJsonToList(list).execute();
+            if (parseJsonToList != null) {
+                if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                    parseJsonToList.cancel(true);
+                }
+            }
+            parseJsonToList = new parseJsonToList(list).execute();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -385,8 +401,8 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             } else if (v.getId() == R.id.fabPlay) {
                 FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .addToBackStack("ViewPager")
-                        .replace(R.id.container, playFrag, "FragmentPlayer")
+                        .add(R.id.container, playFrag, "FragmentPlayer")
+                        .addToBackStack("FragmentPlayer")
                         .commit();
                 viewCtrl.updateActionBar(2);
             }

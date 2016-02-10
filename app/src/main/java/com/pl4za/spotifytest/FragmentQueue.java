@@ -79,7 +79,6 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
 
     @Override
     public void onSwipe(int position) {
-        //TODO: Play service not synced with queue?
         viewCtrl.showSnackBar("Removed: " + queueCtrl.getCurrentTrack().getTrack());
         queueCtrl.removeFromList(position);
         viewCtrl.updateActionBar(1);
@@ -104,10 +103,9 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
                 viewCtrl.setViewPagerPosition(0);
                 viewCtrl.updateActionBar(0);
             } else if (v.getId() == R.id.fabPlay) {
-                FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .addToBackStack("ViewPager")
-                        .replace(R.id.container, playFrag, "FragmentPlayer")
+                        .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                        .addToBackStack("FragmentPlayer")
                         .commit();
                 viewCtrl.updateActionBar(2);
             }

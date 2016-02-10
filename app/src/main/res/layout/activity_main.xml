@@ -23,13 +23,6 @@
             android:adjustViewBounds="true"
             android:maxHeight="100dp"/>
 
-        <com.pl4za.help.MyViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            tools:context="com.pl4za.spotifytest.MainActivity" />
-
         <FrameLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/container"
@@ -49,8 +42,7 @@
 
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rlDrawerListView"
+    <RelativeLayout
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

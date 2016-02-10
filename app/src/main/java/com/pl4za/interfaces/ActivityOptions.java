@@ -9,8 +9,7 @@ public interface ActivityOptions {
 
     void showSnackBar(String text);
 
-    void setViewPagerPosition(int position);
-
     boolean isLandscape();
 
+    void clearSearch();
 }

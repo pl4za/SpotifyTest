@@ -99,6 +99,9 @@ public class PlayCtrl implements ServiceOptions {
 
     @Override
     public boolean isPlaying() {
-        return service != null || service.isPlaying();
+        if (service==null) {
+            return false;
+        }
+        return service.isPlaying();
     }
 }

@@ -26,7 +26,7 @@ public final class R {
 		public static final int vertical_margin_top = 0x7f0a0011;
 	}
 	public static final class drawable {
-		public static final int sb__tablet_bkgnd = 0x7f020079;
+		public static final int sb__tablet_bkgnd = 0x7f02007a;
 	}
 	public static final class id {
 		public static final int snackBar = 0x7f0e0095;

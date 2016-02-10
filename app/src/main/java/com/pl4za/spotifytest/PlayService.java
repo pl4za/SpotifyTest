@@ -35,7 +35,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     private static final String TAG = "PlayService";
     public static NotificationManager mNotificationManager;
-    public static boolean notificationActive = false;
     public static Player mPlayer;
     public static boolean SKIP_NEXT = true;
     public static boolean TRACK_END = true;
@@ -165,16 +164,14 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
         }
         if (msg.equals("TRACK_START") && queueCtrl.hasTracks()) {
+            startNotification();
             PLAYING = true;
             TRACK_END = true;
             SKIP_NEXT = true;
             queueCtrl.updateTrackNumberAndPlayingTrack(arg1.trackUri);
-            if (mNotificationManager == null || notification == null) {
-                startNotification();
-            }
             viewCtrl.updateView();
         }
-        if (notification!=null) {
+        if (notification!=null && queueCtrl.hasTracks()) {
             updateNotificationInfo();
             updateNotificationButtons();
         }
@@ -198,7 +195,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             iFilter.addAction(actionNext);
             iFilter.addAction(actionDismiss);
             registerReceiver(switchButtonListener, iFilter);
-
             Intent intentAction = new Intent(this, MainActivity.class);
             PendingIntent pendingIntentAction = PendingIntent.getActivity(this, 0, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -211,7 +207,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                             .setContent(contentView);
             notification = mBuilder.build();
             notification.flags = Notification.FLAG_ONGOING_EVENT;
-
             //Play
             Intent intentPlayPause = new Intent(actionPlayPause);
             PendingIntent pendingIntentPlayPause = PendingIntent.getBroadcast(this, 0, intentPlayPause, 0);
@@ -226,8 +221,8 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             contentView.setOnClickPendingIntent(R.id.ivClose, pendingIntentClose);
             //
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(1, notification);
-            notificationActive = true;
+            updateNotificationInfo();
+            updateNotificationButtons();
         }
     }
 
@@ -260,7 +255,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public boolean isPlaying() {
-        return PLAYING;
+        return PLAYING || queueCtrl.hasTracks();
     }
 
     public static boolean isRepeating() {
@@ -329,7 +324,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     public void destroyPlayer() {
         mPlayer.pause();
         Spotify.destroyPlayer(mPlayer);
-        if (notificationActive) {
+        if (mNotificationManager!=null) {
             mNotificationManager.cancel(1);
         }
         PLAYING=false;

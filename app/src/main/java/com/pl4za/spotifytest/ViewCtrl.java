@@ -2,6 +2,7 @@ package com.pl4za.spotifytest;
 
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
+import com.pl4za.interfaces.ViewPagerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
 
     private ArrayList<FragmentOptions> fragmentsOptions = new ArrayList<>();
     private ActivityOptions activityOptions;
+    private ViewPagerOptions viewPagerInstance;
 
     private static final ViewCtrl INSTANCE = new ViewCtrl();
 
@@ -25,6 +27,10 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
 
     public void setActivityView(ActivityOptions a) {
         this.activityOptions = a;
+    }
+
+    public void setViewPagerOptions(ViewPagerOptions v) {
+        this.viewPagerInstance = v;
     }
 
     @Override
@@ -46,6 +52,9 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
         for (FragmentOptions f : fragmentsOptions) {
             f.updateView();
         }
+        if (viewPagerInstance != null) {
+            viewPagerInstance.updateView();
+        }
     }
 
     @Override
@@ -56,12 +65,19 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
     }
 
     public void setViewPagerPosition(int position) {
-        activityOptions.setViewPagerPosition(position);
+        if (viewPagerInstance!=null) {
+            viewPagerInstance.setViewPagerPosition(position);
+        }
     }
 
     @Override
     public boolean isLandscape() {
         return activityOptions.isLandscape();
+    }
+
+    @Override
+    public void clearSearch() {
+        activityOptions.clearSearch();
     }
 
     @Override

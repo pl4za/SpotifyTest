@@ -3,6 +3,7 @@ package com.pl4za.spotifytest;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     private PlayCtrl playCtrl = PlayCtrl.getInstance();
     private ViewCtrl viewCtrl = ViewCtrl.getInstance();
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private SettingsManager settings = SettingsManager.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,9 +77,11 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new FragmentPlayer(), "FragmentPlayer")
-                .commit();
+        Fragment frag = this;
+        FragmentTransaction tr = getActivity().getSupportFragmentManager().beginTransaction();
+        tr.detach(frag);
+        tr.attach(frag);
+        tr.commit();
     }
 
     @Override
@@ -173,6 +177,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     @Override
     public void onStop() {
         super.onStop();
+        viewCtrl.updateActionBar(settings.getLastPagerPosition());
     }
 
     private void checkRepeatAndShuffle() {
