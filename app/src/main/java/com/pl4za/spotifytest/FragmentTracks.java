@@ -1,8 +1,8 @@
 package com.pl4za.spotifytest;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,6 +38,8 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     private static final String TAG = "FragmentTracks";
     private static final int SCROLL_STATE_IDLE = 0;
+    String userID, playlistID;
+    List<Track> tempTrackList, tempSortList;
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private AsyncTask<Void, Void, String> parseJsonToList;
@@ -46,9 +48,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private View view;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
-    String userID, playlistID;
-    List<Track> tempTrackList, tempSortList;
-
     // interfaces
     private QueueCtrl queueCtrl = QueueCtrl.getInstance();
     private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
@@ -95,11 +94,41 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
-        spotifyNetwork.addNetworkListener(this);
-        String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_id);
-        String userID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_user_id);
-        loadTracks(userID, playlistID);
+        if (savedInstanceState==null) {
+            spotifyNetwork.addNetworkListener(this);
+            viewCtrl.updateActionBar(0);
+            String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_id);
+            String userID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_user_id);
+            loadTracks(userID, playlistID);
+        }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
+        refreshView.setRefreshing(false);
+        recyclerView.removeAllViews();
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fabPlay.setVisibility(View.INVISIBLE);
+            fabQueue.setVisibility(View.INVISIBLE);
+        } else {
+            fabPlay.setVisibility(View.VISIBLE);
+            fabQueue.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -111,7 +140,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     @Override
     public void onDestroy() {
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-        refreshView.setRefreshing(false);
+        recyclerView.removeAllViews();
         super.onDestroy();
     }
 
@@ -122,9 +151,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void hideFab(boolean hide) {
-        fabPlay.hide(hide);
-        fabQueue.hide(hide);
-        if (!hide) {
+        if (hide) {
+            fabPlay.hide(true);
+            fabQueue.hide(true);
+        } else {
             fabPlay.show(true);
             fabQueue.show(true);
         }
@@ -173,6 +203,68 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             }
         }
         taskCheckCache = new checkCache(url).execute();
+    }
+
+    @Override
+    public void onProfilePictureReceived(Bitmap image) {
+
+    }
+
+    @Override
+    public void onTokenReceived(String acessToken, String refreshToken) {
+
+    }
+
+    private boolean listIsAtTop()   {
+        if(recyclerView.getChildCount() == 0) return true;
+        return recyclerView.getChildAt(0).getTop() == 0;
+    }
+    /*
+    Spotify network related requests
+     */
+
+    @Override
+    public void onTokenRefresh(String newToken) {
+
+    }
+
+    @Override
+    public void onProfileReceived(String userID, String product, String profilePicture) {
+
+    }
+
+    @Override
+    public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
+
+    }
+
+    @Override
+    public void onRandomArtistPictureURLReceived(String artistPictureURL) {
+        if (artistPictureURL.equals("none")) {
+            Random rand = new Random();
+            String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
+            spotifyNetwork.getArtistPicture(ranArtist);
+        }
+    }
+
+    @Override
+    public void onPlaylistTracksReceived(String json) {
+        try {
+            JSONObject list = new JSONObject(json);
+            if (parseJsonToList != null) {
+                if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                    parseJsonToList.cancel(true);
+                }
+            }
+            parseJsonToList = new parseJsonToList(list).execute();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onEtagUpdate(String etag) {
+        settings.setEtag(etag);
     }
 
     private class checkCache extends AsyncTask<Void, Void, JSONObject> {
@@ -319,64 +411,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
     }
 
-    /*
-    Spotify network related requests
-     */
-
-    @Override
-    public void onProfilePictureReceived(Bitmap image) {
-
-    }
-
-    @Override
-    public void onTokenReceived(String acessToken, String refreshToken) {
-
-    }
-
-    @Override
-    public void onTokenRefresh(String newToken) {
-
-    }
-
-    @Override
-    public void onProfileReceived(String userID, String product, String profilePicture) {
-
-    }
-
-    @Override
-    public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
-
-    }
-
-    @Override
-    public void onRandomArtistPictureURLReceived(String artistPictureURL) {
-        if (artistPictureURL.equals("none")) {
-            Random rand = new Random();
-            String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
-            spotifyNetwork.getArtistPicture(ranArtist);
-        }
-    }
-
-    @Override
-    public void onPlaylistTracksReceived(String json) {
-        try {
-            JSONObject list = new JSONObject(json);
-            if (parseJsonToList != null) {
-                if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
-                    parseJsonToList.cancel(true);
-                }
-            }
-            parseJsonToList = new parseJsonToList(list).execute();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onEtagUpdate(String etag) {
-        settings.setEtag(etag);
-    }
-
     private class ListViewScrollListener extends RecyclerView.OnScrollListener {
 
         @Override
@@ -384,9 +418,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == SCROLL_STATE_IDLE) {
                 hideFab(false);
-
             } else {
-                hideFab(true);
+                if (!listIsAtTop()) {
+                    hideFab(true);
+                }
             }
         }
     }

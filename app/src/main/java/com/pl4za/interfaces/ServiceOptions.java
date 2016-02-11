@@ -37,4 +37,6 @@ public interface ServiceOptions {
     void clearQueue();
 
     boolean isPlaying();
+
+    void cancelNotification();
 }

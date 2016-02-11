@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by jasoncosta on 2/2/2016.
  */
-public class ViewCtrl implements ActivityOptions, FragmentOptions {
+public class ViewCtrl implements ActivityOptions, FragmentOptions, ViewPagerOptions {
 
     private ArrayList<FragmentOptions> fragmentsOptions = new ArrayList<>();
     private ActivityOptions activityOptions;
@@ -52,8 +52,12 @@ public class ViewCtrl implements ActivityOptions, FragmentOptions {
         for (FragmentOptions f : fragmentsOptions) {
             f.updateView();
         }
+    }
+
+    @Override
+    public void setAdapter() {
         if (viewPagerInstance != null) {
-            viewPagerInstance.updateView();
+            viewPagerInstance.setAdapter();
         }
     }
 

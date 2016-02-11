@@ -141,6 +141,13 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             populateDrawer(settings.getPlaylistsNames());
             spotifyNetwork.refreshToken(settings.getRefreshToken());
             loadPlaylist(settings.getLastPlaylistPosition());
+            if (playCtrl.isPlaying() && settings.getPlayerOnTop()) {
+                FragmentPlayer playFrag = new FragmentPlayer();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, playFrag, "FragmentPlayer")
+                        .addToBackStack("FragmentPlayer")
+                        .commit();
+            }
         }
     }
 
@@ -165,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             landscape = false;
         }
-        viewCtrl.updateView();
+        //viewCtrl.updateView();
     }
 
     @Override
@@ -265,6 +272,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
+            playCtrl.cancelNotification();
             updateActionBar(1);
             viewCtrl.updateView();
         }
@@ -294,7 +302,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 String code = parts[0].split("=")[1];
                 String state = parts[1].split("=")[1];
                 spotifyNetwork.exchangeCodeForToken(code);
-                REFRESH=true;
+                REFRESH = true;
             }
         }
     }
@@ -413,7 +421,11 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private void loadPlaylist(int position) {
         if (position >= 0) {
             tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
-            if(fragment==null) {
+            // Set playlist name if resuming to pager 0.
+            if (settings.getLastPagerPosition() == 0) {
+                setTitle(tracklistCtrl.getPlaylistName());
+            }
+            if (fragment == null) {
                 fragment = new FragmentMain();
             }
             this.getSupportFragmentManager().beginTransaction()
@@ -423,7 +435,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
             viewCtrl.loadTracks(userID, playlistID);
             viewCtrl.setViewPagerPosition(0);
-            updateActionBar(0);
             mDrawerLayout.closeDrawers();
         } else {
             openDrawer();
@@ -581,6 +592,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             if (position > 0) {
                 loadPlaylist(position - 1);
                 setListItemChecked(position);
+                updateActionBar(0);
             }
         }
     }

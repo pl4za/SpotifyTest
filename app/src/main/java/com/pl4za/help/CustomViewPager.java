@@ -9,13 +9,13 @@ import android.view.MotionEvent;
 /**
  * Created by Admin on 12/02/2015.
  */
-public class MyViewPager extends ViewPager {
+public class CustomViewPager extends ViewPager {
 
-    public MyViewPager(Context context) {
+    public CustomViewPager(Context context) {
         super(context);
     }
 
-    public MyViewPager(Context context, AttributeSet attributeSet) {
+    public CustomViewPager(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 

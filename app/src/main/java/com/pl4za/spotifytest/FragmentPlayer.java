@@ -172,12 +172,14 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     public void onStart() {
         super.onStart();
         viewCtrl.updateActionBar(2);
+        settings.setPlayerOnTop(true);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         viewCtrl.updateActionBar(settings.getLastPagerPosition());
+        settings.setPlayerOnTop(false);
     }
 
     private void checkRepeatAndShuffle() {

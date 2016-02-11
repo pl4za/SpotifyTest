@@ -104,4 +104,11 @@ public class PlayCtrl implements ServiceOptions {
         }
         return service.isPlaying();
     }
+
+    @Override
+    public void cancelNotification() {
+        if (service != null) {
+            service.cancelNotification();
+        }
+    }
 }

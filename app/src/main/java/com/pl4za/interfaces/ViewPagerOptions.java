@@ -7,6 +7,6 @@ public interface ViewPagerOptions {
 
     void setViewPagerPosition(int position);
 
-    void updateView();
+    void setAdapter();
 
 }

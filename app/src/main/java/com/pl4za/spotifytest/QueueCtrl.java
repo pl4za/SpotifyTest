@@ -60,6 +60,9 @@ public class QueueCtrl implements QueueOptions {
             queue.setTrackNumberUpdate(1);
         }
         queue.removeFromQueue(position);
+        if (queue.isEmpty()) {
+            playCtrl.resumePause();
+        }
     }
 
     @Override

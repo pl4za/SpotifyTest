@@ -13,23 +13,28 @@ import com.pl4za.spotifytest.ViewCtrl;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
-    ViewCtrl viewCtrl;
+    boolean landscape;
+    Fragment fragmentTracks, fragmentQueue;
 
     public PageAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void setViewCtrl(ViewCtrl v) {
-        this.viewCtrl = v;
+    public void setOrientation(boolean landscape) {
+        this.landscape = landscape;
     }
 
     @Override
     public Fragment getItem(int position) {
-        //Log.i("Adapter", "Position: " + position);
+        if (fragmentTracks==null) {
+            fragmentTracks = new FragmentTracks();
+        } if (fragmentQueue==null) {
+            fragmentQueue = new FragmentQueue();
+        }
         if (position == 0) {
-            return new FragmentTracks();
+            return fragmentTracks;
         } else if (position == 1)
-            return new FragmentQueue();
+            return fragmentQueue;
         else {
             return null;
         }
@@ -41,7 +46,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     }
 
     @Override public float getPageWidth(int position) {
-        if (viewCtrl.isLandscape()) {
+        if (landscape) {
             return (0.5f);
         }
         else {

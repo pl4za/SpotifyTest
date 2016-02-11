@@ -103,6 +103,13 @@ public class SettingsManager {
         }
     }
 
+    public void setPlayerOnTop(boolean playerOnTop) {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(Params.player_on_top, playerOnTop);
+        editor.apply();
+    }
+
     /*
     Get
      */
@@ -112,8 +119,11 @@ public class SettingsManager {
     }
 
     public String getAccessToken() {
-        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
-        return sharedPref.getString(Params.access_token, "");
+        if (context!=null) {
+            SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+            return sharedPref.getString(Params.access_token, "");
+        }
+        return "null";
     }
 
     public String getRefreshToken() {
@@ -133,7 +143,7 @@ public class SettingsManager {
         } catch (NullPointerException e) {
             Log.e(TAG, "Fetching product from settings error");
         }
-        return "Free";
+        return "Premium";
     }
 
     public int getLastDrawerItem() {
@@ -181,5 +191,10 @@ public class SettingsManager {
             i++;
         }
         return list;
+    }
+
+    public boolean getPlayerOnTop() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(Params.player_on_top, false);
     }
 }

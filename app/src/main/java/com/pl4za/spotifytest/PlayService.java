@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -25,7 +24,6 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +53,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void addToQueue(String trackUri) {
         mPlayer.queue(trackUri);
+        if (mNotificationManager != null && contentView != null) {
+            updateNotificationButtons();
+        }
     }
 
     @Override
@@ -67,6 +68,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         }
         TRACK_END = false;
         SKIP_NEXT = false;
+        if (mNotificationManager != null && contentView != null) {
+            updateNotificationButtons();
+        }
     }
 
     @Override
@@ -145,7 +149,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
             TRACK_END = true;
             viewCtrl.updateView();
-
         } else if (msg.equals("TRACK_END") && TRACK_END) {
             Log.i(TAG, "SKIPPING TO NEXT AUTOMATICALLY");
             TRACK_END = true;
@@ -164,14 +167,16 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
         }
         if (msg.equals("TRACK_START") && queueCtrl.hasTracks()) {
-            startNotification();
+            if (mNotificationManager == null) {
+                startNotification();
+            }
             PLAYING = true;
             TRACK_END = true;
             SKIP_NEXT = true;
             queueCtrl.updateTrackNumberAndPlayingTrack(arg1.trackUri);
             viewCtrl.updateView();
         }
-        if (notification!=null && queueCtrl.hasTracks()) {
+        if (mNotificationManager != null) {
             updateNotificationInfo();
             updateNotificationButtons();
         }
@@ -189,43 +194,62 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void startNotification() {
-        if (mNotificationManager == null || notification == null) {
-            switchButtonListener = new SwitchButtonListener();
-            IntentFilter iFilter = new IntentFilter(actionPlayPause);
-            iFilter.addAction(actionNext);
-            iFilter.addAction(actionDismiss);
-            registerReceiver(switchButtonListener, iFilter);
-            Intent intentAction = new Intent(this, MainActivity.class);
-            PendingIntent pendingIntentAction = PendingIntent.getActivity(this, 0, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
+        switchButtonListener = new SwitchButtonListener();
+        IntentFilter iFilter = new IntentFilter(actionPlayPause);
+        iFilter.addAction(actionNext);
+        iFilter.addAction(actionDismiss);
+        registerReceiver(switchButtonListener, iFilter);
+        Intent intentAction = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntentAction = PendingIntent.getActivity(this, 0, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            contentView = new RemoteViews(getPackageName(), R.layout.playing_notification);
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.ic_action_play_over_video)
-                            .setContentIntent(pendingIntentAction)
-                                    //.setDeleteIntent(pendingIntentDismiss)
-                            .setContent(contentView);
-            notification = mBuilder.build();
-            notification.flags = Notification.FLAG_ONGOING_EVENT;
-            //Play
-            Intent intentPlayPause = new Intent(actionPlayPause);
-            PendingIntent pendingIntentPlayPause = PendingIntent.getBroadcast(this, 0, intentPlayPause, 0);
-            contentView.setOnClickPendingIntent(R.id.ivPlayPause_2, pendingIntentPlayPause);
-            //Next
-            Intent intentNext = new Intent(actionNext);
-            PendingIntent pendingIntentNext = PendingIntent.getBroadcast(this, 0, intentNext, 0);
-            contentView.setOnClickPendingIntent(R.id.ivNext, pendingIntentNext);
-            //Next
-            Intent intentClose = new Intent(actionDismiss);
-            PendingIntent pendingIntentClose = PendingIntent.getBroadcast(this, 0, intentClose, 0);
-            contentView.setOnClickPendingIntent(R.id.ivClose, pendingIntentClose);
-            //
-            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            updateNotificationInfo();
-            updateNotificationButtons();
+        contentView = new RemoteViews(getPackageName(), R.layout.playing_notification);
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_action_play_over_video)
+                        .setContentIntent(pendingIntentAction)
+                                //.setDeleteIntent(pendingIntentDismiss)
+                        .setContent(contentView);
+        notification = mBuilder.build();
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+        //Play
+        Intent intentPlayPause = new Intent(actionPlayPause);
+        PendingIntent pendingIntentPlayPause = PendingIntent.getBroadcast(this, 0, intentPlayPause, 0);
+        contentView.setOnClickPendingIntent(R.id.ivPlayPause_2, pendingIntentPlayPause);
+        //Next
+        Intent intentNext = new Intent(actionNext);
+        PendingIntent pendingIntentNext = PendingIntent.getBroadcast(this, 0, intentNext, 0);
+        contentView.setOnClickPendingIntent(R.id.ivNext, pendingIntentNext);
+        //Next
+        Intent intentClose = new Intent(actionDismiss);
+        PendingIntent pendingIntentClose = PendingIntent.getBroadcast(this, 0, intentClose, 0);
+        contentView.setOnClickPendingIntent(R.id.ivClose, pendingIntentClose);
+        //
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        updateNotificationInfo();
+        updateNotificationButtons();
+    }
+
+    public void initializePlayer() {
+        if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
+            Log.i(TAG, "Initializing player");
+            Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
+            mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
+                @Override
+                public void onInitialized(Player player) {
+                    mPlayer.addConnectionStateCallback(PlayService.this);
+                    mPlayer.addPlayerNotificationCallback(PlayService.this);
+                    Log.i(TAG, "Player initialized");
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
+                }
+            });
         }
     }
 
+    /*
     public void initializePlayer() {
         if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
             if (settings.getProduct().equals("premium")) {
@@ -249,6 +273,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
         }
     }
+    */
 
     public static boolean isShuffled() {
         return SHUFFLE;
@@ -292,7 +317,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void prevTrack() {
         if (queueCtrl.hasPrevious()) {
-            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition()-1);
+            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() - 1);
             //mPlayer.skipToPrevious();
         }
     }
@@ -322,31 +347,53 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void destroyPlayer() {
-        mPlayer.pause();
+        cancelNotification();
         Spotify.destroyPlayer(mPlayer);
-        if (mNotificationManager!=null) {
-            mNotificationManager.cancel(1);
-        }
-        PLAYING=false;
+        PLAYING = false;
         stopSelf();
+    }
+
+    public void cancelNotification() {
+        if (mNotificationManager != null) {
+            mNotificationManager.cancelAll();
+            mNotificationManager = null;
+            notification = null;
+        }
     }
 
     private void updateNotificationInfo() {
         Log.i(TAG, "Updating notification");
-        contentView.setImageViewResource(R.id.image, R.drawable.no_image);
-        contentView.setTextViewText(R.id.tvTrackTitle, queueCtrl.getCurrentTrack().getTrack());
-        contentView.setTextViewText(R.id.tvArtistAndAlbum, queueCtrl.getCurrentTrack().getSimpleArtist() + " - " + queueCtrl.getCurrentTrack().getAlbum());
-        mNotificationManager.notify(1, notification);
+        if (!queueCtrl.hasTracks()) {
+            cancelNotification();
+        } else if (mNotificationManager != null) {
+            contentView.setImageViewResource(R.id.image, R.drawable.no_image);
+            contentView.setTextViewText(R.id.tvTrackTitle, queueCtrl.getCurrentTrack().getTrack());
+            contentView.setTextViewText(R.id.tvArtistAndAlbum, queueCtrl.getCurrentTrack().getSimpleArtist() + " - " + queueCtrl.getCurrentTrack().getAlbum());
+            mNotificationManager.notify(1, notification);
+        }
     }
 
     private void updateNotificationButtons() {
         Log.i(TAG, "Updating notification");
-        if (!PLAYING) {
-            contentView.setImageViewResource(R.id.ivPlayPause_2, R.drawable.play_selector);
-        } else {
-            contentView.setImageViewResource(R.id.ivPlayPause_2, R.drawable.pause_selector);
+        if (!queueCtrl.hasTracks()) {
+            cancelNotification();
+        } else if (mNotificationManager != null) {
+            if (queueCtrl.hasNext()) {
+                contentView.setImageViewResource(R.id.ivNext, R.drawable.next_selector);
+            } else {
+                contentView.setImageViewResource(R.id.ivNext, R.drawable.ic_next_pressed);
+            }
+            if (queueCtrl.hasTracks()) {
+                if (!PLAYING) {
+                    contentView.setImageViewResource(R.id.ivPlayPause_2, R.drawable.play_selector);
+                } else {
+                    contentView.setImageViewResource(R.id.ivPlayPause_2, R.drawable.pause_selector);
+                }
+            } else {
+                contentView.setImageViewResource(R.id.ivNext, R.drawable.ic_play_pressed);
+            }
+            mNotificationManager.notify(1, notification);
         }
-        mNotificationManager.notify(1, notification);
     }
 
     public class LocalBinder extends Binder {

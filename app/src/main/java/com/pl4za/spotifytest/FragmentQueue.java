@@ -1,5 +1,6 @@
 package com.pl4za.spotifytest;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,10 @@ import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pl4za.help.CustomListAdapter;
+import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
+import com.pl4za.volley.AppController;
 
 import java.util.List;
 
@@ -53,15 +56,28 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
+        recyclerView.removeAllViews();
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fabTracks.setVisibility(View.INVISIBLE);
+        } else {
+            fabTracks.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void updateView() {
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void hideFab(boolean hide) {
-        fabPlay.hide(hide);
-        fabTracks.hide(hide);
-        if (!hide) {
+        if (hide) {
+            fabPlay.hide(true);
+            fabTracks.hide(true);
+        } else {
             fabPlay.show(true);
             fabTracks.show(true);
         }
@@ -95,6 +111,11 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         //Not implemented
     }
 
+    private boolean listIsAtTop()   {
+        if(recyclerView.getChildCount() == 0) return true;
+        return recyclerView.getChildAt(0).getTop() == 0;
+    }
+
     private class FabClickListener implements View.OnClickListener {
 
         @Override
@@ -121,7 +142,9 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
                 hideFab(false);
 
             } else {
-                hideFab(true);
+                if (!listIsAtTop()) {
+                    hideFab(true);
+                }
             }
         }
     }

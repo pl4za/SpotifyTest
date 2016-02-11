@@ -28,6 +28,7 @@ public class Params {
     public static final String artist_picture_url = "artist_picture_url";
     public static final String last_pager_position = "last_pager_position";
     public static final String last_drawer_item = "last_drawer_item";
+    public static final String player_on_top = "player_on_top";
     // Playlist
     public static final String playlist_name = "playlist_name";
     public static final String playlist_id = "playlist_id";

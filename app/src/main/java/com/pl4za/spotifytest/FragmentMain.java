@@ -1,5 +1,6 @@
 package com.pl4za.spotifytest;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -7,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pl4za.help.MyViewPager;
+import com.pl4za.help.CustomViewPager;
 import com.pl4za.help.PageAdapter;
 import com.pl4za.interfaces.ViewPagerOptions;
 
@@ -16,7 +17,7 @@ import com.pl4za.interfaces.ViewPagerOptions;
  */
 public class FragmentMain extends Fragment implements ViewPagerOptions {
 
-    private static MyViewPager viewPager;
+    private static CustomViewPager viewPager;
     private PageAdapter viewPagerAdapter;
 
     // Delegators
@@ -27,14 +28,24 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        viewPager = (MyViewPager) view.findViewById(R.id.pager);
+        viewPager = (CustomViewPager) view.findViewById(R.id.pager);
         viewPager.setOnPageChangeListener(new ViewPagerScroll());
-        viewPagerAdapter = new PageAdapter(getActivity().getSupportFragmentManager());
-        viewPagerAdapter.setViewCtrl(viewCtrl);
+        if (savedInstanceState==null) {
+            viewPagerAdapter = new PageAdapter(getActivity().getSupportFragmentManager());
+            viewPager.setAdapter(viewPagerAdapter);
+        } else {
+
+        }
+        viewPagerAdapter.setOrientation(viewCtrl.isLandscape());
         viewCtrl.setViewPagerOptions(this);
-        viewPager.setAdapter(viewPagerAdapter);
         tracklistCtrl.clear();
+
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -51,7 +62,15 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     }
 
     @Override
-    public void updateView() {
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        viewPagerAdapter.setOrientation(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
+        setAdapter();
+    }
+
+    //TODO: remove, not used
+    @Override
+    public void setAdapter() {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
