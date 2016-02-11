@@ -80,8 +80,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     @Override
     public void onDestroy() {
-        if (switchButtonListener != null)
-            unregisterReceiver(switchButtonListener);
         destroyPlayer();
         Log.i(TAG, "Service destroyed");
         super.onDestroy();
@@ -347,6 +345,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void destroyPlayer() {
+        mPlayer.pause();
         cancelNotification();
         Spotify.destroyPlayer(mPlayer);
         PLAYING = false;
@@ -358,6 +357,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             mNotificationManager.cancelAll();
             mNotificationManager = null;
             notification = null;
+            unregisterReceiver(switchButtonListener);
         }
     }
 

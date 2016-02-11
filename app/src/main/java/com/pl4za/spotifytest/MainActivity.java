@@ -557,10 +557,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
         if (REFRESH) {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            activateDrawer(true);
             REFRESH = false;
             openDrawer();
         }

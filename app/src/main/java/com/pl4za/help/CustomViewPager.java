@@ -11,6 +11,9 @@ import android.view.MotionEvent;
  */
 public class CustomViewPager extends ViewPager {
 
+    private float x1, x2;
+    private int position;
+
     public CustomViewPager(Context context) {
         super(context);
     }
@@ -20,8 +23,31 @@ public class CustomViewPager extends ViewPager {
     }
 
     @Override
+    protected void onPageScrolled(int position, float offset, int offsetPixels) {
+        super.onPageScrolled(position, offset, offsetPixels);
+        this.position=position;
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        //Log.i("MyViewPager", "Fingers:" + ev.getPointerCount() + " - " + ev.getAction());
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            x1 = ev.getX();
+        } else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            x2 = ev.getX();
+            if (position==0) {
+                if (x2 < x1) {
+                    return super.onTouchEvent(ev);
+                } else {
+                    return false;
+                }
+            } else {
+                if (x1 < x2) {
+                    return super.onTouchEvent(ev);
+                } else {
+                    return false;
+                }
+            }
+        }
         return false;
     }
 }
