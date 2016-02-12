@@ -1,6 +1,6 @@
 package com.pl4za.interfaces;
 
-import com.pl4za.spotifytest.Track;
+import com.pl4za.spotifast.Track;
 
 import java.util.List;
 

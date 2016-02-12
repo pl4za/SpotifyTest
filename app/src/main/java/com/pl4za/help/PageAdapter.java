@@ -3,12 +3,9 @@ package com.pl4za.help;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.View;
 
-import com.pl4za.spotifytest.FragmentQueue;
-import com.pl4za.spotifytest.FragmentTracks;
-import com.pl4za.spotifytest.MainActivity;
-import com.pl4za.spotifytest.ViewCtrl;
+import com.pl4za.spotifast.FragmentQueue;
+import com.pl4za.spotifast.FragmentTracks;
 
 
 public class PageAdapter extends FragmentPagerAdapter {

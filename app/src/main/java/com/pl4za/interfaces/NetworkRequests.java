@@ -2,7 +2,7 @@ package com.pl4za.interfaces;
 
 import android.graphics.Bitmap;
 
-import com.pl4za.spotifytest.Playlist;
+import com.pl4za.spotifast.Playlist;
 
 import java.util.ArrayList;
 

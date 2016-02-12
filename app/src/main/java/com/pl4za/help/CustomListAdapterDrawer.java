@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.pl4za.spotifytest.R;
-import com.pl4za.spotifytest.SettingsManager;
+import com.pl4za.spotifast.R;
+import com.pl4za.spotifast.SettingsManager;
 import com.pl4za.volley.AppController;
 
 public class CustomListAdapterDrawer extends BaseAdapter {

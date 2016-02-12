@@ -37,9 +37,9 @@ MERGED from com.github.mrengineer13:snackbar:1.1.0:8:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 uses-permission#android.permission.INTERNET
-ADDED from AndroidManifest.xml:11:5
+ADDED from AndroidManifest.xml:11:9
 	android:name
-		ADDED from AndroidManifest.xml:11:22
+		ADDED from AndroidManifest.xml:11:26
 application
 ADDED from AndroidManifest.xml:13:5
 MERGED from com.spotify.sdk:spotify-auth:1.0.0-beta12:30:5
@@ -62,7 +62,7 @@ MERGED from com.github.mrengineer13:snackbar:1.1.0:12:5
 		ADDED from AndroidManifest.xml:18:9
 	android:name
 		ADDED from AndroidManifest.xml:14:9
-activity#com.pl4za.spotifytest.MainActivity
+activity#com.pl4za.spotifast.MainActivity
 ADDED from AndroidManifest.xml:20:9
 	android:label
 		ADDED from AndroidManifest.xml:22:13
@@ -114,7 +114,7 @@ action#android.intent.action.SEARCH
 ADDED from AndroidManifest.xml:42:17
 	android:name
 		ADDED from AndroidManifest.xml:42:25
-service#com.pl4za.spotifytest.PlayService
+service#com.pl4za.spotifast.PlayService
 ADDED from AndroidManifest.xml:46:9
 	android:exported
 		ADDED from AndroidManifest.xml:48:13
