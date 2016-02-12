@@ -18,4 +18,8 @@
 
     </style>
 
+    <style name="NotificationText" parent="android:TextAppearance.Material.Notification" />
+
+    <style name="NotificationTitle" parent="android:TextAppearance.Material.Notification.Title" />
+
 </resources>

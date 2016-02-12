@@ -3,7 +3,6 @@ package com.pl4za.help;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -11,9 +10,11 @@ import android.view.MotionEvent;
  */
 public class CustomViewPager extends ViewPager {
 
+    /*
     private float x1, x2;
     private int position;
-
+    private static final int THRESHOLD = 10;
+*/
     public CustomViewPager(Context context) {
         super(context);
     }
@@ -25,17 +26,18 @@ public class CustomViewPager extends ViewPager {
     @Override
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         super.onPageScrolled(position, offset, offsetPixels);
-        this.position=position;
+        //      this.position = position;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        /*
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             x1 = ev.getX();
         } else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
             x2 = ev.getX();
-            if (position==0) {
-                if (x2 < x1) {
+            if (position == 0) {
+                if (x2 < x1-THRESHOLD) {
                     return super.onTouchEvent(ev);
                 } else {
                     return false;
@@ -48,6 +50,7 @@ public class CustomViewPager extends ViewPager {
                 }
             }
         }
+        */
         return false;
     }
 }

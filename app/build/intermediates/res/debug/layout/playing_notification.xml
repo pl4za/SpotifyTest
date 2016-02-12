@@ -2,16 +2,15 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
-    android:padding="5dp"
-    android:layout_marginTop="5dp"
     android:layout_centerVertical="true"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvTrackTitle"
-        android:textSize="20dp"
+        android:textAppearance="@style/NotificationTitle"
         android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -22,7 +21,7 @@
 
     <TextView
         android:id="@+id/tvArtistAndAlbum"
-        android:textSize="15dp"
+        android:textAppearance="@style/NotificationText"
         android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,6 +68,7 @@
             android:maxWidth="40dp"
             android:maxHeight="40dp"
             android:paddingTop="10dp"
+            android:paddingRight="5dp"
             android:paddingBottom="10dp"
             android:src="@drawable/close_selector"
             android:layout_centerInParent="true"

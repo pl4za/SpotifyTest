@@ -114,8 +114,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         super.onStop();
     }
 
-
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -175,7 +173,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
         viewCtrl.updateView();
-        viewCtrl.showSnackBar("Queued: " + track.getTrack());
         viewCtrl.updateActionBar(0);
     }
 
@@ -187,6 +184,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .commit();
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
+        viewCtrl.showSnackBar("Playing");
     }
 
     @Override

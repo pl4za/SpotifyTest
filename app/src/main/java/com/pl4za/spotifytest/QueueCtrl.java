@@ -14,6 +14,7 @@ public class QueueCtrl implements QueueOptions {
 
     private Queue queue;
     private PlayCtrl playCtrl = PlayCtrl.getInstance();
+    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     private static final QueueCtrl INSTANCE = new QueueCtrl();
 
@@ -27,10 +28,17 @@ public class QueueCtrl implements QueueOptions {
 
     @Override
     public void addTrack(Track track) {
+        boolean queueExists = hasTracks();
         if (playCtrl.isActive()) {
             queue.addToQueue(track);
             playCtrl.addToQueue(track.getTrackURI());
             setQueueChanged(true);
+            viewCtrl.showSnackBar("Queued: " + track.getTrack());
+            if (!queueExists) {
+                playCtrl.play(track.getTrackURI());
+            }
+        } else {
+            viewCtrl.showSnackBar("Player not initialized");
         }
     }
 
@@ -39,6 +47,9 @@ public class QueueCtrl implements QueueOptions {
         if (playCtrl.isActive()) {
             queue.addToQueue(tracklist, listStart);
             playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
+            viewCtrl.showSnackBar("Playing");
+        } else {
+            viewCtrl.showSnackBar("Player not initialized");
         }
     }
 

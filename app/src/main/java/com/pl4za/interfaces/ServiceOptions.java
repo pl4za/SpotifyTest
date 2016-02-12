@@ -28,6 +28,8 @@ public interface ServiceOptions {
 
     void addToQueue(String trackUri);
 
+    void play(String trackUri);
+
     void addToQueue(List<String> queue, int listStart);
 
     boolean isActive();

@@ -74,6 +74,12 @@ public class PlayCtrl implements ServiceOptions {
     }
 
     @Override
+    public void play(String trackUri) {
+        if (service != null)
+            service.play(trackUri);
+    }
+
+    @Override
     public void addToQueue(List<String> queue, int listStart) {
         if (service != null)
             service.addToQueue(queue, listStart);

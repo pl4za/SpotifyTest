@@ -1410,7 +1410,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    </style><style name="NotificationText" parent="TextAppearance.StatusBar.EventContent"/><style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title"/><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -1446,7 +1446,7 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
         <item name="android:windowActivityTransitions">true</item>
 
-    </style></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\colors.xml" qualifiers="v22"><color name="notification_text">#000000</color><color name="notification_text_secondary">#616161</color></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\dimens.xml" qualifiers="v22"><dimen name="tool_bar_top_padding">24dp</dimen></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\styles.xml" qualifiers="v22"><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    </style><style name="NotificationText" parent="android:TextAppearance.Material.Notification"/><style name="NotificationTitle" parent="android:TextAppearance.Material.Notification.Title"/></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\colors.xml" qualifiers="v22"><color name="notification_text">#000000</color><color name="notification_text_secondary">#616161</color></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\dimens.xml" qualifiers="v22"><dimen name="tool_bar_top_padding">24dp</dimen></file><file path="C:\Users\jasoncosta\Documents\AndroidstudioProjects\SpotifyTest\app\src\main\res\values-v22\styles.xml" qualifiers="v22"><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>

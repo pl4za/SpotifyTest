@@ -40,9 +40,9 @@ public final class R {
 	}
 	public static final class style {
 		public static final int SnackBar = 0x7f0b0006;
-		public static final int SnackBar_Button = 0x7f0b00b1;
-		public static final int SnackBar_Container = 0x7f0b00b2;
-		public static final int SnackBar_Message = 0x7f0b00b3;
+		public static final int SnackBar_Button = 0x7f0b00b3;
+		public static final int SnackBar_Container = 0x7f0b00b4;
+		public static final int SnackBar_Message = 0x7f0b00b5;
 		public static final int SnackBar_SnackBar = 0x7f0b0007;
 	}
 }

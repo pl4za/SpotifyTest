@@ -59,6 +59,14 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     @Override
+    public void play(String trackUri) {
+        mPlayer.play(trackUri);
+        if (mNotificationManager != null && contentView != null) {
+            updateNotificationButtons();
+        }
+    }
+
+    @Override
     public void addToQueue(List<String> queue, int listStart) {
         clearQueue();
         if (queue.size() == 1) {
@@ -246,32 +254,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             });
         }
     }
-
-    /*
-    public void initializePlayer() {
-        if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
-            if (settings.getProduct().equals("premium")) {
-                Log.i(TAG, "Initializing player");
-                Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
-                mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
-                    @Override
-                    public void onInitialized(Player player) {
-                        mPlayer.addConnectionStateCallback(PlayService.this);
-                        mPlayer.addPlayerNotificationCallback(PlayService.this);
-                        Log.i(TAG, "Player initialized");
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
-                    }
-                });
-            } else {
-                Toast.makeText(getApplicationContext(), "Spotify premium is required", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    */
 
     public static boolean isShuffled() {
         return SHUFFLE;
