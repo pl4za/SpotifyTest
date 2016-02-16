@@ -46,7 +46,8 @@ public class QueueCtrl implements QueueOptions {
     public void addTrackList(List<Track> tracklist, int listStart) {
         if (playCtrl.isActive()) {
             queue.addToQueue(tracklist, listStart);
-            playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
+            //TODO: fix player queue limit.
+            playCtrl.addToQueue(getTrackURIList(tracklist).subList(0, 250), listStart);
             viewCtrl.showSnackBar("Playing");
         } else {
             viewCtrl.showSnackBar("Initializing player");
