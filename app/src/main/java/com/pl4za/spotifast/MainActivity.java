@@ -182,6 +182,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     protected void onPause() {
+        Log.i(TAG, "onPause");
         super.onPause();
         if (mBound) {
             if (!playCtrl.isPlaying()) {

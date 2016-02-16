@@ -257,7 +257,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void initializePlayer() {
         if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
-            destroyPlayer();
+            if (queueCtrl.hasTracks()) {
+                destroyPlayer();
+            }
             Log.i(TAG, "Initializing player");
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
             mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
@@ -266,7 +268,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     mPlayer.addConnectionStateCallback(PlayService.this);
                     mPlayer.addPlayerNotificationCallback(PlayService.this);
                     Log.i(TAG, "Player initialized");
-                    viewCtrl.showSnackBar("Player initialized");
+                    //viewCtrl.showSnackBar("Player initialized");
                 }
 
                 @Override

@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/thumbnail"
             android:layout_alignRight="@+id/time"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/darkgrey"
             android:textSize="@dimen/added" />
 
         <TextView
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/added"
             android:layout_alignParentRight="true"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="@dimen/time" />
 
     </RelativeLayout>
