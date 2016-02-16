@@ -32,6 +32,7 @@ import java.util.List;
 public class PlayService extends Service implements PlayerNotificationCallback, ConnectionStateCallback, ServiceOptions {
 
     private static final String TAG = "PlayService";
+    private static final int MAX_ITEMS = 100;
     public static NotificationManager mNotificationManager;
     public static Player mPlayer;
     public static boolean SKIP_NEXT = true;
@@ -72,7 +73,26 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (queue.size() == 1) {
             mPlayer.play(queue);
         } else {
-            mPlayer.play(PlayConfig.createFor(queue).withTrackIndex(listStart));
+            int max = MAX_ITEMS;
+            int start = 0;
+            //TODO: fix player queue limit.
+            if (queueCtrl.getTrackList().size() < max) {
+                max = queueCtrl.getTrackList().size();
+            } else {
+                if (listStart - max >= 0) {
+                    start = listStart - max / 2;
+                    max = listStart + max / 2;
+                    if (max>queueCtrl.getTrackList().size()) {
+                        max = queueCtrl.getTrackList().size();
+                    }
+                    listStart = (MAX_ITEMS / 2);
+                }
+            }
+            //Log.i(TAG, "queue size: "+queue.size()+" start: "+start+" max: "+max+" click: "+listStart);
+            // start: 76 max: 98 click: 49
+            List<String> subList = queue.subList(start, max);
+            // Log.i(TAG, "subList size: "+subList.size()+" max: "+subList.size());
+            mPlayer.play(PlayConfig.createFor(subList).withTrackIndex(listStart));
         }
         TRACK_END = false;
         SKIP_NEXT = false;
@@ -237,6 +257,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void initializePlayer() {
         if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
+            destroyPlayer();
             Log.i(TAG, "Initializing player");
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
             mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
@@ -245,6 +266,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     mPlayer.addConnectionStateCallback(PlayService.this);
                     mPlayer.addPlayerNotificationCallback(PlayService.this);
                     Log.i(TAG, "Player initialized");
+                    viewCtrl.showSnackBar("Player initialized");
                 }
 
                 @Override
@@ -335,11 +357,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void destroyPlayer() {
-        mPlayer.pause();
-        cancelNotification();
-        Spotify.destroyPlayer(mPlayer);
-        PLAYING = false;
-        stopSelf();
+        if (mPlayer!=null) {
+            mPlayer.pause();
+            cancelNotification();
+            Spotify.destroyPlayer(mPlayer);
+            PLAYING = false;
+            stopSelf();
+        }
     }
 
     public void cancelNotification() {
@@ -349,7 +373,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             notification = null;
             try {
                 unregisterReceiver(switchButtonListener);
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 Log.e(TAG, "unregister receiver error");
             }
         }

@@ -184,7 +184,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
         viewCtrl.updateView(1);
-        viewCtrl.updateActionBar(0);
+        //viewCtrl.updateActionBar(0);
     }
 
     @Override
@@ -432,7 +432,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                         s.setPosition(i);
                         i++;
                     }
-                    viewCtrl.showSnackBar("Sorted by date added");
                 }
                 refreshView.setEnabled(true);
                 refreshView.setRefreshing(false);

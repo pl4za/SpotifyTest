@@ -8,8 +8,8 @@ import java.util.List;
  * Created by Jason on 01/02/2015.
  */
 public class Queue {
-
-    private static final List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
+    private static final String TAG = "Queue";
+    private static List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
     private static int trackNumber = 0;
     private static int trackNumberUpdate = 0;
     private static boolean queueChanged = false;
@@ -58,7 +58,7 @@ public class Queue {
         }
     }
 
-    private void updatedTrackNumber(int removedPosition) {
+    private void updateQueuePosition(int removedPosition) {
         if (TRACK_LIST.size() > 0) {
             if (removedPosition > trackNumber) {
             } else if (removedPosition < trackNumber) {
@@ -76,8 +76,8 @@ public class Queue {
 
     public void removeFromQueue(int position) {
         TRACK_LIST.remove(position);
-        queueChanged=true;
-        updatedTrackNumber(position);
+        queueChanged = true;
+        updateQueuePosition(position);
     }
 
     public boolean hasNext() {
@@ -101,11 +101,15 @@ public class Queue {
     }
 
     public void setQueueChanged(boolean changed) {
-        queueChanged=changed;
+        queueChanged = changed;
     }
 
     public Track getCurrentTrack() {
         return TRACK_LIST.get(trackNumber);
+    }
+
+    public void setQueue(List<Track> queue) {
+        this.TRACK_LIST = queue;
     }
 
 }

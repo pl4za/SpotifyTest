@@ -59,7 +59,7 @@ public class ViewCtrl {
                 f.updateView();
             } else if (viewPosition==1 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue"))) {
                 f.updateView();
-            } else if (viewPosition==2 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentPlayer"))) {
+            } else if (viewPosition==2 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentPlayer") || (f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue")))) {
                 f.updateView();
             }
         }

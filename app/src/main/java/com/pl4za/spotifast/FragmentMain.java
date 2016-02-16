@@ -68,7 +68,6 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         setAdapter();
     }
 
-    //TODO: remove, not used
     @Override
     public void setAdapter() {
         viewPager.setAdapter(viewPagerAdapter);
@@ -79,7 +78,6 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             settings.setLastPagerPosition(position);
-            viewCtrl.clearSearch();
         }
 
         @Override

@@ -1,7 +1,6 @@
 package com.pl4za.help;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,11 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return trackList.size();
+        try {
+            return trackList.size();
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     private String convertAdded(String time) {
@@ -118,10 +121,10 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
                             if (originalTracklist.get(i).getTrack().toLowerCase().contains(constraint.toString())) { //Track
                                 results.add(originalTracklist.get(i));
                             }
-                            if (originalTracklist.get(i).getAlbum().toLowerCase().contains(constraint.toString())) { //Album
+                            else if (originalTracklist.get(i).getAlbum().toLowerCase().contains(constraint.toString())) { //Album
                                 results.add(originalTracklist.get(i));
                             }
-                            if (originalTracklist.get(i).getSimpleArtist().toLowerCase().contains(constraint.toString())) { //Artist
+                            else if (originalTracklist.get(i).getSimpleArtist().toLowerCase().contains(constraint.toString())) { //Artist
                                 results.add(originalTracklist.get(i));
                             }
                         }
@@ -129,7 +132,6 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
                     oReturn.values = results;
                 } else
                     oReturn.values = originalTracklist;
-                //TODO: FIX
                 swipeListener.setList((List<Track>) oReturn.values);
                 return oReturn;
             }
@@ -164,7 +166,6 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
         holder.added.setText(convertAdded(track.getAdded()));
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
-
         if (direction.equals("right")) {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.swipeLayout.findViewById(R.id.back));
         } else {

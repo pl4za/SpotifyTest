@@ -128,7 +128,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
             TextView tvAlbum = (TextView) view.findViewById(R.id.tvAlbum);
             TextView tvArtist = (TextView) view.findViewById(R.id.tvArtist);
             tvTrackTitle.setText(queueCtrl.getCurrentTrack().getTrack());
-            tvAlbum.setText(queueCtrl.getCurrentTrack().getTrack());
+            tvAlbum.setText(queueCtrl.getCurrentTrack().getAlbum());
             tvArtist.setText(queueCtrl.getCurrentTrack().getSimpleArtist());
             checkRepeatAndShuffle();
             //
@@ -173,6 +173,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
         super.onStart();
         viewCtrl.updateActionBar(2);
         settings.setPlayerOnTop(true);
+        updateView();
     }
 
     @Override

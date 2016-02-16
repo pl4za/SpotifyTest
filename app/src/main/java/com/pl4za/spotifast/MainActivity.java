@@ -151,6 +151,11 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
+    }
+
     private void activateDrawer(boolean status) {
         if (status) {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -324,28 +329,29 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             }
             if (fragmentNumber == 2) {
                 //lastPagerPosition = 2;
-                clearSearch();
                 ENABLE_SEARCH = false;
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 setTitle("Playing");
+                clearSearch();
             }
         } else {
             mDrawerToggle.setDrawerIndicatorEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             if (fragmentNumber == 0) {
-                boolean search = tracklistCtrl.hasTracks();
+                //boolean search = tracklistCtrl.hasTracks();
                 if (tracklistCtrl.hasTracks()) {
                     setTitle(tracklistCtrl.getPlaylistName());
                 }
-                ENABLE_SEARCH = search;
+                ENABLE_SEARCH = true;
                 ENABLE_CLEAR = false;
             } else if (fragmentNumber == 1) {
-                boolean search = queueCtrl.hasTracks();
-                ENABLE_SEARCH = search;
+                //boolean search = queueCtrl.hasTracks();
+                ENABLE_SEARCH = false;
                 ENABLE_CLEAR = clear;
                 setTitle("Queue");
+                clearSearch();
             }
             if (fragmentNumber == 2) {
                 //lastPagerPosition = 2;
@@ -353,6 +359,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 ENABLE_CLEAR = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 setTitle("Playing");
+                clearSearch();
             }
         }
         mDrawerToggle.syncState();

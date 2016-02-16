@@ -70,6 +70,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     @Override
     public void updateView() {
         mAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(queueCtrl.getQueuePosition());
     }
 
     @Override
@@ -85,12 +86,11 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
 
     @Override
     public void updateFilter(String query) {
-        mAdapter.getFilter().filter(query);
     }
 
     @Override
     public void setList(List<Track> list) {
-        queueCtrl.setTrackList(list);
+
     }
 
     @Override

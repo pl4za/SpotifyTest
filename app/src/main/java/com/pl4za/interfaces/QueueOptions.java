@@ -28,4 +28,5 @@ public interface QueueOptions extends TracklistOptions {
     boolean hasNext();
 
     boolean hasPrevious();
+
 }
