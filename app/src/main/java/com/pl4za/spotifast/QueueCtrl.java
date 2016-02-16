@@ -49,7 +49,8 @@ public class QueueCtrl implements QueueOptions {
             playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
             viewCtrl.showSnackBar("Playing");
         } else {
-            viewCtrl.showSnackBar("Player not initialized");
+            viewCtrl.showSnackBar("Initializing player");
+            playCtrl.initializePlayer();
         }
     }
 

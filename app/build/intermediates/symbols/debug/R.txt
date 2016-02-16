@@ -804,11 +804,11 @@ int string action_refresh 0x7f080017
 int string action_search 0x7f080018
 int string action_settings 0x7f080019
 int string action_undo 0x7f08001a
-int string app_name 0x7f08001b
+int string app_name 0x7f08001f
 int string com_spotify_sdk_login_progress 0x7f080020
 int string define_FloatingActionButton 0x7f080021
-int string drawer_close 0x7f08001c
-int string drawer_open 0x7f08001d
+int string drawer_close 0x7f08001b
+int string drawer_open 0x7f08001c
 int string library_FloatingActionButton_author 0x7f080022
 int string library_FloatingActionButton_authorWebsite 0x7f080023
 int string library_FloatingActionButton_isOpenSource 0x7f080024
@@ -818,8 +818,8 @@ int string library_FloatingActionButton_libraryVersion 0x7f080027
 int string library_FloatingActionButton_libraryWebsite 0x7f080028
 int string library_FloatingActionButton_licenseId 0x7f080029
 int string library_FloatingActionButton_repositoryLink 0x7f08002a
-int string list_row_transition 0x7f08001e
-int string search_hint 0x7f08001f
+int string list_row_transition 0x7f08001d
+int string search_hint 0x7f08001e
 int string status_bar_notification_info_overflow 0x7f080013
 int style AlertDialog_AppCompat 0x7f0b0083
 int style AlertDialog_AppCompat_Light 0x7f0b0084

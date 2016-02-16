@@ -37,8 +37,9 @@ import java.util.Random;
 public class FragmentTracks extends Fragment implements FragmentOptions, NetworkRequests {
 
     private static final String TAG = "FragmentTracks";
+    private static boolean firstPage = true;
     private static final int SCROLL_STATE_IDLE = 0;
-    String userID, playlistID;
+    String userID, playlistID, oldPlaylistID;
     List<Track> tempTrackList, tempSortList;
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
@@ -127,6 +128,16 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
+        if (taskCheckCache != null) {
+            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
+                taskCheckCache.cancel(true);
+            }
+        }
+        if (parseJsonToList != null) {
+            if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                parseJsonToList.cancel(true);
+            }
+        }
     }
 
     @Override
@@ -184,16 +195,19 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 .commit();
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
-        viewCtrl.showSnackBar("Playing");
     }
 
     @Override
     public synchronized void loadTracks(String userID, String playlistID) {
         this.userID = userID;
+        this.oldPlaylistID = playlistID;
         this.playlistID = playlistID;
         // Reset temp list
+        if (tempTrackList!=null) {
+            tempTrackList.clear();
+        }
         tempTrackList = new ArrayList<>();
-        tempTrackList.clear();
+        firstPage=true;
         String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
@@ -330,9 +344,15 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             try {
                 if (json != null) {
                     JSONArray playlists = json.getJSONArray("items");
+                    JSONObject ids, tracks, artistNumber;
+                    JSONArray albumArtArray, artistArray;
+                    String albumArt, bigAlbumArt, artistID;
+                    albumArt = bigAlbumArt = artistID = "";
+                    String[] artists;
+                    int artistSize = 0;
                     for (int i = 0; i < playlists.length(); i++) {
-                        JSONObject ids = playlists.getJSONObject(i);
-                        JSONObject tracks = ids.getJSONObject("track");
+                        ids = playlists.getJSONObject(i);
+                        tracks = ids.getJSONObject("track");
                         try {
                             if (tracks.getString("uri").startsWith("spotify:local")) {
                                 continue;
@@ -341,16 +361,13 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                             Log.e("json", "No track uri or local track. Skipping...");
                             break;
                         }
-                        JSONArray albumArtArray = tracks.getJSONObject("album").getJSONArray("images");
-                        JSONArray artistArray = tracks.getJSONArray("artists");
-                        String albumArt = "";
-                        String bigAlbumArt = "";
-                        String artistID = "";
-                        String[] artists = new String[artistArray.length()];
+                        albumArtArray = tracks.getJSONObject("album").getJSONArray("images");
+                        artistArray = tracks.getJSONArray("artists");
+                        artists = new String[artistArray.length()];
                         try {
-                            int artistSize = artistArray.length();
+                            artistSize = artistArray.length();
                             for (int j = 0; j < artistSize; j++) {
-                                JSONObject artistNumber = artistArray.getJSONObject(j);
+                                artistNumber = artistArray.getJSONObject(j);
                                 artists[j] = artistNumber.getString("name");
                                 artistID = artistNumber.getString("id");
                             }
@@ -382,20 +399,40 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                     }
                 }
                 taskCheckCache = new checkCache(next).execute();
+                // add
+                if (firstPage) {
+                    tracklistCtrl.clear();
+                    firstPage=false;
+                }
+                tracklistCtrl.addTrackList(tempTrackList, 0);
+                tempTrackList.clear();
+                mAdapter.notifyDataSetChanged();
             } else {
                 Log.i(TAG, "No more pages");
+                // add last page
+                if (firstPage) {
+                    tracklistCtrl.clear();
+                    firstPage=false;
+                }
+                tracklistCtrl.addTrackList(tempTrackList, 0);
+                tempTrackList.clear();
+                mAdapter.notifyDataSetChanged();
+                if (tempSortList!=null) {
+                    tempSortList.clear();
+                }
                 tempSortList = new ArrayList<>();
-                if (!tempTrackList.isEmpty()) {
-                    tempSortList.addAll(tempTrackList);
+                if (tracklistCtrl.hasTracks()) {
+                    tempSortList.addAll(tracklistCtrl.getTrackList());
                     Collections.sort(tempSortList, new ListComparator());
                     Random rand = new Random();
-                    String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                    String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
                     spotifyNetwork.getArtistPicture(ranArtist);
                     int i = 0;
                     for (Track s : tempSortList) {
                         s.setPosition(i);
                         i++;
                     }
+                    viewCtrl.showSnackBar("Sorted by date added");
                 }
                 refreshView.setEnabled(true);
                 refreshView.setRefreshing(false);

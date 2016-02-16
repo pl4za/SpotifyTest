@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.pl4za.spotifytest"
+        applicationId "com.pl4za.spotifyfast"
         minSdkVersion 16
         targetSdkVersion 23
     }

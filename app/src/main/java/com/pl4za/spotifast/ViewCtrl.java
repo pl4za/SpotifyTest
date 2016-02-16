@@ -55,7 +55,6 @@ public class ViewCtrl {
 
     public void updateView(int viewPosition) {
         for (FragmentOptions f : fragmentsOptions) {
-            Log.i("AI", f.getClass().getName());
             if (viewPosition==0 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentTracks"))) {
                 f.updateView();
             } else if (viewPosition==1 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue"))) {

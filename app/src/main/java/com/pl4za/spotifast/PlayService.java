@@ -289,16 +289,24 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void nextTrack() {
         if (queueCtrl.hasNext()) {
-            mPlayer.clearQueue();
-            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() + 1);
-            //mPlayer.skipToNext();
+            if (SHUFFLE) {
+                mPlayer.skipToNext();
+            } else {
+                mPlayer.clearQueue();
+                addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() + 1);
+            }
+            //TODO: mPlayer.skipToNext();
         }
     }
 
     public void prevTrack() {
-        if (queueCtrl.hasPrevious()) {
-            addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() - 1);
-            //mPlayer.skipToPrevious();
+        if (SHUFFLE) {
+            mPlayer.skipToPrevious();
+        } else {
+            if (queueCtrl.hasPrevious()) {
+                addToQueue(queueCtrl.getTrackURIList(queueCtrl.getTrackList()), queueCtrl.getQueuePosition() - 1);
+                //mPlayer.skipToPrevious();
+            }
         }
     }
 
@@ -339,7 +347,11 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             mNotificationManager.cancelAll();
             mNotificationManager = null;
             notification = null;
-            unregisterReceiver(switchButtonListener);
+            try {
+                unregisterReceiver(switchButtonListener);
+            }catch (IllegalArgumentException e) {
+                Log.e(TAG, "unregister receiver error");
+            }
         }
     }
 

@@ -2119,11 +2119,11 @@ containing a value of this type.
         public static final int action_search=0x7f080018;
         public static final int action_settings=0x7f080019;
         public static final int action_undo=0x7f08001a;
-        public static final int app_name=0x7f08001b;
+        public static final int app_name=0x7f08001f;
         public static final int com_spotify_sdk_login_progress=0x7f080020;
         public static final int define_FloatingActionButton=0x7f080021;
-        public static final int drawer_close=0x7f08001c;
-        public static final int drawer_open=0x7f08001d;
+        public static final int drawer_close=0x7f08001b;
+        public static final int drawer_open=0x7f08001c;
         public static final int library_FloatingActionButton_author=0x7f080022;
         public static final int library_FloatingActionButton_authorWebsite=0x7f080023;
         public static final int library_FloatingActionButton_isOpenSource=0x7f080024;
@@ -2133,8 +2133,8 @@ containing a value of this type.
         public static final int library_FloatingActionButton_libraryWebsite=0x7f080028;
         public static final int library_FloatingActionButton_licenseId=0x7f080029;
         public static final int library_FloatingActionButton_repositoryLink=0x7f08002a;
-        public static final int list_row_transition=0x7f08001e;
-        public static final int search_hint=0x7f08001f;
+        public static final int list_row_transition=0x7f08001d;
+        public static final int search_hint=0x7f08001e;
         public static final int status_bar_notification_info_overflow=0x7f080013;
     }
     public static final class style {
@@ -2479,33 +2479,33 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ActionBar_background com.pl4za.spotifytest:background}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_backgroundSplit com.pl4za.spotifytest:backgroundSplit}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_backgroundStacked com.pl4za.spotifytest:backgroundStacked}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_contentInsetEnd com.pl4za.spotifytest:contentInsetEnd}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_contentInsetLeft com.pl4za.spotifytest:contentInsetLeft}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_contentInsetRight com.pl4za.spotifytest:contentInsetRight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_contentInsetStart com.pl4za.spotifytest:contentInsetStart}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_customNavigationLayout com.pl4za.spotifytest:customNavigationLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_displayOptions com.pl4za.spotifytest:displayOptions}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_divider com.pl4za.spotifytest:divider}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_elevation com.pl4za.spotifytest:elevation}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_height com.pl4za.spotifytest:height}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_hideOnContentScroll com.pl4za.spotifytest:hideOnContentScroll}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_homeAsUpIndicator com.pl4za.spotifytest:homeAsUpIndicator}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_homeLayout com.pl4za.spotifytest:homeLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_icon com.pl4za.spotifytest:icon}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_indeterminateProgressStyle com.pl4za.spotifytest:indeterminateProgressStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_itemPadding com.pl4za.spotifytest:itemPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_logo com.pl4za.spotifytest:logo}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_navigationMode com.pl4za.spotifytest:navigationMode}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_popupTheme com.pl4za.spotifytest:popupTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_progressBarPadding com.pl4za.spotifytest:progressBarPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_progressBarStyle com.pl4za.spotifytest:progressBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_subtitle com.pl4za.spotifytest:subtitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_subtitleTextStyle com.pl4za.spotifytest:subtitleTextStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_title com.pl4za.spotifytest:title}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionBar_titleTextStyle com.pl4za.spotifytest:titleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_background com.pl4za.spotifyfast:background}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_backgroundSplit com.pl4za.spotifyfast:backgroundSplit}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_backgroundStacked com.pl4za.spotifyfast:backgroundStacked}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_contentInsetEnd com.pl4za.spotifyfast:contentInsetEnd}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_contentInsetLeft com.pl4za.spotifyfast:contentInsetLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_contentInsetRight com.pl4za.spotifyfast:contentInsetRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_contentInsetStart com.pl4za.spotifyfast:contentInsetStart}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_customNavigationLayout com.pl4za.spotifyfast:customNavigationLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_displayOptions com.pl4za.spotifyfast:displayOptions}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_divider com.pl4za.spotifyfast:divider}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_elevation com.pl4za.spotifyfast:elevation}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_height com.pl4za.spotifyfast:height}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_hideOnContentScroll com.pl4za.spotifyfast:hideOnContentScroll}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_homeAsUpIndicator com.pl4za.spotifyfast:homeAsUpIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_homeLayout com.pl4za.spotifyfast:homeLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_icon com.pl4za.spotifyfast:icon}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_indeterminateProgressStyle com.pl4za.spotifyfast:indeterminateProgressStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_itemPadding com.pl4za.spotifyfast:itemPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_logo com.pl4za.spotifyfast:logo}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_navigationMode com.pl4za.spotifyfast:navigationMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_popupTheme com.pl4za.spotifyfast:popupTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_progressBarPadding com.pl4za.spotifyfast:progressBarPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_progressBarStyle com.pl4za.spotifyfast:progressBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_subtitle com.pl4za.spotifyfast:subtitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_subtitleTextStyle com.pl4za.spotifyfast:subtitleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_title com.pl4za.spotifyfast:title}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionBar_titleTextStyle com.pl4za.spotifyfast:titleTextStyle}</code></td><td></td></tr>
            </table>
            @see #ActionBar_background
            @see #ActionBar_backgroundSplit
@@ -2545,17 +2545,17 @@ containing a value of this type.
             0x7f01001a, 0x7f01001b, 0x7f01008e
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#background}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#background}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:background
+          @attr name com.pl4za.spotifyfast:background
         */
         public static final int ActionBar_background = 10;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#backgroundSplit}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#backgroundSplit}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2563,11 +2563,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:backgroundSplit
+          @attr name com.pl4za.spotifyfast:backgroundSplit
         */
         public static final int ActionBar_backgroundSplit = 12;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#backgroundStacked}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#backgroundStacked}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2575,11 +2575,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:backgroundStacked
+          @attr name com.pl4za.spotifyfast:backgroundStacked
         */
         public static final int ActionBar_backgroundStacked = 11;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetEnd}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetEnd}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2591,11 +2591,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetEnd
+          @attr name com.pl4za.spotifyfast:contentInsetEnd
         */
         public static final int ActionBar_contentInsetEnd = 21;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetLeft}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetLeft}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2607,11 +2607,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetLeft
+          @attr name com.pl4za.spotifyfast:contentInsetLeft
         */
         public static final int ActionBar_contentInsetLeft = 22;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetRight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetRight}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2623,11 +2623,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetRight
+          @attr name com.pl4za.spotifyfast:contentInsetRight
         */
         public static final int ActionBar_contentInsetRight = 23;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetStart}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetStart}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2639,21 +2639,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetStart
+          @attr name com.pl4za.spotifyfast:contentInsetStart
         */
         public static final int ActionBar_contentInsetStart = 20;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#customNavigationLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#customNavigationLayout}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:customNavigationLayout
+          @attr name com.pl4za.spotifyfast:customNavigationLayout
         */
         public static final int ActionBar_customNavigationLayout = 13;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#displayOptions}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#displayOptions}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2671,21 +2671,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>showCustom</code></td><td>0x10</td><td></td></tr>
 <tr><td><code>disableHome</code></td><td>0x20</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:displayOptions
+          @attr name com.pl4za.spotifyfast:displayOptions
         */
         public static final int ActionBar_displayOptions = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#divider}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#divider}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:divider
+          @attr name com.pl4za.spotifyfast:divider
         */
         public static final int ActionBar_divider = 9;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#elevation}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#elevation}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2697,11 +2697,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:elevation
+          @attr name com.pl4za.spotifyfast:elevation
         */
         public static final int ActionBar_elevation = 24;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#height}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#height}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2713,11 +2713,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:height
+          @attr name com.pl4za.spotifyfast:height
         */
         public static final int ActionBar_height = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#hideOnContentScroll}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#hideOnContentScroll}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2727,51 +2727,51 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:hideOnContentScroll
+          @attr name com.pl4za.spotifyfast:hideOnContentScroll
         */
         public static final int ActionBar_hideOnContentScroll = 19;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#homeAsUpIndicator}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#homeAsUpIndicator}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:homeAsUpIndicator
+          @attr name com.pl4za.spotifyfast:homeAsUpIndicator
         */
         public static final int ActionBar_homeAsUpIndicator = 26;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#homeLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#homeLayout}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:homeLayout
+          @attr name com.pl4za.spotifyfast:homeLayout
         */
         public static final int ActionBar_homeLayout = 14;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#icon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#icon}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:icon
+          @attr name com.pl4za.spotifyfast:icon
         */
         public static final int ActionBar_icon = 7;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#indeterminateProgressStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#indeterminateProgressStyle}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:indeterminateProgressStyle
+          @attr name com.pl4za.spotifyfast:indeterminateProgressStyle
         */
         public static final int ActionBar_indeterminateProgressStyle = 16;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#itemPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#itemPadding}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2783,21 +2783,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:itemPadding
+          @attr name com.pl4za.spotifyfast:itemPadding
         */
         public static final int ActionBar_itemPadding = 18;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#logo}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#logo}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:logo
+          @attr name com.pl4za.spotifyfast:logo
         */
         public static final int ActionBar_logo = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#navigationMode}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#navigationMode}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2811,21 +2811,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>listMode</code></td><td>1</td><td></td></tr>
 <tr><td><code>tabMode</code></td><td>2</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:navigationMode
+          @attr name com.pl4za.spotifyfast:navigationMode
         */
         public static final int ActionBar_navigationMode = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#popupTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#popupTheme}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:popupTheme
+          @attr name com.pl4za.spotifyfast:popupTheme
         */
         public static final int ActionBar_popupTheme = 25;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#progressBarPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#progressBarPadding}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2837,21 +2837,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:progressBarPadding
+          @attr name com.pl4za.spotifyfast:progressBarPadding
         */
         public static final int ActionBar_progressBarPadding = 17;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#progressBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#progressBarStyle}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:progressBarStyle
+          @attr name com.pl4za.spotifyfast:progressBarStyle
         */
         public static final int ActionBar_progressBarStyle = 15;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitle}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2861,21 +2861,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:subtitle
+          @attr name com.pl4za.spotifyfast:subtitle
         */
         public static final int ActionBar_subtitle = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitleTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitleTextStyle}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:subtitleTextStyle
+          @attr name com.pl4za.spotifyfast:subtitleTextStyle
         */
         public static final int ActionBar_subtitleTextStyle = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#title}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#title}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
@@ -2885,17 +2885,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:title
+          @attr name com.pl4za.spotifyfast:title
         */
         public static final int ActionBar_title = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleTextStyle}
           attribute's value can be found in the {@link #ActionBar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:titleTextStyle
+          @attr name com.pl4za.spotifyfast:titleTextStyle
         */
         public static final int ActionBar_titleTextStyle = 5;
         /** Attributes that can be used with a ActionBarLayout.
@@ -2947,12 +2947,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ActionMode_background com.pl4za.spotifytest:background}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionMode_backgroundSplit com.pl4za.spotifytest:backgroundSplit}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionMode_closeItemLayout com.pl4za.spotifytest:closeItemLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionMode_height com.pl4za.spotifytest:height}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionMode_subtitleTextStyle com.pl4za.spotifytest:subtitleTextStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActionMode_titleTextStyle com.pl4za.spotifytest:titleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_background com.pl4za.spotifyfast:background}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_backgroundSplit com.pl4za.spotifyfast:backgroundSplit}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_closeItemLayout com.pl4za.spotifyfast:closeItemLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_height com.pl4za.spotifyfast:height}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_subtitleTextStyle com.pl4za.spotifyfast:subtitleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActionMode_titleTextStyle com.pl4za.spotifyfast:titleTextStyle}</code></td><td></td></tr>
            </table>
            @see #ActionMode_background
            @see #ActionMode_backgroundSplit
@@ -2966,17 +2966,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f01000e, 0x7f01001c
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#background}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#background}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:background
+          @attr name com.pl4za.spotifyfast:background
         */
         public static final int ActionMode_background = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#backgroundSplit}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#backgroundSplit}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
@@ -2984,21 +2984,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:backgroundSplit
+          @attr name com.pl4za.spotifyfast:backgroundSplit
         */
         public static final int ActionMode_backgroundSplit = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#closeItemLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#closeItemLayout}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:closeItemLayout
+          @attr name com.pl4za.spotifyfast:closeItemLayout
         */
         public static final int ActionMode_closeItemLayout = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#height}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#height}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
@@ -3010,27 +3010,27 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:height
+          @attr name com.pl4za.spotifyfast:height
         */
         public static final int ActionMode_height = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitleTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitleTextStyle}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:subtitleTextStyle
+          @attr name com.pl4za.spotifyfast:subtitleTextStyle
         */
         public static final int ActionMode_subtitleTextStyle = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleTextStyle}
           attribute's value can be found in the {@link #ActionMode} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:titleTextStyle
+          @attr name com.pl4za.spotifyfast:titleTextStyle
         */
         public static final int ActionMode_titleTextStyle = 1;
         /** Attributes that can be used with a ActivityChooserView.
@@ -3039,8 +3039,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ActivityChooserView_expandActivityOverflowButtonDrawable com.pl4za.spotifytest:expandActivityOverflowButtonDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #ActivityChooserView_initialActivityCount com.pl4za.spotifytest:initialActivityCount}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActivityChooserView_expandActivityOverflowButtonDrawable com.pl4za.spotifyfast:expandActivityOverflowButtonDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #ActivityChooserView_initialActivityCount com.pl4za.spotifyfast:initialActivityCount}</code></td><td></td></tr>
            </table>
            @see #ActivityChooserView_expandActivityOverflowButtonDrawable
            @see #ActivityChooserView_initialActivityCount
@@ -3049,17 +3049,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f01001d, 0x7f01001e
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#expandActivityOverflowButtonDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#expandActivityOverflowButtonDrawable}
           attribute's value can be found in the {@link #ActivityChooserView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:expandActivityOverflowButtonDrawable
+          @attr name com.pl4za.spotifyfast:expandActivityOverflowButtonDrawable
         */
         public static final int ActivityChooserView_expandActivityOverflowButtonDrawable = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#initialActivityCount}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#initialActivityCount}
           attribute's value can be found in the {@link #ActivityChooserView} array.
 
 
@@ -3069,7 +3069,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:initialActivityCount
+          @attr name com.pl4za.spotifyfast:initialActivityCount
         */
         public static final int ActivityChooserView_initialActivityCount = 0;
         /** Attributes that can be used with a AlertDialog.
@@ -3079,11 +3079,11 @@ containing a value of this type.
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #AlertDialog_android_layout android:layout}</code></td><td></td></tr>
-           <tr><td><code>{@link #AlertDialog_buttonPanelSideLayout com.pl4za.spotifytest:buttonPanelSideLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #AlertDialog_listItemLayout com.pl4za.spotifytest:listItemLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #AlertDialog_listLayout com.pl4za.spotifytest:listLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #AlertDialog_multiChoiceItemLayout com.pl4za.spotifytest:multiChoiceItemLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #AlertDialog_singleChoiceItemLayout com.pl4za.spotifytest:singleChoiceItemLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #AlertDialog_buttonPanelSideLayout com.pl4za.spotifyfast:buttonPanelSideLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #AlertDialog_listItemLayout com.pl4za.spotifyfast:listItemLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #AlertDialog_listLayout com.pl4za.spotifyfast:listLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #AlertDialog_multiChoiceItemLayout com.pl4za.spotifyfast:multiChoiceItemLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #AlertDialog_singleChoiceItemLayout com.pl4za.spotifyfast:singleChoiceItemLayout}</code></td><td></td></tr>
            </table>
            @see #AlertDialog_android_layout
            @see #AlertDialog_buttonPanelSideLayout
@@ -3103,53 +3103,53 @@ containing a value of this type.
         */
         public static final int AlertDialog_android_layout = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonPanelSideLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonPanelSideLayout}
           attribute's value can be found in the {@link #AlertDialog} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonPanelSideLayout
+          @attr name com.pl4za.spotifyfast:buttonPanelSideLayout
         */
         public static final int AlertDialog_buttonPanelSideLayout = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listItemLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listItemLayout}
           attribute's value can be found in the {@link #AlertDialog} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:listItemLayout
+          @attr name com.pl4za.spotifyfast:listItemLayout
         */
         public static final int AlertDialog_listItemLayout = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listLayout}
           attribute's value can be found in the {@link #AlertDialog} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:listLayout
+          @attr name com.pl4za.spotifyfast:listLayout
         */
         public static final int AlertDialog_listLayout = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#multiChoiceItemLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#multiChoiceItemLayout}
           attribute's value can be found in the {@link #AlertDialog} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:multiChoiceItemLayout
+          @attr name com.pl4za.spotifyfast:multiChoiceItemLayout
         */
         public static final int AlertDialog_multiChoiceItemLayout = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#singleChoiceItemLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#singleChoiceItemLayout}
           attribute's value can be found in the {@link #AlertDialog} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:singleChoiceItemLayout
+          @attr name com.pl4za.spotifyfast:singleChoiceItemLayout
         */
         public static final int AlertDialog_singleChoiceItemLayout = 4;
         /** Attributes that can be used with a AppCompatTextView.
@@ -3159,7 +3159,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #AppCompatTextView_android_textAppearance android:textAppearance}</code></td><td></td></tr>
-           <tr><td><code>{@link #AppCompatTextView_textAllCaps com.pl4za.spotifytest:textAllCaps}</code></td><td></td></tr>
+           <tr><td><code>{@link #AppCompatTextView_textAllCaps com.pl4za.spotifyfast:textAllCaps}</code></td><td></td></tr>
            </table>
            @see #AppCompatTextView_android_textAppearance
            @see #AppCompatTextView_textAllCaps
@@ -3174,14 +3174,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int AppCompatTextView_android_textAppearance = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAllCaps}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAllCaps}
           attribute's value can be found in the {@link #AppCompatTextView} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a boolean value, either "<code>true</code>" or "<code>false</code>".
-          @attr name com.pl4za.spotifytest:textAllCaps
+          @attr name com.pl4za.spotifyfast:textAllCaps
         */
         public static final int AppCompatTextView_textAllCaps = 1;
         /** Attributes that can be used with a ButtonBarLayout.
@@ -3190,7 +3190,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ButtonBarLayout_allowStacking com.pl4za.spotifytest:allowStacking}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarLayout_allowStacking com.pl4za.spotifyfast:allowStacking}</code></td><td></td></tr>
            </table>
            @see #ButtonBarLayout_allowStacking
          */
@@ -3198,7 +3198,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010025
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#allowStacking}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#allowStacking}
           attribute's value can be found in the {@link #ButtonBarLayout} array.
 
 
@@ -3208,7 +3208,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:allowStacking
+          @attr name com.pl4za.spotifyfast:allowStacking
         */
         public static final int ButtonBarLayout_allowStacking = 0;
         /** Attributes that can be used with a CircleImageView.
@@ -3217,8 +3217,8 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #CircleImageView_border_color com.pl4za.spotifytest:border_color}</code></td><td></td></tr>
-           <tr><td><code>{@link #CircleImageView_border_width com.pl4za.spotifytest:border_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleImageView_border_color com.pl4za.spotifyfast:border_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleImageView_border_width com.pl4za.spotifyfast:border_width}</code></td><td></td></tr>
            </table>
            @see #CircleImageView_border_color
            @see #CircleImageView_border_width
@@ -3227,7 +3227,7 @@ containing a value of this type.
             0x7f010026, 0x7f010027
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#border_color}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#border_color}
           attribute's value can be found in the {@link #CircleImageView} array.
 
 
@@ -3238,11 +3238,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:border_color
+          @attr name com.pl4za.spotifyfast:border_color
         */
         public static final int CircleImageView_border_color = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#border_width}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#border_width}
           attribute's value can be found in the {@link #CircleImageView} array.
 
 
@@ -3254,7 +3254,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:border_width
+          @attr name com.pl4za.spotifyfast:border_width
         */
         public static final int CircleImageView_border_width = 0;
         /** Attributes that can be used with a CompoundButton.
@@ -3264,8 +3264,8 @@ containing a value of this type.
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #CompoundButton_android_button android:button}</code></td><td></td></tr>
-           <tr><td><code>{@link #CompoundButton_buttonTint com.pl4za.spotifytest:buttonTint}</code></td><td></td></tr>
-           <tr><td><code>{@link #CompoundButton_buttonTintMode com.pl4za.spotifytest:buttonTintMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #CompoundButton_buttonTint com.pl4za.spotifyfast:buttonTint}</code></td><td></td></tr>
+           <tr><td><code>{@link #CompoundButton_buttonTintMode com.pl4za.spotifyfast:buttonTintMode}</code></td><td></td></tr>
            </table>
            @see #CompoundButton_android_button
            @see #CompoundButton_buttonTint
@@ -3281,7 +3281,7 @@ containing a value of this type.
         */
         public static final int CompoundButton_android_button = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonTint}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonTint}
           attribute's value can be found in the {@link #CompoundButton} array.
 
 
@@ -3292,11 +3292,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:buttonTint
+          @attr name com.pl4za.spotifyfast:buttonTint
         */
         public static final int CompoundButton_buttonTint = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonTintMode}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonTintMode}
           attribute's value can be found in the {@link #CompoundButton} array.
 
 
@@ -3312,7 +3312,7 @@ containing a value of this type.
 <tr><td><code>multiply</code></td><td>14</td><td></td></tr>
 <tr><td><code>screen</code></td><td>15</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:buttonTintMode
+          @attr name com.pl4za.spotifyfast:buttonTintMode
         */
         public static final int CompoundButton_buttonTintMode = 2;
         /** Attributes that can be used with a DrawerArrowToggle.
@@ -3321,14 +3321,14 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_arrowHeadLength com.pl4za.spotifytest:arrowHeadLength}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_arrowShaftLength com.pl4za.spotifytest:arrowShaftLength}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_barLength com.pl4za.spotifytest:barLength}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_color com.pl4za.spotifytest:color}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_drawableSize com.pl4za.spotifytest:drawableSize}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_gapBetweenBars com.pl4za.spotifytest:gapBetweenBars}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_spinBars com.pl4za.spotifytest:spinBars}</code></td><td></td></tr>
-           <tr><td><code>{@link #DrawerArrowToggle_thickness com.pl4za.spotifytest:thickness}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_arrowHeadLength com.pl4za.spotifyfast:arrowHeadLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_arrowShaftLength com.pl4za.spotifyfast:arrowShaftLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_barLength com.pl4za.spotifyfast:barLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_color com.pl4za.spotifyfast:color}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_drawableSize com.pl4za.spotifyfast:drawableSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_gapBetweenBars com.pl4za.spotifyfast:gapBetweenBars}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_spinBars com.pl4za.spotifyfast:spinBars}</code></td><td></td></tr>
+           <tr><td><code>{@link #DrawerArrowToggle_thickness com.pl4za.spotifyfast:thickness}</code></td><td></td></tr>
            </table>
            @see #DrawerArrowToggle_arrowHeadLength
            @see #DrawerArrowToggle_arrowShaftLength
@@ -3344,7 +3344,7 @@ containing a value of this type.
             0x7f01002e, 0x7f01002f, 0x7f010030, 0x7f010031
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#arrowHeadLength}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#arrowHeadLength}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3356,11 +3356,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:arrowHeadLength
+          @attr name com.pl4za.spotifyfast:arrowHeadLength
         */
         public static final int DrawerArrowToggle_arrowHeadLength = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#arrowShaftLength}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#arrowShaftLength}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3372,11 +3372,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:arrowShaftLength
+          @attr name com.pl4za.spotifyfast:arrowShaftLength
         */
         public static final int DrawerArrowToggle_arrowShaftLength = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#barLength}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#barLength}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3388,11 +3388,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:barLength
+          @attr name com.pl4za.spotifyfast:barLength
         */
         public static final int DrawerArrowToggle_barLength = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#color}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#color}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3403,11 +3403,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:color
+          @attr name com.pl4za.spotifyfast:color
         */
         public static final int DrawerArrowToggle_color = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#drawableSize}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#drawableSize}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3419,11 +3419,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:drawableSize
+          @attr name com.pl4za.spotifyfast:drawableSize
         */
         public static final int DrawerArrowToggle_drawableSize = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#gapBetweenBars}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#gapBetweenBars}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3435,11 +3435,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:gapBetweenBars
+          @attr name com.pl4za.spotifyfast:gapBetweenBars
         */
         public static final int DrawerArrowToggle_gapBetweenBars = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#spinBars}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#spinBars}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3449,11 +3449,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:spinBars
+          @attr name com.pl4za.spotifyfast:spinBars
         */
         public static final int DrawerArrowToggle_spinBars = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#thickness}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#thickness}
           attribute's value can be found in the {@link #DrawerArrowToggle} array.
 
 
@@ -3465,7 +3465,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:thickness
+          @attr name com.pl4za.spotifyfast:thickness
         */
         public static final int DrawerArrowToggle_thickness = 7;
         /** Attributes that can be used with a FloatingActionButton.
@@ -3474,11 +3474,11 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #FloatingActionButton_fab_colorNormal com.pl4za.spotifytest:fab_colorNormal}</code></td><td></td></tr>
-           <tr><td><code>{@link #FloatingActionButton_fab_colorPressed com.pl4za.spotifytest:fab_colorPressed}</code></td><td></td></tr>
-           <tr><td><code>{@link #FloatingActionButton_fab_colorRipple com.pl4za.spotifytest:fab_colorRipple}</code></td><td></td></tr>
-           <tr><td><code>{@link #FloatingActionButton_fab_shadow com.pl4za.spotifytest:fab_shadow}</code></td><td></td></tr>
-           <tr><td><code>{@link #FloatingActionButton_fab_type com.pl4za.spotifytest:fab_type}</code></td><td></td></tr>
+           <tr><td><code>{@link #FloatingActionButton_fab_colorNormal com.pl4za.spotifyfast:fab_colorNormal}</code></td><td></td></tr>
+           <tr><td><code>{@link #FloatingActionButton_fab_colorPressed com.pl4za.spotifyfast:fab_colorPressed}</code></td><td></td></tr>
+           <tr><td><code>{@link #FloatingActionButton_fab_colorRipple com.pl4za.spotifyfast:fab_colorRipple}</code></td><td></td></tr>
+           <tr><td><code>{@link #FloatingActionButton_fab_shadow com.pl4za.spotifyfast:fab_shadow}</code></td><td></td></tr>
+           <tr><td><code>{@link #FloatingActionButton_fab_type com.pl4za.spotifyfast:fab_type}</code></td><td></td></tr>
            </table>
            @see #FloatingActionButton_fab_colorNormal
            @see #FloatingActionButton_fab_colorPressed
@@ -3491,7 +3491,7 @@ containing a value of this type.
             0x7f010036
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#fab_colorNormal}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#fab_colorNormal}
           attribute's value can be found in the {@link #FloatingActionButton} array.
 
 
@@ -3502,11 +3502,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:fab_colorNormal
+          @attr name com.pl4za.spotifyfast:fab_colorNormal
         */
         public static final int FloatingActionButton_fab_colorNormal = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#fab_colorPressed}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#fab_colorPressed}
           attribute's value can be found in the {@link #FloatingActionButton} array.
 
 
@@ -3517,11 +3517,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:fab_colorPressed
+          @attr name com.pl4za.spotifyfast:fab_colorPressed
         */
         public static final int FloatingActionButton_fab_colorPressed = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#fab_colorRipple}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#fab_colorRipple}
           attribute's value can be found in the {@link #FloatingActionButton} array.
 
 
@@ -3532,11 +3532,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:fab_colorRipple
+          @attr name com.pl4za.spotifyfast:fab_colorRipple
         */
         public static final int FloatingActionButton_fab_colorRipple = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#fab_shadow}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#fab_shadow}
           attribute's value can be found in the {@link #FloatingActionButton} array.
 
 
@@ -3546,11 +3546,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:fab_shadow
+          @attr name com.pl4za.spotifyfast:fab_shadow
         */
         public static final int FloatingActionButton_fab_shadow = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#fab_type}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#fab_type}
           attribute's value can be found in the {@link #FloatingActionButton} array.
 
 
@@ -3563,7 +3563,7 @@ containing a value of this type.
 <tr><td><code>normal</code></td><td>0</td><td></td></tr>
 <tr><td><code>mini</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:fab_type
+          @attr name com.pl4za.spotifyfast:fab_type
         */
         public static final int FloatingActionButton_fab_type = 4;
         /** Attributes that can be used with a LinearLayoutCompat.
@@ -3577,10 +3577,10 @@ containing a value of this type.
            <tr><td><code>{@link #LinearLayoutCompat_android_gravity android:gravity}</code></td><td></td></tr>
            <tr><td><code>{@link #LinearLayoutCompat_android_orientation android:orientation}</code></td><td></td></tr>
            <tr><td><code>{@link #LinearLayoutCompat_android_weightSum android:weightSum}</code></td><td></td></tr>
-           <tr><td><code>{@link #LinearLayoutCompat_divider com.pl4za.spotifytest:divider}</code></td><td></td></tr>
-           <tr><td><code>{@link #LinearLayoutCompat_dividerPadding com.pl4za.spotifytest:dividerPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #LinearLayoutCompat_measureWithLargestChild com.pl4za.spotifytest:measureWithLargestChild}</code></td><td></td></tr>
-           <tr><td><code>{@link #LinearLayoutCompat_showDividers com.pl4za.spotifytest:showDividers}</code></td><td></td></tr>
+           <tr><td><code>{@link #LinearLayoutCompat_divider com.pl4za.spotifyfast:divider}</code></td><td></td></tr>
+           <tr><td><code>{@link #LinearLayoutCompat_dividerPadding com.pl4za.spotifyfast:dividerPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #LinearLayoutCompat_measureWithLargestChild com.pl4za.spotifyfast:measureWithLargestChild}</code></td><td></td></tr>
+           <tr><td><code>{@link #LinearLayoutCompat_showDividers com.pl4za.spotifyfast:showDividers}</code></td><td></td></tr>
            </table>
            @see #LinearLayoutCompat_android_baselineAligned
            @see #LinearLayoutCompat_android_baselineAlignedChildIndex
@@ -3628,17 +3628,17 @@ containing a value of this type.
         */
         public static final int LinearLayoutCompat_android_weightSum = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#divider}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#divider}
           attribute's value can be found in the {@link #LinearLayoutCompat} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:divider
+          @attr name com.pl4za.spotifyfast:divider
         */
         public static final int LinearLayoutCompat_divider = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dividerPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dividerPadding}
           attribute's value can be found in the {@link #LinearLayoutCompat} array.
 
 
@@ -3650,11 +3650,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:dividerPadding
+          @attr name com.pl4za.spotifyfast:dividerPadding
         */
         public static final int LinearLayoutCompat_dividerPadding = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#measureWithLargestChild}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#measureWithLargestChild}
           attribute's value can be found in the {@link #LinearLayoutCompat} array.
 
 
@@ -3664,11 +3664,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:measureWithLargestChild
+          @attr name com.pl4za.spotifyfast:measureWithLargestChild
         */
         public static final int LinearLayoutCompat_measureWithLargestChild = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#showDividers}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#showDividers}
           attribute's value can be found in the {@link #LinearLayoutCompat} array.
 
 
@@ -3683,7 +3683,7 @@ containing a value of this type.
 <tr><td><code>middle</code></td><td>2</td><td></td></tr>
 <tr><td><code>end</code></td><td>4</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:showDividers
+          @attr name com.pl4za.spotifyfast:showDividers
         */
         public static final int LinearLayoutCompat_showDividers = 7;
         /** Attributes that can be used with a LinearLayoutCompat_Layout.
@@ -3822,9 +3822,9 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #MenuItem_actionLayout com.pl4za.spotifytest:actionLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #MenuItem_actionProviderClass com.pl4za.spotifytest:actionProviderClass}</code></td><td></td></tr>
-           <tr><td><code>{@link #MenuItem_actionViewClass com.pl4za.spotifytest:actionViewClass}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuItem_actionLayout com.pl4za.spotifyfast:actionLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuItem_actionProviderClass com.pl4za.spotifyfast:actionProviderClass}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuItem_actionViewClass com.pl4za.spotifyfast:actionViewClass}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuItem_android_alphabeticShortcut android:alphabeticShortcut}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuItem_android_checkable android:checkable}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuItem_android_checked android:checked}</code></td><td></td></tr>
@@ -3838,7 +3838,7 @@ containing a value of this type.
            <tr><td><code>{@link #MenuItem_android_title android:title}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuItem_android_titleCondensed android:titleCondensed}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuItem_android_visible android:visible}</code></td><td></td></tr>
-           <tr><td><code>{@link #MenuItem_showAsAction com.pl4za.spotifytest:showAsAction}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuItem_showAsAction com.pl4za.spotifyfast:showAsAction}</code></td><td></td></tr>
            </table>
            @see #MenuItem_actionLayout
            @see #MenuItem_actionProviderClass
@@ -3866,17 +3866,17 @@ containing a value of this type.
             0x7f01003d
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionLayout}
           attribute's value can be found in the {@link #MenuItem} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionLayout
+          @attr name com.pl4za.spotifyfast:actionLayout
         */
         public static final int MenuItem_actionLayout = 14;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionProviderClass}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionProviderClass}
           attribute's value can be found in the {@link #MenuItem} array.
 
 
@@ -3886,11 +3886,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:actionProviderClass
+          @attr name com.pl4za.spotifyfast:actionProviderClass
         */
         public static final int MenuItem_actionProviderClass = 16;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionViewClass}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionViewClass}
           attribute's value can be found in the {@link #MenuItem} array.
 
 
@@ -3900,7 +3900,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:actionViewClass
+          @attr name com.pl4za.spotifyfast:actionViewClass
         */
         public static final int MenuItem_actionViewClass = 15;
         /**
@@ -3982,7 +3982,7 @@ containing a value of this type.
         */
         public static final int MenuItem_android_visible = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#showAsAction}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#showAsAction}
           attribute's value can be found in the {@link #MenuItem} array.
 
 
@@ -3998,7 +3998,7 @@ containing a value of this type.
 <tr><td><code>withText</code></td><td>4</td><td></td></tr>
 <tr><td><code>collapseActionView</code></td><td>8</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:showAsAction
+          @attr name com.pl4za.spotifyfast:showAsAction
         */
         public static final int MenuItem_showAsAction = 13;
         /** Attributes that can be used with a MenuView.
@@ -4014,7 +4014,7 @@ containing a value of this type.
            <tr><td><code>{@link #MenuView_android_itemTextAppearance android:itemTextAppearance}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuView_android_verticalDivider android:verticalDivider}</code></td><td></td></tr>
            <tr><td><code>{@link #MenuView_android_windowAnimationStyle android:windowAnimationStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #MenuView_preserveIconSpacing com.pl4za.spotifytest:preserveIconSpacing}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuView_preserveIconSpacing com.pl4za.spotifyfast:preserveIconSpacing}</code></td><td></td></tr>
            </table>
            @see #MenuView_android_headerBackground
            @see #MenuView_android_horizontalDivider
@@ -4072,7 +4072,7 @@ containing a value of this type.
         */
         public static final int MenuView_android_windowAnimationStyle = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#preserveIconSpacing}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#preserveIconSpacing}
           attribute's value can be found in the {@link #MenuView} array.
 
 
@@ -4082,7 +4082,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:preserveIconSpacing
+          @attr name com.pl4za.spotifyfast:preserveIconSpacing
         */
         public static final int MenuView_preserveIconSpacing = 7;
         /** Attributes that can be used with a PopupWindow.
@@ -4092,7 +4092,7 @@ containing a value of this type.
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #PopupWindow_android_popupBackground android:popupBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #PopupWindow_overlapAnchor com.pl4za.spotifytest:overlapAnchor}</code></td><td></td></tr>
+           <tr><td><code>{@link #PopupWindow_overlapAnchor com.pl4za.spotifyfast:overlapAnchor}</code></td><td></td></tr>
            </table>
            @see #PopupWindow_android_popupBackground
            @see #PopupWindow_overlapAnchor
@@ -4107,7 +4107,7 @@ containing a value of this type.
         */
         public static final int PopupWindow_android_popupBackground = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#overlapAnchor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#overlapAnchor}
           attribute's value can be found in the {@link #PopupWindow} array.
 
 
@@ -4117,7 +4117,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:overlapAnchor
+          @attr name com.pl4za.spotifyfast:overlapAnchor
         */
         public static final int PopupWindow_overlapAnchor = 1;
         /** Attributes that can be used with a PopupWindowBackgroundState.
@@ -4126,7 +4126,7 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #PopupWindowBackgroundState_state_above_anchor com.pl4za.spotifytest:state_above_anchor}</code></td><td></td></tr>
+           <tr><td><code>{@link #PopupWindowBackgroundState_state_above_anchor com.pl4za.spotifyfast:state_above_anchor}</code></td><td></td></tr>
            </table>
            @see #PopupWindowBackgroundState_state_above_anchor
          */
@@ -4134,7 +4134,7 @@ containing a value of this type.
             0x7f010040
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#state_above_anchor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#state_above_anchor}
           attribute's value can be found in the {@link #PopupWindowBackgroundState} array.
 
 
@@ -4144,7 +4144,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:state_above_anchor
+          @attr name com.pl4za.spotifyfast:state_above_anchor
         */
         public static final int PopupWindowBackgroundState_state_above_anchor = 0;
         /** Attributes that can be used with a RecyclerView.
@@ -4154,10 +4154,10 @@ containing a value of this type.
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #RecyclerView_android_orientation android:orientation}</code></td><td></td></tr>
-           <tr><td><code>{@link #RecyclerView_layoutManager com.pl4za.spotifytest:layoutManager}</code></td><td></td></tr>
-           <tr><td><code>{@link #RecyclerView_reverseLayout com.pl4za.spotifytest:reverseLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #RecyclerView_spanCount com.pl4za.spotifytest:spanCount}</code></td><td></td></tr>
-           <tr><td><code>{@link #RecyclerView_stackFromEnd com.pl4za.spotifytest:stackFromEnd}</code></td><td></td></tr>
+           <tr><td><code>{@link #RecyclerView_layoutManager com.pl4za.spotifyfast:layoutManager}</code></td><td></td></tr>
+           <tr><td><code>{@link #RecyclerView_reverseLayout com.pl4za.spotifyfast:reverseLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #RecyclerView_spanCount com.pl4za.spotifyfast:spanCount}</code></td><td></td></tr>
+           <tr><td><code>{@link #RecyclerView_stackFromEnd com.pl4za.spotifyfast:stackFromEnd}</code></td><td></td></tr>
            </table>
            @see #RecyclerView_android_orientation
            @see #RecyclerView_layoutManager
@@ -4176,7 +4176,7 @@ containing a value of this type.
         */
         public static final int RecyclerView_android_orientation = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#layoutManager}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#layoutManager}
           attribute's value can be found in the {@link #RecyclerView} array.
 
 
@@ -4186,11 +4186,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:layoutManager
+          @attr name com.pl4za.spotifyfast:layoutManager
         */
         public static final int RecyclerView_layoutManager = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#reverseLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#reverseLayout}
           attribute's value can be found in the {@link #RecyclerView} array.
 
 
@@ -4200,11 +4200,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:reverseLayout
+          @attr name com.pl4za.spotifyfast:reverseLayout
         */
         public static final int RecyclerView_reverseLayout = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#spanCount}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#spanCount}
           attribute's value can be found in the {@link #RecyclerView} array.
 
 
@@ -4214,11 +4214,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:spanCount
+          @attr name com.pl4za.spotifyfast:spanCount
         */
         public static final int RecyclerView_spanCount = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#stackFromEnd}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#stackFromEnd}
           attribute's value can be found in the {@link #RecyclerView} array.
 
 
@@ -4228,7 +4228,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:stackFromEnd
+          @attr name com.pl4za.spotifyfast:stackFromEnd
         */
         public static final int RecyclerView_stackFromEnd = 4;
         /** Attributes that can be used with a SearchView.
@@ -4241,19 +4241,19 @@ containing a value of this type.
            <tr><td><code>{@link #SearchView_android_imeOptions android:imeOptions}</code></td><td></td></tr>
            <tr><td><code>{@link #SearchView_android_inputType android:inputType}</code></td><td></td></tr>
            <tr><td><code>{@link #SearchView_android_maxWidth android:maxWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_closeIcon com.pl4za.spotifytest:closeIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_commitIcon com.pl4za.spotifytest:commitIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_defaultQueryHint com.pl4za.spotifytest:defaultQueryHint}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_goIcon com.pl4za.spotifytest:goIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_iconifiedByDefault com.pl4za.spotifytest:iconifiedByDefault}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_layout com.pl4za.spotifytest:layout}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_queryBackground com.pl4za.spotifytest:queryBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_queryHint com.pl4za.spotifytest:queryHint}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_searchHintIcon com.pl4za.spotifytest:searchHintIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_searchIcon com.pl4za.spotifytest:searchIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_submitBackground com.pl4za.spotifytest:submitBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_suggestionRowLayout com.pl4za.spotifytest:suggestionRowLayout}</code></td><td></td></tr>
-           <tr><td><code>{@link #SearchView_voiceIcon com.pl4za.spotifytest:voiceIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_closeIcon com.pl4za.spotifyfast:closeIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_commitIcon com.pl4za.spotifyfast:commitIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_defaultQueryHint com.pl4za.spotifyfast:defaultQueryHint}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_goIcon com.pl4za.spotifyfast:goIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_iconifiedByDefault com.pl4za.spotifyfast:iconifiedByDefault}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_layout com.pl4za.spotifyfast:layout}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_queryBackground com.pl4za.spotifyfast:queryBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_queryHint com.pl4za.spotifyfast:queryHint}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_searchHintIcon com.pl4za.spotifyfast:searchHintIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_searchIcon com.pl4za.spotifyfast:searchIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_submitBackground com.pl4za.spotifyfast:submitBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_suggestionRowLayout com.pl4za.spotifyfast:suggestionRowLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #SearchView_voiceIcon com.pl4za.spotifyfast:voiceIcon}</code></td><td></td></tr>
            </table>
            @see #SearchView_android_focusable
            @see #SearchView_android_imeOptions
@@ -4305,27 +4305,27 @@ containing a value of this type.
         */
         public static final int SearchView_android_maxWidth = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#closeIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#closeIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:closeIcon
+          @attr name com.pl4za.spotifyfast:closeIcon
         */
         public static final int SearchView_closeIcon = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#commitIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#commitIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:commitIcon
+          @attr name com.pl4za.spotifyfast:commitIcon
         */
         public static final int SearchView_commitIcon = 13;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#defaultQueryHint}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#defaultQueryHint}
           attribute's value can be found in the {@link #SearchView} array.
 
 
@@ -4335,21 +4335,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:defaultQueryHint
+          @attr name com.pl4za.spotifyfast:defaultQueryHint
         */
         public static final int SearchView_defaultQueryHint = 7;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#goIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#goIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:goIcon
+          @attr name com.pl4za.spotifyfast:goIcon
         */
         public static final int SearchView_goIcon = 9;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#iconifiedByDefault}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#iconifiedByDefault}
           attribute's value can be found in the {@link #SearchView} array.
 
 
@@ -4359,31 +4359,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:iconifiedByDefault
+          @attr name com.pl4za.spotifyfast:iconifiedByDefault
         */
         public static final int SearchView_iconifiedByDefault = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#layout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#layout}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:layout
+          @attr name com.pl4za.spotifyfast:layout
         */
         public static final int SearchView_layout = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#queryBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#queryBackground}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:queryBackground
+          @attr name com.pl4za.spotifyfast:queryBackground
         */
         public static final int SearchView_queryBackground = 15;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#queryHint}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#queryHint}
           attribute's value can be found in the {@link #SearchView} array.
 
 
@@ -4393,57 +4393,57 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:queryHint
+          @attr name com.pl4za.spotifyfast:queryHint
         */
         public static final int SearchView_queryHint = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#searchHintIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#searchHintIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:searchHintIcon
+          @attr name com.pl4za.spotifyfast:searchHintIcon
         */
         public static final int SearchView_searchHintIcon = 11;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#searchIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#searchIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:searchIcon
+          @attr name com.pl4za.spotifyfast:searchIcon
         */
         public static final int SearchView_searchIcon = 10;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#submitBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#submitBackground}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:submitBackground
+          @attr name com.pl4za.spotifyfast:submitBackground
         */
         public static final int SearchView_submitBackground = 16;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#suggestionRowLayout}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#suggestionRowLayout}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:suggestionRowLayout
+          @attr name com.pl4za.spotifyfast:suggestionRowLayout
         */
         public static final int SearchView_suggestionRowLayout = 14;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#voiceIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#voiceIcon}
           attribute's value can be found in the {@link #SearchView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:voiceIcon
+          @attr name com.pl4za.spotifyfast:voiceIcon
         */
         public static final int SearchView_voiceIcon = 12;
         /** Attributes that can be used with a Spinner.
@@ -4455,7 +4455,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <tr><td><code>{@link #Spinner_android_dropDownWidth android:dropDownWidth}</code></td><td></td></tr>
            <tr><td><code>{@link #Spinner_android_popupBackground android:popupBackground}</code></td><td></td></tr>
            <tr><td><code>{@link #Spinner_android_prompt android:prompt}</code></td><td></td></tr>
-           <tr><td><code>{@link #Spinner_popupTheme com.pl4za.spotifytest:popupTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Spinner_popupTheme com.pl4za.spotifyfast:popupTheme}</code></td><td></td></tr>
            </table>
            @see #Spinner_android_dropDownWidth
            @see #Spinner_android_popupBackground
@@ -4484,13 +4484,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int Spinner_android_prompt = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#popupTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#popupTheme}
           attribute's value can be found in the {@link #Spinner} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:popupTheme
+          @attr name com.pl4za.spotifyfast:popupTheme
         */
         public static final int Spinner_popupTheme = 3;
         /** Attributes that can be used with a SwipeLayout.
@@ -4499,13 +4499,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SwipeLayout_bottomEdgeSwipeOffset com.pl4za.spotifytest:bottomEdgeSwipeOffset}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_clickToClose com.pl4za.spotifytest:clickToClose}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_drag_edge com.pl4za.spotifytest:drag_edge}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_leftEdgeSwipeOffset com.pl4za.spotifytest:leftEdgeSwipeOffset}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_rightEdgeSwipeOffset com.pl4za.spotifytest:rightEdgeSwipeOffset}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_show_mode com.pl4za.spotifytest:show_mode}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwipeLayout_topEdgeSwipeOffset com.pl4za.spotifytest:topEdgeSwipeOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_bottomEdgeSwipeOffset com.pl4za.spotifyfast:bottomEdgeSwipeOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_clickToClose com.pl4za.spotifyfast:clickToClose}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_drag_edge com.pl4za.spotifyfast:drag_edge}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_leftEdgeSwipeOffset com.pl4za.spotifyfast:leftEdgeSwipeOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_rightEdgeSwipeOffset com.pl4za.spotifyfast:rightEdgeSwipeOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_show_mode com.pl4za.spotifyfast:show_mode}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeLayout_topEdgeSwipeOffset com.pl4za.spotifyfast:topEdgeSwipeOffset}</code></td><td></td></tr>
            </table>
            @see #SwipeLayout_bottomEdgeSwipeOffset
            @see #SwipeLayout_clickToClose
@@ -4520,7 +4520,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010056, 0x7f010057, 0x7f010058
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#bottomEdgeSwipeOffset}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#bottomEdgeSwipeOffset}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4532,11 +4532,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:bottomEdgeSwipeOffset
+          @attr name com.pl4za.spotifyfast:bottomEdgeSwipeOffset
         */
         public static final int SwipeLayout_bottomEdgeSwipeOffset = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#clickToClose}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#clickToClose}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4546,11 +4546,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:clickToClose
+          @attr name com.pl4za.spotifyfast:clickToClose
         */
         public static final int SwipeLayout_clickToClose = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#drag_edge}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#drag_edge}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4565,11 +4565,11 @@ containing a value of this type.
 <tr><td><code>top</code></td><td>4</td><td></td></tr>
 <tr><td><code>bottom</code></td><td>8</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:drag_edge
+          @attr name com.pl4za.spotifyfast:drag_edge
         */
         public static final int SwipeLayout_drag_edge = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#leftEdgeSwipeOffset}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#leftEdgeSwipeOffset}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4581,11 +4581,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:leftEdgeSwipeOffset
+          @attr name com.pl4za.spotifyfast:leftEdgeSwipeOffset
         */
         public static final int SwipeLayout_leftEdgeSwipeOffset = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#rightEdgeSwipeOffset}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#rightEdgeSwipeOffset}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4597,11 +4597,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:rightEdgeSwipeOffset
+          @attr name com.pl4za.spotifyfast:rightEdgeSwipeOffset
         */
         public static final int SwipeLayout_rightEdgeSwipeOffset = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#show_mode}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#show_mode}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4614,11 +4614,11 @@ containing a value of this type.
 <tr><td><code>lay_down</code></td><td>0</td><td></td></tr>
 <tr><td><code>pull_out</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:show_mode
+          @attr name com.pl4za.spotifyfast:show_mode
         */
         public static final int SwipeLayout_show_mode = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#topEdgeSwipeOffset}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#topEdgeSwipeOffset}
           attribute's value can be found in the {@link #SwipeLayout} array.
 
 
@@ -4630,7 +4630,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:topEdgeSwipeOffset
+          @attr name com.pl4za.spotifyfast:topEdgeSwipeOffset
         */
         public static final int SwipeLayout_topEdgeSwipeOffset = 3;
         /** Attributes that can be used with a SwitchCompat.
@@ -4642,13 +4642,13 @@ containing a value of this type.
            <tr><td><code>{@link #SwitchCompat_android_textOff android:textOff}</code></td><td></td></tr>
            <tr><td><code>{@link #SwitchCompat_android_textOn android:textOn}</code></td><td></td></tr>
            <tr><td><code>{@link #SwitchCompat_android_thumb android:thumb}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_showText com.pl4za.spotifytest:showText}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_splitTrack com.pl4za.spotifytest:splitTrack}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_switchMinWidth com.pl4za.spotifytest:switchMinWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_switchPadding com.pl4za.spotifytest:switchPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_switchTextAppearance com.pl4za.spotifytest:switchTextAppearance}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_thumbTextPadding com.pl4za.spotifytest:thumbTextPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #SwitchCompat_track com.pl4za.spotifytest:track}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_showText com.pl4za.spotifyfast:showText}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_splitTrack com.pl4za.spotifyfast:splitTrack}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_switchMinWidth com.pl4za.spotifyfast:switchMinWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_switchPadding com.pl4za.spotifyfast:switchPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_switchTextAppearance com.pl4za.spotifyfast:switchTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_thumbTextPadding com.pl4za.spotifyfast:thumbTextPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompat_track com.pl4za.spotifyfast:track}</code></td><td></td></tr>
            </table>
            @see #SwitchCompat_android_textOff
            @see #SwitchCompat_android_textOn
@@ -4685,7 +4685,7 @@ containing a value of this type.
         */
         public static final int SwitchCompat_android_thumb = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#showText}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#showText}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
@@ -4695,11 +4695,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:showText
+          @attr name com.pl4za.spotifyfast:showText
         */
         public static final int SwitchCompat_showText = 9;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#splitTrack}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#splitTrack}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
@@ -4709,11 +4709,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:splitTrack
+          @attr name com.pl4za.spotifyfast:splitTrack
         */
         public static final int SwitchCompat_splitTrack = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#switchMinWidth}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#switchMinWidth}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
@@ -4725,11 +4725,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:switchMinWidth
+          @attr name com.pl4za.spotifyfast:switchMinWidth
         */
         public static final int SwitchCompat_switchMinWidth = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#switchPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#switchPadding}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
@@ -4741,21 +4741,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:switchPadding
+          @attr name com.pl4za.spotifyfast:switchPadding
         */
         public static final int SwitchCompat_switchPadding = 7;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#switchTextAppearance}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#switchTextAppearance}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:switchTextAppearance
+          @attr name com.pl4za.spotifyfast:switchTextAppearance
         */
         public static final int SwitchCompat_switchTextAppearance = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#thumbTextPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#thumbTextPadding}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
@@ -4767,17 +4767,17 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:thumbTextPadding
+          @attr name com.pl4za.spotifyfast:thumbTextPadding
         */
         public static final int SwitchCompat_thumbTextPadding = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#track}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#track}
           attribute's value can be found in the {@link #SwitchCompat} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:track
+          @attr name com.pl4za.spotifyfast:track
         */
         public static final int SwitchCompat_track = 3;
         /** Attributes that can be used with a TextAppearance.
@@ -4794,7 +4794,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <tr><td><code>{@link #TextAppearance_android_textSize android:textSize}</code></td><td></td></tr>
            <tr><td><code>{@link #TextAppearance_android_textStyle android:textStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #TextAppearance_android_typeface android:typeface}</code></td><td></td></tr>
-           <tr><td><code>{@link #TextAppearance_textAllCaps com.pl4za.spotifytest:textAllCaps}</code></td><td></td></tr>
+           <tr><td><code>{@link #TextAppearance_textAllCaps com.pl4za.spotifyfast:textAllCaps}</code></td><td></td></tr>
            </table>
            @see #TextAppearance_android_shadowColor
            @see #TextAppearance_android_shadowDx
@@ -4860,14 +4860,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int TextAppearance_android_typeface = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAllCaps}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAllCaps}
           attribute's value can be found in the {@link #TextAppearance} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a boolean value, either "<code>true</code>" or "<code>false</code>".
-          @attr name com.pl4za.spotifytest:textAllCaps
+          @attr name com.pl4za.spotifyfast:textAllCaps
         */
         public static final int TextAppearance_textAllCaps = 8;
         /** Attributes that can be used with a Theme.
@@ -4876,116 +4876,116 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #Theme_actionBarDivider com.pl4za.spotifytest:actionBarDivider}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarItemBackground com.pl4za.spotifytest:actionBarItemBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarPopupTheme com.pl4za.spotifytest:actionBarPopupTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarSize com.pl4za.spotifytest:actionBarSize}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarSplitStyle com.pl4za.spotifytest:actionBarSplitStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarStyle com.pl4za.spotifytest:actionBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarTabBarStyle com.pl4za.spotifytest:actionBarTabBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarTabStyle com.pl4za.spotifytest:actionBarTabStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarTabTextStyle com.pl4za.spotifytest:actionBarTabTextStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarTheme com.pl4za.spotifytest:actionBarTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionBarWidgetTheme com.pl4za.spotifytest:actionBarWidgetTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionButtonStyle com.pl4za.spotifytest:actionButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionDropDownStyle com.pl4za.spotifytest:actionDropDownStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionMenuTextAppearance com.pl4za.spotifytest:actionMenuTextAppearance}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionMenuTextColor com.pl4za.spotifytest:actionMenuTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeBackground com.pl4za.spotifytest:actionModeBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeCloseButtonStyle com.pl4za.spotifytest:actionModeCloseButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeCloseDrawable com.pl4za.spotifytest:actionModeCloseDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeCopyDrawable com.pl4za.spotifytest:actionModeCopyDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeCutDrawable com.pl4za.spotifytest:actionModeCutDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeFindDrawable com.pl4za.spotifytest:actionModeFindDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModePasteDrawable com.pl4za.spotifytest:actionModePasteDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModePopupWindowStyle com.pl4za.spotifytest:actionModePopupWindowStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeSelectAllDrawable com.pl4za.spotifytest:actionModeSelectAllDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeShareDrawable com.pl4za.spotifytest:actionModeShareDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeSplitBackground com.pl4za.spotifytest:actionModeSplitBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeStyle com.pl4za.spotifytest:actionModeStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionModeWebSearchDrawable com.pl4za.spotifytest:actionModeWebSearchDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionOverflowButtonStyle com.pl4za.spotifytest:actionOverflowButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_actionOverflowMenuStyle com.pl4za.spotifytest:actionOverflowMenuStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_activityChooserViewStyle com.pl4za.spotifytest:activityChooserViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_alertDialogButtonGroupStyle com.pl4za.spotifytest:alertDialogButtonGroupStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_alertDialogCenterButtons com.pl4za.spotifytest:alertDialogCenterButtons}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_alertDialogStyle com.pl4za.spotifytest:alertDialogStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_alertDialogTheme com.pl4za.spotifytest:alertDialogTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarDivider com.pl4za.spotifyfast:actionBarDivider}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarItemBackground com.pl4za.spotifyfast:actionBarItemBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarPopupTheme com.pl4za.spotifyfast:actionBarPopupTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarSize com.pl4za.spotifyfast:actionBarSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarSplitStyle com.pl4za.spotifyfast:actionBarSplitStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarStyle com.pl4za.spotifyfast:actionBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarTabBarStyle com.pl4za.spotifyfast:actionBarTabBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarTabStyle com.pl4za.spotifyfast:actionBarTabStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarTabTextStyle com.pl4za.spotifyfast:actionBarTabTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarTheme com.pl4za.spotifyfast:actionBarTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionBarWidgetTheme com.pl4za.spotifyfast:actionBarWidgetTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionButtonStyle com.pl4za.spotifyfast:actionButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionDropDownStyle com.pl4za.spotifyfast:actionDropDownStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionMenuTextAppearance com.pl4za.spotifyfast:actionMenuTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionMenuTextColor com.pl4za.spotifyfast:actionMenuTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeBackground com.pl4za.spotifyfast:actionModeBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeCloseButtonStyle com.pl4za.spotifyfast:actionModeCloseButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeCloseDrawable com.pl4za.spotifyfast:actionModeCloseDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeCopyDrawable com.pl4za.spotifyfast:actionModeCopyDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeCutDrawable com.pl4za.spotifyfast:actionModeCutDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeFindDrawable com.pl4za.spotifyfast:actionModeFindDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModePasteDrawable com.pl4za.spotifyfast:actionModePasteDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModePopupWindowStyle com.pl4za.spotifyfast:actionModePopupWindowStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeSelectAllDrawable com.pl4za.spotifyfast:actionModeSelectAllDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeShareDrawable com.pl4za.spotifyfast:actionModeShareDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeSplitBackground com.pl4za.spotifyfast:actionModeSplitBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeStyle com.pl4za.spotifyfast:actionModeStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionModeWebSearchDrawable com.pl4za.spotifyfast:actionModeWebSearchDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionOverflowButtonStyle com.pl4za.spotifyfast:actionOverflowButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_actionOverflowMenuStyle com.pl4za.spotifyfast:actionOverflowMenuStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_activityChooserViewStyle com.pl4za.spotifyfast:activityChooserViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_alertDialogButtonGroupStyle com.pl4za.spotifyfast:alertDialogButtonGroupStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_alertDialogCenterButtons com.pl4za.spotifyfast:alertDialogCenterButtons}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_alertDialogStyle com.pl4za.spotifyfast:alertDialogStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_alertDialogTheme com.pl4za.spotifyfast:alertDialogTheme}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_android_windowAnimationStyle android:windowAnimationStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_android_windowIsFloating android:windowIsFloating}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_autoCompleteTextViewStyle com.pl4za.spotifytest:autoCompleteTextViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_borderlessButtonStyle com.pl4za.spotifytest:borderlessButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonBarButtonStyle com.pl4za.spotifytest:buttonBarButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonBarNegativeButtonStyle com.pl4za.spotifytest:buttonBarNegativeButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonBarNeutralButtonStyle com.pl4za.spotifytest:buttonBarNeutralButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonBarPositiveButtonStyle com.pl4za.spotifytest:buttonBarPositiveButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonBarStyle com.pl4za.spotifytest:buttonBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonStyle com.pl4za.spotifytest:buttonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_buttonStyleSmall com.pl4za.spotifytest:buttonStyleSmall}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_checkboxStyle com.pl4za.spotifytest:checkboxStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_checkedTextViewStyle com.pl4za.spotifytest:checkedTextViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorAccent com.pl4za.spotifytest:colorAccent}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorButtonNormal com.pl4za.spotifytest:colorButtonNormal}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorControlActivated com.pl4za.spotifytest:colorControlActivated}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorControlHighlight com.pl4za.spotifytest:colorControlHighlight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorControlNormal com.pl4za.spotifytest:colorControlNormal}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorPrimary com.pl4za.spotifytest:colorPrimary}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorPrimaryDark com.pl4za.spotifytest:colorPrimaryDark}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_colorSwitchThumbNormal com.pl4za.spotifytest:colorSwitchThumbNormal}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_controlBackground com.pl4za.spotifytest:controlBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dialogPreferredPadding com.pl4za.spotifytest:dialogPreferredPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dialogTheme com.pl4za.spotifytest:dialogTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dividerHorizontal com.pl4za.spotifytest:dividerHorizontal}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dividerVertical com.pl4za.spotifytest:dividerVertical}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dropDownListViewStyle com.pl4za.spotifytest:dropDownListViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_dropdownListPreferredItemHeight com.pl4za.spotifytest:dropdownListPreferredItemHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_editTextBackground com.pl4za.spotifytest:editTextBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_editTextColor com.pl4za.spotifytest:editTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_editTextStyle com.pl4za.spotifytest:editTextStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_homeAsUpIndicator com.pl4za.spotifytest:homeAsUpIndicator}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_imageButtonStyle com.pl4za.spotifytest:imageButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listChoiceBackgroundIndicator com.pl4za.spotifytest:listChoiceBackgroundIndicator}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listDividerAlertDialog com.pl4za.spotifytest:listDividerAlertDialog}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPopupWindowStyle com.pl4za.spotifytest:listPopupWindowStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPreferredItemHeight com.pl4za.spotifytest:listPreferredItemHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPreferredItemHeightLarge com.pl4za.spotifytest:listPreferredItemHeightLarge}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPreferredItemHeightSmall com.pl4za.spotifytest:listPreferredItemHeightSmall}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPreferredItemPaddingLeft com.pl4za.spotifytest:listPreferredItemPaddingLeft}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_listPreferredItemPaddingRight com.pl4za.spotifytest:listPreferredItemPaddingRight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_panelBackground com.pl4za.spotifytest:panelBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_panelMenuListTheme com.pl4za.spotifytest:panelMenuListTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_panelMenuListWidth com.pl4za.spotifytest:panelMenuListWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_popupMenuStyle com.pl4za.spotifytest:popupMenuStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_popupWindowStyle com.pl4za.spotifytest:popupWindowStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_radioButtonStyle com.pl4za.spotifytest:radioButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_ratingBarStyle com.pl4za.spotifytest:ratingBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_searchViewStyle com.pl4za.spotifytest:searchViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_seekBarStyle com.pl4za.spotifytest:seekBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_selectableItemBackground com.pl4za.spotifytest:selectableItemBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_selectableItemBackgroundBorderless com.pl4za.spotifytest:selectableItemBackgroundBorderless}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_spinnerDropDownItemStyle com.pl4za.spotifytest:spinnerDropDownItemStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_spinnerStyle com.pl4za.spotifytest:spinnerStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_switchStyle com.pl4za.spotifytest:switchStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceLargePopupMenu com.pl4za.spotifytest:textAppearanceLargePopupMenu}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceListItem com.pl4za.spotifytest:textAppearanceListItem}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceListItemSmall com.pl4za.spotifytest:textAppearanceListItemSmall}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceSearchResultSubtitle com.pl4za.spotifytest:textAppearanceSearchResultSubtitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceSearchResultTitle com.pl4za.spotifytest:textAppearanceSearchResultTitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textAppearanceSmallPopupMenu com.pl4za.spotifytest:textAppearanceSmallPopupMenu}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textColorAlertDialogListItem com.pl4za.spotifytest:textColorAlertDialogListItem}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_textColorSearchUrl com.pl4za.spotifytest:textColorSearchUrl}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_toolbarNavigationButtonStyle com.pl4za.spotifytest:toolbarNavigationButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_toolbarStyle com.pl4za.spotifytest:toolbarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowActionBar com.pl4za.spotifytest:windowActionBar}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowActionBarOverlay com.pl4za.spotifytest:windowActionBarOverlay}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowActionModeOverlay com.pl4za.spotifytest:windowActionModeOverlay}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowFixedHeightMajor com.pl4za.spotifytest:windowFixedHeightMajor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowFixedHeightMinor com.pl4za.spotifytest:windowFixedHeightMinor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowFixedWidthMajor com.pl4za.spotifytest:windowFixedWidthMajor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowFixedWidthMinor com.pl4za.spotifytest:windowFixedWidthMinor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowMinWidthMajor com.pl4za.spotifytest:windowMinWidthMajor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowMinWidthMinor com.pl4za.spotifytest:windowMinWidthMinor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Theme_windowNoTitle com.pl4za.spotifytest:windowNoTitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_autoCompleteTextViewStyle com.pl4za.spotifyfast:autoCompleteTextViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_borderlessButtonStyle com.pl4za.spotifyfast:borderlessButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonBarButtonStyle com.pl4za.spotifyfast:buttonBarButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonBarNegativeButtonStyle com.pl4za.spotifyfast:buttonBarNegativeButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonBarNeutralButtonStyle com.pl4za.spotifyfast:buttonBarNeutralButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonBarPositiveButtonStyle com.pl4za.spotifyfast:buttonBarPositiveButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonBarStyle com.pl4za.spotifyfast:buttonBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonStyle com.pl4za.spotifyfast:buttonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_buttonStyleSmall com.pl4za.spotifyfast:buttonStyleSmall}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_checkboxStyle com.pl4za.spotifyfast:checkboxStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_checkedTextViewStyle com.pl4za.spotifyfast:checkedTextViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorAccent com.pl4za.spotifyfast:colorAccent}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorButtonNormal com.pl4za.spotifyfast:colorButtonNormal}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorControlActivated com.pl4za.spotifyfast:colorControlActivated}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorControlHighlight com.pl4za.spotifyfast:colorControlHighlight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorControlNormal com.pl4za.spotifyfast:colorControlNormal}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorPrimary com.pl4za.spotifyfast:colorPrimary}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorPrimaryDark com.pl4za.spotifyfast:colorPrimaryDark}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_colorSwitchThumbNormal com.pl4za.spotifyfast:colorSwitchThumbNormal}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_controlBackground com.pl4za.spotifyfast:controlBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dialogPreferredPadding com.pl4za.spotifyfast:dialogPreferredPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dialogTheme com.pl4za.spotifyfast:dialogTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dividerHorizontal com.pl4za.spotifyfast:dividerHorizontal}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dividerVertical com.pl4za.spotifyfast:dividerVertical}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dropDownListViewStyle com.pl4za.spotifyfast:dropDownListViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_dropdownListPreferredItemHeight com.pl4za.spotifyfast:dropdownListPreferredItemHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_editTextBackground com.pl4za.spotifyfast:editTextBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_editTextColor com.pl4za.spotifyfast:editTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_editTextStyle com.pl4za.spotifyfast:editTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_homeAsUpIndicator com.pl4za.spotifyfast:homeAsUpIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_imageButtonStyle com.pl4za.spotifyfast:imageButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listChoiceBackgroundIndicator com.pl4za.spotifyfast:listChoiceBackgroundIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listDividerAlertDialog com.pl4za.spotifyfast:listDividerAlertDialog}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPopupWindowStyle com.pl4za.spotifyfast:listPopupWindowStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPreferredItemHeight com.pl4za.spotifyfast:listPreferredItemHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPreferredItemHeightLarge com.pl4za.spotifyfast:listPreferredItemHeightLarge}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPreferredItemHeightSmall com.pl4za.spotifyfast:listPreferredItemHeightSmall}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPreferredItemPaddingLeft com.pl4za.spotifyfast:listPreferredItemPaddingLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_listPreferredItemPaddingRight com.pl4za.spotifyfast:listPreferredItemPaddingRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_panelBackground com.pl4za.spotifyfast:panelBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_panelMenuListTheme com.pl4za.spotifyfast:panelMenuListTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_panelMenuListWidth com.pl4za.spotifyfast:panelMenuListWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_popupMenuStyle com.pl4za.spotifyfast:popupMenuStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_popupWindowStyle com.pl4za.spotifyfast:popupWindowStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_radioButtonStyle com.pl4za.spotifyfast:radioButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_ratingBarStyle com.pl4za.spotifyfast:ratingBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_searchViewStyle com.pl4za.spotifyfast:searchViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_seekBarStyle com.pl4za.spotifyfast:seekBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_selectableItemBackground com.pl4za.spotifyfast:selectableItemBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_selectableItemBackgroundBorderless com.pl4za.spotifyfast:selectableItemBackgroundBorderless}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_spinnerDropDownItemStyle com.pl4za.spotifyfast:spinnerDropDownItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_spinnerStyle com.pl4za.spotifyfast:spinnerStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_switchStyle com.pl4za.spotifyfast:switchStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceLargePopupMenu com.pl4za.spotifyfast:textAppearanceLargePopupMenu}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceListItem com.pl4za.spotifyfast:textAppearanceListItem}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceListItemSmall com.pl4za.spotifyfast:textAppearanceListItemSmall}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceSearchResultSubtitle com.pl4za.spotifyfast:textAppearanceSearchResultSubtitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceSearchResultTitle com.pl4za.spotifyfast:textAppearanceSearchResultTitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textAppearanceSmallPopupMenu com.pl4za.spotifyfast:textAppearanceSmallPopupMenu}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textColorAlertDialogListItem com.pl4za.spotifyfast:textColorAlertDialogListItem}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_textColorSearchUrl com.pl4za.spotifyfast:textColorSearchUrl}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_toolbarNavigationButtonStyle com.pl4za.spotifyfast:toolbarNavigationButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_toolbarStyle com.pl4za.spotifyfast:toolbarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowActionBar com.pl4za.spotifyfast:windowActionBar}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowActionBarOverlay com.pl4za.spotifyfast:windowActionBarOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowActionModeOverlay com.pl4za.spotifyfast:windowActionModeOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowFixedHeightMajor com.pl4za.spotifyfast:windowFixedHeightMajor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowFixedHeightMinor com.pl4za.spotifyfast:windowFixedHeightMinor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowFixedWidthMajor com.pl4za.spotifyfast:windowFixedWidthMajor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowFixedWidthMinor com.pl4za.spotifyfast:windowFixedWidthMinor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowMinWidthMajor com.pl4za.spotifyfast:windowMinWidthMajor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowMinWidthMinor com.pl4za.spotifyfast:windowMinWidthMinor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_windowNoTitle com.pl4za.spotifyfast:windowNoTitle}</code></td><td></td></tr>
            </table>
            @see #Theme_actionBarDivider
            @see #Theme_actionBarItemBackground
@@ -5129,37 +5129,37 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f0100ca, 0x7f0100cb
         };
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarDivider}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarDivider}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarDivider
+          @attr name com.pl4za.spotifyfast:actionBarDivider
         */
         public static final int Theme_actionBarDivider = 23;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarItemBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarItemBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarItemBackground
+          @attr name com.pl4za.spotifyfast:actionBarItemBackground
         */
         public static final int Theme_actionBarItemBackground = 24;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarPopupTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarPopupTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarPopupTheme
+          @attr name com.pl4za.spotifyfast:actionBarPopupTheme
         */
         public static final int Theme_actionBarPopupTheme = 17;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarSize}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarSize}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5179,111 +5179,111 @@ containing a value of this type.
 <tr><th>Constant</th><th>Value</th><th>Description</th></tr>
 <tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:actionBarSize
+          @attr name com.pl4za.spotifyfast:actionBarSize
         */
         public static final int Theme_actionBarSize = 22;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarSplitStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarSplitStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarSplitStyle
+          @attr name com.pl4za.spotifyfast:actionBarSplitStyle
         */
         public static final int Theme_actionBarSplitStyle = 19;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarStyle
+          @attr name com.pl4za.spotifyfast:actionBarStyle
         */
         public static final int Theme_actionBarStyle = 18;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarTabBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarTabBarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarTabBarStyle
+          @attr name com.pl4za.spotifyfast:actionBarTabBarStyle
         */
         public static final int Theme_actionBarTabBarStyle = 13;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarTabStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarTabStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarTabStyle
+          @attr name com.pl4za.spotifyfast:actionBarTabStyle
         */
         public static final int Theme_actionBarTabStyle = 12;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarTabTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarTabTextStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarTabTextStyle
+          @attr name com.pl4za.spotifyfast:actionBarTabTextStyle
         */
         public static final int Theme_actionBarTabTextStyle = 14;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarTheme
+          @attr name com.pl4za.spotifyfast:actionBarTheme
         */
         public static final int Theme_actionBarTheme = 20;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionBarWidgetTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionBarWidgetTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionBarWidgetTheme
+          @attr name com.pl4za.spotifyfast:actionBarWidgetTheme
         */
         public static final int Theme_actionBarWidgetTheme = 21;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionButtonStyle
+          @attr name com.pl4za.spotifyfast:actionButtonStyle
         */
         public static final int Theme_actionButtonStyle = 49;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionDropDownStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionDropDownStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionDropDownStyle
+          @attr name com.pl4za.spotifyfast:actionDropDownStyle
         */
         public static final int Theme_actionDropDownStyle = 45;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionMenuTextAppearance}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionMenuTextAppearance}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionMenuTextAppearance
+          @attr name com.pl4za.spotifyfast:actionMenuTextAppearance
         */
         public static final int Theme_actionMenuTextAppearance = 25;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionMenuTextColor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionMenuTextColor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5291,181 +5291,181 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:actionMenuTextColor
+          @attr name com.pl4za.spotifyfast:actionMenuTextColor
         */
         public static final int Theme_actionMenuTextColor = 26;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeBackground
+          @attr name com.pl4za.spotifyfast:actionModeBackground
         */
         public static final int Theme_actionModeBackground = 29;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeCloseButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeCloseButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeCloseButtonStyle
+          @attr name com.pl4za.spotifyfast:actionModeCloseButtonStyle
         */
         public static final int Theme_actionModeCloseButtonStyle = 28;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeCloseDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeCloseDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeCloseDrawable
+          @attr name com.pl4za.spotifyfast:actionModeCloseDrawable
         */
         public static final int Theme_actionModeCloseDrawable = 31;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeCopyDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeCopyDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeCopyDrawable
+          @attr name com.pl4za.spotifyfast:actionModeCopyDrawable
         */
         public static final int Theme_actionModeCopyDrawable = 33;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeCutDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeCutDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeCutDrawable
+          @attr name com.pl4za.spotifyfast:actionModeCutDrawable
         */
         public static final int Theme_actionModeCutDrawable = 32;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeFindDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeFindDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeFindDrawable
+          @attr name com.pl4za.spotifyfast:actionModeFindDrawable
         */
         public static final int Theme_actionModeFindDrawable = 37;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModePasteDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModePasteDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModePasteDrawable
+          @attr name com.pl4za.spotifyfast:actionModePasteDrawable
         */
         public static final int Theme_actionModePasteDrawable = 34;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModePopupWindowStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModePopupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModePopupWindowStyle
+          @attr name com.pl4za.spotifyfast:actionModePopupWindowStyle
         */
         public static final int Theme_actionModePopupWindowStyle = 39;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeSelectAllDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeSelectAllDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeSelectAllDrawable
+          @attr name com.pl4za.spotifyfast:actionModeSelectAllDrawable
         */
         public static final int Theme_actionModeSelectAllDrawable = 35;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeShareDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeShareDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeShareDrawable
+          @attr name com.pl4za.spotifyfast:actionModeShareDrawable
         */
         public static final int Theme_actionModeShareDrawable = 36;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeSplitBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeSplitBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeSplitBackground
+          @attr name com.pl4za.spotifyfast:actionModeSplitBackground
         */
         public static final int Theme_actionModeSplitBackground = 30;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeStyle
+          @attr name com.pl4za.spotifyfast:actionModeStyle
         */
         public static final int Theme_actionModeStyle = 27;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionModeWebSearchDrawable}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionModeWebSearchDrawable}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionModeWebSearchDrawable
+          @attr name com.pl4za.spotifyfast:actionModeWebSearchDrawable
         */
         public static final int Theme_actionModeWebSearchDrawable = 38;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionOverflowButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionOverflowButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionOverflowButtonStyle
+          @attr name com.pl4za.spotifyfast:actionOverflowButtonStyle
         */
         public static final int Theme_actionOverflowButtonStyle = 15;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#actionOverflowMenuStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#actionOverflowMenuStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:actionOverflowMenuStyle
+          @attr name com.pl4za.spotifyfast:actionOverflowMenuStyle
         */
         public static final int Theme_actionOverflowMenuStyle = 16;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#activityChooserViewStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#activityChooserViewStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:activityChooserViewStyle
+          @attr name com.pl4za.spotifyfast:activityChooserViewStyle
         */
         public static final int Theme_activityChooserViewStyle = 57;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#alertDialogButtonGroupStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#alertDialogButtonGroupStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:alertDialogButtonGroupStyle
+          @attr name com.pl4za.spotifyfast:alertDialogButtonGroupStyle
         */
         public static final int Theme_alertDialogButtonGroupStyle = 92;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#alertDialogCenterButtons}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#alertDialogCenterButtons}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5475,27 +5475,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:alertDialogCenterButtons
+          @attr name com.pl4za.spotifyfast:alertDialogCenterButtons
         */
         public static final int Theme_alertDialogCenterButtons = 93;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#alertDialogStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#alertDialogStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:alertDialogStyle
+          @attr name com.pl4za.spotifyfast:alertDialogStyle
         */
         public static final int Theme_alertDialogStyle = 91;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#alertDialogTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#alertDialogTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:alertDialogTheme
+          @attr name com.pl4za.spotifyfast:alertDialogTheme
         */
         public static final int Theme_alertDialogTheme = 94;
         /**
@@ -5511,117 +5511,117 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int Theme_android_windowIsFloating = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#autoCompleteTextViewStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#autoCompleteTextViewStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:autoCompleteTextViewStyle
+          @attr name com.pl4za.spotifyfast:autoCompleteTextViewStyle
         */
         public static final int Theme_autoCompleteTextViewStyle = 99;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#borderlessButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#borderlessButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:borderlessButtonStyle
+          @attr name com.pl4za.spotifyfast:borderlessButtonStyle
         */
         public static final int Theme_borderlessButtonStyle = 54;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonBarButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonBarButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonBarButtonStyle
+          @attr name com.pl4za.spotifyfast:buttonBarButtonStyle
         */
         public static final int Theme_buttonBarButtonStyle = 51;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonBarNegativeButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonBarNegativeButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonBarNegativeButtonStyle
+          @attr name com.pl4za.spotifyfast:buttonBarNegativeButtonStyle
         */
         public static final int Theme_buttonBarNegativeButtonStyle = 97;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonBarNeutralButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonBarNeutralButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonBarNeutralButtonStyle
+          @attr name com.pl4za.spotifyfast:buttonBarNeutralButtonStyle
         */
         public static final int Theme_buttonBarNeutralButtonStyle = 98;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonBarPositiveButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonBarPositiveButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonBarPositiveButtonStyle
+          @attr name com.pl4za.spotifyfast:buttonBarPositiveButtonStyle
         */
         public static final int Theme_buttonBarPositiveButtonStyle = 96;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonBarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonBarStyle
+          @attr name com.pl4za.spotifyfast:buttonBarStyle
         */
         public static final int Theme_buttonBarStyle = 50;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonStyle
+          @attr name com.pl4za.spotifyfast:buttonStyle
         */
         public static final int Theme_buttonStyle = 100;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#buttonStyleSmall}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#buttonStyleSmall}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:buttonStyleSmall
+          @attr name com.pl4za.spotifyfast:buttonStyleSmall
         */
         public static final int Theme_buttonStyleSmall = 101;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#checkboxStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#checkboxStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:checkboxStyle
+          @attr name com.pl4za.spotifyfast:checkboxStyle
         */
         public static final int Theme_checkboxStyle = 102;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#checkedTextViewStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#checkedTextViewStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:checkedTextViewStyle
+          @attr name com.pl4za.spotifyfast:checkedTextViewStyle
         */
         public static final int Theme_checkedTextViewStyle = 103;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorAccent}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorAccent}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5632,11 +5632,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorAccent
+          @attr name com.pl4za.spotifyfast:colorAccent
         */
         public static final int Theme_colorAccent = 84;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorButtonNormal}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorButtonNormal}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5647,11 +5647,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorButtonNormal
+          @attr name com.pl4za.spotifyfast:colorButtonNormal
         */
         public static final int Theme_colorButtonNormal = 88;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorControlActivated}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorControlActivated}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5662,11 +5662,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorControlActivated
+          @attr name com.pl4za.spotifyfast:colorControlActivated
         */
         public static final int Theme_colorControlActivated = 86;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorControlHighlight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorControlHighlight}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5677,11 +5677,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorControlHighlight
+          @attr name com.pl4za.spotifyfast:colorControlHighlight
         */
         public static final int Theme_colorControlHighlight = 87;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorControlNormal}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorControlNormal}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5692,11 +5692,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorControlNormal
+          @attr name com.pl4za.spotifyfast:colorControlNormal
         */
         public static final int Theme_colorControlNormal = 85;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorPrimary}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorPrimary}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5707,11 +5707,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorPrimary
+          @attr name com.pl4za.spotifyfast:colorPrimary
         */
         public static final int Theme_colorPrimary = 82;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorPrimaryDark}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorPrimaryDark}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5722,11 +5722,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorPrimaryDark
+          @attr name com.pl4za.spotifyfast:colorPrimaryDark
         */
         public static final int Theme_colorPrimaryDark = 83;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#colorSwitchThumbNormal}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#colorSwitchThumbNormal}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5737,21 +5737,21 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:colorSwitchThumbNormal
+          @attr name com.pl4za.spotifyfast:colorSwitchThumbNormal
         */
         public static final int Theme_colorSwitchThumbNormal = 89;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#controlBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#controlBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:controlBackground
+          @attr name com.pl4za.spotifyfast:controlBackground
         */
         public static final int Theme_controlBackground = 90;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dialogPreferredPadding}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dialogPreferredPadding}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5763,51 +5763,51 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:dialogPreferredPadding
+          @attr name com.pl4za.spotifyfast:dialogPreferredPadding
         */
         public static final int Theme_dialogPreferredPadding = 43;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dialogTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dialogTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:dialogTheme
+          @attr name com.pl4za.spotifyfast:dialogTheme
         */
         public static final int Theme_dialogTheme = 42;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dividerHorizontal}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dividerHorizontal}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:dividerHorizontal
+          @attr name com.pl4za.spotifyfast:dividerHorizontal
         */
         public static final int Theme_dividerHorizontal = 56;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dividerVertical}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dividerVertical}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:dividerVertical
+          @attr name com.pl4za.spotifyfast:dividerVertical
         */
         public static final int Theme_dividerVertical = 55;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dropDownListViewStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dropDownListViewStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:dropDownListViewStyle
+          @attr name com.pl4za.spotifyfast:dropDownListViewStyle
         */
         public static final int Theme_dropDownListViewStyle = 74;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#dropdownListPreferredItemHeight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#dropdownListPreferredItemHeight}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5819,21 +5819,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:dropdownListPreferredItemHeight
+          @attr name com.pl4za.spotifyfast:dropdownListPreferredItemHeight
         */
         public static final int Theme_dropdownListPreferredItemHeight = 46;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#editTextBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#editTextBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:editTextBackground
+          @attr name com.pl4za.spotifyfast:editTextBackground
         */
         public static final int Theme_editTextBackground = 63;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#editTextColor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#editTextColor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5841,71 +5841,71 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:editTextColor
+          @attr name com.pl4za.spotifyfast:editTextColor
         */
         public static final int Theme_editTextColor = 62;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#editTextStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#editTextStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:editTextStyle
+          @attr name com.pl4za.spotifyfast:editTextStyle
         */
         public static final int Theme_editTextStyle = 104;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#homeAsUpIndicator}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#homeAsUpIndicator}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:homeAsUpIndicator
+          @attr name com.pl4za.spotifyfast:homeAsUpIndicator
         */
         public static final int Theme_homeAsUpIndicator = 48;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#imageButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#imageButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:imageButtonStyle
+          @attr name com.pl4za.spotifyfast:imageButtonStyle
         */
         public static final int Theme_imageButtonStyle = 64;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listChoiceBackgroundIndicator}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listChoiceBackgroundIndicator}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:listChoiceBackgroundIndicator
+          @attr name com.pl4za.spotifyfast:listChoiceBackgroundIndicator
         */
         public static final int Theme_listChoiceBackgroundIndicator = 81;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listDividerAlertDialog}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listDividerAlertDialog}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:listDividerAlertDialog
+          @attr name com.pl4za.spotifyfast:listDividerAlertDialog
         */
         public static final int Theme_listDividerAlertDialog = 44;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPopupWindowStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPopupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:listPopupWindowStyle
+          @attr name com.pl4za.spotifyfast:listPopupWindowStyle
         */
         public static final int Theme_listPopupWindowStyle = 75;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPreferredItemHeight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPreferredItemHeight}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5917,11 +5917,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:listPreferredItemHeight
+          @attr name com.pl4za.spotifyfast:listPreferredItemHeight
         */
         public static final int Theme_listPreferredItemHeight = 69;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPreferredItemHeightLarge}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPreferredItemHeightLarge}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5933,11 +5933,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:listPreferredItemHeightLarge
+          @attr name com.pl4za.spotifyfast:listPreferredItemHeightLarge
         */
         public static final int Theme_listPreferredItemHeightLarge = 71;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPreferredItemHeightSmall}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPreferredItemHeightSmall}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5949,11 +5949,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:listPreferredItemHeightSmall
+          @attr name com.pl4za.spotifyfast:listPreferredItemHeightSmall
         */
         public static final int Theme_listPreferredItemHeightSmall = 70;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPreferredItemPaddingLeft}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPreferredItemPaddingLeft}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5965,11 +5965,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:listPreferredItemPaddingLeft
+          @attr name com.pl4za.spotifyfast:listPreferredItemPaddingLeft
         */
         public static final int Theme_listPreferredItemPaddingLeft = 72;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#listPreferredItemPaddingRight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#listPreferredItemPaddingRight}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -5981,31 +5981,31 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:listPreferredItemPaddingRight
+          @attr name com.pl4za.spotifyfast:listPreferredItemPaddingRight
         */
         public static final int Theme_listPreferredItemPaddingRight = 73;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#panelBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#panelBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:panelBackground
+          @attr name com.pl4za.spotifyfast:panelBackground
         */
         public static final int Theme_panelBackground = 78;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#panelMenuListTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#panelMenuListTheme}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:panelMenuListTheme
+          @attr name com.pl4za.spotifyfast:panelMenuListTheme
         */
         public static final int Theme_panelMenuListTheme = 80;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#panelMenuListWidth}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#panelMenuListWidth}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6017,181 +6017,181 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:panelMenuListWidth
+          @attr name com.pl4za.spotifyfast:panelMenuListWidth
         */
         public static final int Theme_panelMenuListWidth = 79;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#popupMenuStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#popupMenuStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:popupMenuStyle
+          @attr name com.pl4za.spotifyfast:popupMenuStyle
         */
         public static final int Theme_popupMenuStyle = 60;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#popupWindowStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#popupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:popupWindowStyle
+          @attr name com.pl4za.spotifyfast:popupWindowStyle
         */
         public static final int Theme_popupWindowStyle = 61;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#radioButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#radioButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:radioButtonStyle
+          @attr name com.pl4za.spotifyfast:radioButtonStyle
         */
         public static final int Theme_radioButtonStyle = 105;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#ratingBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#ratingBarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:ratingBarStyle
+          @attr name com.pl4za.spotifyfast:ratingBarStyle
         */
         public static final int Theme_ratingBarStyle = 106;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#searchViewStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#searchViewStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:searchViewStyle
+          @attr name com.pl4za.spotifyfast:searchViewStyle
         */
         public static final int Theme_searchViewStyle = 68;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#seekBarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#seekBarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:seekBarStyle
+          @attr name com.pl4za.spotifyfast:seekBarStyle
         */
         public static final int Theme_seekBarStyle = 107;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#selectableItemBackground}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#selectableItemBackground}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:selectableItemBackground
+          @attr name com.pl4za.spotifyfast:selectableItemBackground
         */
         public static final int Theme_selectableItemBackground = 52;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#selectableItemBackgroundBorderless}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#selectableItemBackgroundBorderless}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:selectableItemBackgroundBorderless
+          @attr name com.pl4za.spotifyfast:selectableItemBackgroundBorderless
         */
         public static final int Theme_selectableItemBackgroundBorderless = 53;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#spinnerDropDownItemStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#spinnerDropDownItemStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:spinnerDropDownItemStyle
+          @attr name com.pl4za.spotifyfast:spinnerDropDownItemStyle
         */
         public static final int Theme_spinnerDropDownItemStyle = 47;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#spinnerStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#spinnerStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:spinnerStyle
+          @attr name com.pl4za.spotifyfast:spinnerStyle
         */
         public static final int Theme_spinnerStyle = 108;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#switchStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#switchStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:switchStyle
+          @attr name com.pl4za.spotifyfast:switchStyle
         */
         public static final int Theme_switchStyle = 109;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceLargePopupMenu}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceLargePopupMenu}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceLargePopupMenu
+          @attr name com.pl4za.spotifyfast:textAppearanceLargePopupMenu
         */
         public static final int Theme_textAppearanceLargePopupMenu = 40;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceListItem}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceListItem}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceListItem
+          @attr name com.pl4za.spotifyfast:textAppearanceListItem
         */
         public static final int Theme_textAppearanceListItem = 76;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceListItemSmall}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceListItemSmall}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceListItemSmall
+          @attr name com.pl4za.spotifyfast:textAppearanceListItemSmall
         */
         public static final int Theme_textAppearanceListItemSmall = 77;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceSearchResultSubtitle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceSearchResultSubtitle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceSearchResultSubtitle
+          @attr name com.pl4za.spotifyfast:textAppearanceSearchResultSubtitle
         */
         public static final int Theme_textAppearanceSearchResultSubtitle = 66;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceSearchResultTitle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceSearchResultTitle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceSearchResultTitle
+          @attr name com.pl4za.spotifyfast:textAppearanceSearchResultTitle
         */
         public static final int Theme_textAppearanceSearchResultTitle = 65;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textAppearanceSmallPopupMenu}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textAppearanceSmallPopupMenu}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:textAppearanceSmallPopupMenu
+          @attr name com.pl4za.spotifyfast:textAppearanceSmallPopupMenu
         */
         public static final int Theme_textAppearanceSmallPopupMenu = 41;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textColorAlertDialogListItem}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textColorAlertDialogListItem}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6199,11 +6199,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:textColorAlertDialogListItem
+          @attr name com.pl4za.spotifyfast:textColorAlertDialogListItem
         */
         public static final int Theme_textColorAlertDialogListItem = 95;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#textColorSearchUrl}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#textColorSearchUrl}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6211,31 +6211,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name com.pl4za.spotifytest:textColorSearchUrl
+          @attr name com.pl4za.spotifyfast:textColorSearchUrl
         */
         public static final int Theme_textColorSearchUrl = 67;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#toolbarNavigationButtonStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#toolbarNavigationButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:toolbarNavigationButtonStyle
+          @attr name com.pl4za.spotifyfast:toolbarNavigationButtonStyle
         */
         public static final int Theme_toolbarNavigationButtonStyle = 59;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#toolbarStyle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#toolbarStyle}
           attribute's value can be found in the {@link #Theme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:toolbarStyle
+          @attr name com.pl4za.spotifyfast:toolbarStyle
         */
         public static final int Theme_toolbarStyle = 58;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowActionBar}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowActionBar}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6245,11 +6245,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowActionBar
+          @attr name com.pl4za.spotifyfast:windowActionBar
         */
         public static final int Theme_windowActionBar = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowActionBarOverlay}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowActionBarOverlay}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6259,11 +6259,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowActionBarOverlay
+          @attr name com.pl4za.spotifyfast:windowActionBarOverlay
         */
         public static final int Theme_windowActionBarOverlay = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowActionModeOverlay}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowActionModeOverlay}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6273,11 +6273,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowActionModeOverlay
+          @attr name com.pl4za.spotifyfast:windowActionModeOverlay
         */
         public static final int Theme_windowActionModeOverlay = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowFixedHeightMajor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowFixedHeightMajor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6292,11 +6292,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowFixedHeightMajor
+          @attr name com.pl4za.spotifyfast:windowFixedHeightMajor
         */
         public static final int Theme_windowFixedHeightMajor = 9;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowFixedHeightMinor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowFixedHeightMinor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6311,11 +6311,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowFixedHeightMinor
+          @attr name com.pl4za.spotifyfast:windowFixedHeightMinor
         */
         public static final int Theme_windowFixedHeightMinor = 7;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowFixedWidthMajor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowFixedWidthMajor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6330,11 +6330,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowFixedWidthMajor
+          @attr name com.pl4za.spotifyfast:windowFixedWidthMajor
         */
         public static final int Theme_windowFixedWidthMajor = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowFixedWidthMinor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowFixedWidthMinor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6349,11 +6349,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowFixedWidthMinor
+          @attr name com.pl4za.spotifyfast:windowFixedWidthMinor
         */
         public static final int Theme_windowFixedWidthMinor = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowMinWidthMajor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowMinWidthMajor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6368,11 +6368,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowMinWidthMajor
+          @attr name com.pl4za.spotifyfast:windowMinWidthMajor
         */
         public static final int Theme_windowMinWidthMajor = 10;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowMinWidthMinor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowMinWidthMinor}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6387,11 +6387,11 @@ some parent container.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowMinWidthMinor
+          @attr name com.pl4za.spotifyfast:windowMinWidthMinor
         */
         public static final int Theme_windowMinWidthMinor = 11;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#windowNoTitle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#windowNoTitle}
           attribute's value can be found in the {@link #Theme} array.
 
 
@@ -6401,7 +6401,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:windowNoTitle
+          @attr name com.pl4za.spotifyfast:windowNoTitle
         */
         public static final int Theme_windowNoTitle = 3;
         /** Attributes that can be used with a Toolbar.
@@ -6412,29 +6412,29 @@ containing a value of this type.
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #Toolbar_android_gravity android:gravity}</code></td><td></td></tr>
            <tr><td><code>{@link #Toolbar_android_minHeight android:minHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_collapseContentDescription com.pl4za.spotifytest:collapseContentDescription}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_collapseIcon com.pl4za.spotifytest:collapseIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_contentInsetEnd com.pl4za.spotifytest:contentInsetEnd}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_contentInsetLeft com.pl4za.spotifytest:contentInsetLeft}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_contentInsetRight com.pl4za.spotifytest:contentInsetRight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_contentInsetStart com.pl4za.spotifytest:contentInsetStart}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_logo com.pl4za.spotifytest:logo}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_logoDescription com.pl4za.spotifytest:logoDescription}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_maxButtonHeight com.pl4za.spotifytest:maxButtonHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_navigationContentDescription com.pl4za.spotifytest:navigationContentDescription}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_navigationIcon com.pl4za.spotifytest:navigationIcon}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_popupTheme com.pl4za.spotifytest:popupTheme}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_subtitle com.pl4za.spotifytest:subtitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_subtitleTextAppearance com.pl4za.spotifytest:subtitleTextAppearance}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_subtitleTextColor com.pl4za.spotifytest:subtitleTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_title com.pl4za.spotifytest:title}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleMarginBottom com.pl4za.spotifytest:titleMarginBottom}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleMarginEnd com.pl4za.spotifytest:titleMarginEnd}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleMarginStart com.pl4za.spotifytest:titleMarginStart}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleMarginTop com.pl4za.spotifytest:titleMarginTop}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleMargins com.pl4za.spotifytest:titleMargins}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleTextAppearance com.pl4za.spotifytest:titleTextAppearance}</code></td><td></td></tr>
-           <tr><td><code>{@link #Toolbar_titleTextColor com.pl4za.spotifytest:titleTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_collapseContentDescription com.pl4za.spotifyfast:collapseContentDescription}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_collapseIcon com.pl4za.spotifyfast:collapseIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_contentInsetEnd com.pl4za.spotifyfast:contentInsetEnd}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_contentInsetLeft com.pl4za.spotifyfast:contentInsetLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_contentInsetRight com.pl4za.spotifyfast:contentInsetRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_contentInsetStart com.pl4za.spotifyfast:contentInsetStart}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_logo com.pl4za.spotifyfast:logo}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_logoDescription com.pl4za.spotifyfast:logoDescription}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_maxButtonHeight com.pl4za.spotifyfast:maxButtonHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_navigationContentDescription com.pl4za.spotifyfast:navigationContentDescription}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_navigationIcon com.pl4za.spotifyfast:navigationIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_popupTheme com.pl4za.spotifyfast:popupTheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_subtitle com.pl4za.spotifyfast:subtitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_subtitleTextAppearance com.pl4za.spotifyfast:subtitleTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_subtitleTextColor com.pl4za.spotifyfast:subtitleTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_title com.pl4za.spotifyfast:title}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleMarginBottom com.pl4za.spotifyfast:titleMarginBottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleMarginEnd com.pl4za.spotifyfast:titleMarginEnd}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleMarginStart com.pl4za.spotifyfast:titleMarginStart}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleMarginTop com.pl4za.spotifyfast:titleMarginTop}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleMargins com.pl4za.spotifyfast:titleMargins}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleTextAppearance com.pl4za.spotifyfast:titleTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #Toolbar_titleTextColor com.pl4za.spotifyfast:titleTextColor}</code></td><td></td></tr>
            </table>
            @see #Toolbar_android_gravity
            @see #Toolbar_android_minHeight
@@ -6484,7 +6484,7 @@ containing a value of this type.
         */
         public static final int Toolbar_android_minHeight = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#collapseContentDescription}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#collapseContentDescription}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6494,21 +6494,21 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:collapseContentDescription
+          @attr name com.pl4za.spotifyfast:collapseContentDescription
         */
         public static final int Toolbar_collapseContentDescription = 19;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#collapseIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#collapseIcon}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:collapseIcon
+          @attr name com.pl4za.spotifyfast:collapseIcon
         */
         public static final int Toolbar_collapseIcon = 18;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetEnd}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetEnd}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6520,11 +6520,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetEnd
+          @attr name com.pl4za.spotifyfast:contentInsetEnd
         */
         public static final int Toolbar_contentInsetEnd = 6;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetLeft}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetLeft}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6536,11 +6536,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetLeft
+          @attr name com.pl4za.spotifyfast:contentInsetLeft
         */
         public static final int Toolbar_contentInsetLeft = 7;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetRight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetRight}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6552,11 +6552,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetRight
+          @attr name com.pl4za.spotifyfast:contentInsetRight
         */
         public static final int Toolbar_contentInsetRight = 8;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#contentInsetStart}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#contentInsetStart}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6568,21 +6568,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:contentInsetStart
+          @attr name com.pl4za.spotifyfast:contentInsetStart
         */
         public static final int Toolbar_contentInsetStart = 5;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#logo}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#logo}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:logo
+          @attr name com.pl4za.spotifyfast:logo
         */
         public static final int Toolbar_logo = 4;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#logoDescription}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#logoDescription}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6592,11 +6592,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:logoDescription
+          @attr name com.pl4za.spotifyfast:logoDescription
         */
         public static final int Toolbar_logoDescription = 22;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#maxButtonHeight}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#maxButtonHeight}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6608,11 +6608,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:maxButtonHeight
+          @attr name com.pl4za.spotifyfast:maxButtonHeight
         */
         public static final int Toolbar_maxButtonHeight = 17;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#navigationContentDescription}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#navigationContentDescription}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6622,31 +6622,31 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:navigationContentDescription
+          @attr name com.pl4za.spotifyfast:navigationContentDescription
         */
         public static final int Toolbar_navigationContentDescription = 21;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#navigationIcon}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#navigationIcon}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:navigationIcon
+          @attr name com.pl4za.spotifyfast:navigationIcon
         */
         public static final int Toolbar_navigationIcon = 20;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#popupTheme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#popupTheme}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:popupTheme
+          @attr name com.pl4za.spotifyfast:popupTheme
         */
         public static final int Toolbar_popupTheme = 9;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitle}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitle}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6656,21 +6656,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:subtitle
+          @attr name com.pl4za.spotifyfast:subtitle
         */
         public static final int Toolbar_subtitle = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitleTextAppearance}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitleTextAppearance}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:subtitleTextAppearance
+          @attr name com.pl4za.spotifyfast:subtitleTextAppearance
         */
         public static final int Toolbar_subtitleTextAppearance = 11;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#subtitleTextColor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#subtitleTextColor}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6681,11 +6681,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:subtitleTextColor
+          @attr name com.pl4za.spotifyfast:subtitleTextColor
         */
         public static final int Toolbar_subtitleTextColor = 24;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#title}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#title}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6695,11 +6695,11 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:title
+          @attr name com.pl4za.spotifyfast:title
         */
         public static final int Toolbar_title = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleMarginBottom}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleMarginBottom}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6711,11 +6711,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleMarginBottom
+          @attr name com.pl4za.spotifyfast:titleMarginBottom
         */
         public static final int Toolbar_titleMarginBottom = 16;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleMarginEnd}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleMarginEnd}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6727,11 +6727,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleMarginEnd
+          @attr name com.pl4za.spotifyfast:titleMarginEnd
         */
         public static final int Toolbar_titleMarginEnd = 14;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleMarginStart}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleMarginStart}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6743,11 +6743,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleMarginStart
+          @attr name com.pl4za.spotifyfast:titleMarginStart
         */
         public static final int Toolbar_titleMarginStart = 13;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleMarginTop}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleMarginTop}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6759,11 +6759,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleMarginTop
+          @attr name com.pl4za.spotifyfast:titleMarginTop
         */
         public static final int Toolbar_titleMarginTop = 15;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleMargins}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleMargins}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6775,21 +6775,21 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleMargins
+          @attr name com.pl4za.spotifyfast:titleMargins
         */
         public static final int Toolbar_titleMargins = 12;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleTextAppearance}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleTextAppearance}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:titleTextAppearance
+          @attr name com.pl4za.spotifyfast:titleTextAppearance
         */
         public static final int Toolbar_titleTextAppearance = 10;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#titleTextColor}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#titleTextColor}
           attribute's value can be found in the {@link #Toolbar} array.
 
 
@@ -6800,7 +6800,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:titleTextColor
+          @attr name com.pl4za.spotifyfast:titleTextColor
         */
         public static final int Toolbar_titleTextColor = 23;
         /** Attributes that can be used with a View.
@@ -6811,9 +6811,9 @@ containing a value of this type.
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #View_android_focusable android:focusable}</code></td><td></td></tr>
            <tr><td><code>{@link #View_android_theme android:theme}</code></td><td></td></tr>
-           <tr><td><code>{@link #View_paddingEnd com.pl4za.spotifytest:paddingEnd}</code></td><td></td></tr>
-           <tr><td><code>{@link #View_paddingStart com.pl4za.spotifytest:paddingStart}</code></td><td></td></tr>
-           <tr><td><code>{@link #View_theme com.pl4za.spotifytest:theme}</code></td><td></td></tr>
+           <tr><td><code>{@link #View_paddingEnd com.pl4za.spotifyfast:paddingEnd}</code></td><td></td></tr>
+           <tr><td><code>{@link #View_paddingStart com.pl4za.spotifyfast:paddingStart}</code></td><td></td></tr>
+           <tr><td><code>{@link #View_theme com.pl4za.spotifyfast:theme}</code></td><td></td></tr>
            </table>
            @see #View_android_focusable
            @see #View_android_theme
@@ -6838,7 +6838,7 @@ containing a value of this type.
         */
         public static final int View_android_theme = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#paddingEnd}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#paddingEnd}
           attribute's value can be found in the {@link #View} array.
 
 
@@ -6850,11 +6850,11 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:paddingEnd
+          @attr name com.pl4za.spotifyfast:paddingEnd
         */
         public static final int View_paddingEnd = 3;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#paddingStart}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#paddingStart}
           attribute's value can be found in the {@link #View} array.
 
 
@@ -6866,17 +6866,17 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:paddingStart
+          @attr name com.pl4za.spotifyfast:paddingStart
         */
         public static final int View_paddingStart = 2;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#theme}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#theme}
           attribute's value can be found in the {@link #View} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.pl4za.spotifytest:theme
+          @attr name com.pl4za.spotifyfast:theme
         */
         public static final int View_theme = 4;
         /** Attributes that can be used with a ViewBackgroundHelper.
@@ -6886,8 +6886,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #ViewBackgroundHelper_android_background android:background}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewBackgroundHelper_backgroundTint com.pl4za.spotifytest:backgroundTint}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewBackgroundHelper_backgroundTintMode com.pl4za.spotifytest:backgroundTintMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewBackgroundHelper_backgroundTint com.pl4za.spotifyfast:backgroundTint}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewBackgroundHelper_backgroundTintMode com.pl4za.spotifyfast:backgroundTintMode}</code></td><td></td></tr>
            </table>
            @see #ViewBackgroundHelper_android_background
            @see #ViewBackgroundHelper_backgroundTint
@@ -6903,7 +6903,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int ViewBackgroundHelper_android_background = 0;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#backgroundTint}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#backgroundTint}
           attribute's value can be found in the {@link #ViewBackgroundHelper} array.
 
 
@@ -6914,11 +6914,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.pl4za.spotifytest:backgroundTint
+          @attr name com.pl4za.spotifyfast:backgroundTint
         */
         public static final int ViewBackgroundHelper_backgroundTint = 1;
         /**
-          <p>This symbol is the offset where the {@link com.pl4za.spotifytest.R.attr#backgroundTintMode}
+          <p>This symbol is the offset where the {@link com.pl4za.spotifyfast.R.attr#backgroundTintMode}
           attribute's value can be found in the {@link #ViewBackgroundHelper} array.
 
 
@@ -6934,7 +6934,7 @@ containing a value of this type.
 <tr><td><code>multiply</code></td><td>14</td><td></td></tr>
 <tr><td><code>screen</code></td><td>15</td><td></td></tr>
 </table>
-          @attr name com.pl4za.spotifytest:backgroundTintMode
+          @attr name com.pl4za.spotifyfast:backgroundTintMode
         */
         public static final int ViewBackgroundHelper_backgroundTintMode = 2;
         /** Attributes that can be used with a ViewStubCompat.
