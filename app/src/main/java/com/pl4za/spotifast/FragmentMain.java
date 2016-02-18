@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.pl4za.help.CustomViewPager;
 import com.pl4za.help.PageAdapter;
+import com.pl4za.help.Params;
 import com.pl4za.interfaces.ViewPagerOptions;
+import com.pl4za.volley.AppController;
 
 /**
  * Created by jasoncosta on 10/02/2016.
@@ -21,31 +23,21 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     private PageAdapter viewPagerAdapter;
 
     // Delegators
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
-    private SettingsManager settings = SettingsManager.getInstance();
-    private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final SettingsManager settings = SettingsManager.getInstance();
+    private final TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         viewPager = (CustomViewPager) view.findViewById(R.id.pager);
         viewPager.setOnPageChangeListener(new ViewPagerScroll());
-        if (savedInstanceState==null) {
-            viewPagerAdapter = new PageAdapter(getActivity().getSupportFragmentManager());
-            viewPager.setAdapter(viewPagerAdapter);
-        } else {
-
-        }
+        viewPagerAdapter = new PageAdapter(getActivity().getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setOrientation(viewCtrl.isLandscape());
         viewCtrl.setViewPagerOptions(this);
         tracklistCtrl.clear();
-
         return view;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -57,6 +49,13 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
+        viewPager.removeAllViews();
+    }
+
+    @Override
     public void setViewPagerPosition(int position) {
         viewPager.setCurrentItem(position);
     }
@@ -64,6 +63,7 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         viewPagerAdapter.setOrientation(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
         setAdapter();
     }
@@ -73,7 +73,7 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-    class ViewPagerScroll implements ViewPager.OnPageChangeListener {
+    private class ViewPagerScroll implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class QueueCtrl implements QueueOptions {
 
-    private Queue queue;
-    private PlayCtrl playCtrl = PlayCtrl.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final Queue queue;
+    private final PlayCtrl playCtrl = PlayCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     private static final QueueCtrl INSTANCE = new QueueCtrl();
 
@@ -38,7 +38,7 @@ public class QueueCtrl implements QueueOptions {
                 playCtrl.play(track.getTrackURI());
             }
         } else {
-            viewCtrl.showSnackBar("Player not initialized");
+            playCtrl.initializePlayer();
         }
     }
 
@@ -51,7 +51,6 @@ public class QueueCtrl implements QueueOptions {
             playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
             viewCtrl.showSnackBar("Playing");
         } else {
-            viewCtrl.showSnackBar("Initializing player");
             playCtrl.initializePlayer();
         }
     }

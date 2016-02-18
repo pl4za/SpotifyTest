@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.view.GravityCompat;
@@ -44,6 +45,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 //TODO: finish undo option
@@ -69,16 +73,13 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private Intent serviceIntent;
-    private Context context;
-    FragmentMain fragment;
+    private FragmentMain fragment;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             PlayService.LocalBinder binder = (PlayService.LocalBinder) service;
             playCtrl.setService(binder.getService());
             mBound = true;
-            playCtrl.initializePlayer();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -87,19 +88,19 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     };
 
     // Delegators
-    private PlayCtrl playCtrl = PlayCtrl.getInstance();
-    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-    private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
-    private SettingsManager settings = SettingsManager.getInstance();
-    private SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final PlayCtrl playCtrl = PlayCtrl.getInstance();
+    private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private final TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
+    private final SettingsManager settings = SettingsManager.getInstance();
+    private final SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settings.setContext(this);
         viewCtrl.setActivityView(this);
-        context = getApplicationContext();
+        Context context = getApplicationContext();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -107,9 +108,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -124,8 +122,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             DISABLE_LOGIN = true;
             ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
-            populateDrawer(settings.getPlaylistsNames());
-            spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+            populateDrawer(settings.getPlaylistsNames());spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         } else {
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
@@ -177,7 +174,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             landscape = false;
         }
-        //viewCtrl.updateView();
     }
 
     @Override
@@ -208,6 +204,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfile);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserProfilePicture);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserNextPlaylists);
         AppController.getInstance().cancelPendingRequests(Params.TAG_refreshToken);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getArtistID);
     }
@@ -306,7 +303,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             if (uri != null) {
                 String[] parts = uri.toString().split("&");
                 String code = parts[0].split("=")[1];
-                String state = parts[1].split("=")[1];
                 spotifyNetwork.exchangeCodeForToken(code);
                 REFRESH = true;
             }
@@ -421,7 +417,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     private void startService() {
-        serviceIntent = new Intent(this, PlayService.class);
+        Intent serviceIntent = new Intent(this, PlayService.class);
         this.startService(serviceIntent);
         bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
     }
@@ -476,7 +472,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             return BitmapFactory.decodeStream(new FileInputStream(f));
         } catch (FileNotFoundException e) {
             Log.e("MainActivity", "Profile image not found");
-            return BitmapFactory.decodeResource(getResources(), R.drawable.ic_spotifyicon);
+            return BitmapFactory.decodeResource(getResources(), R.mipmap.spotify_white);
         }
     }
 
@@ -512,7 +508,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         }
     }
 
-    public View getViewByPosition(int pos, ListView listView) {
+    private View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
         if (pos < firstListItemPosition || pos > lastListItemPosition) {
@@ -526,16 +522,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     /*
     Spotify network related requests
      */
-
-    @Override
-    public void onProfilePictureReceived(Bitmap image) {
-        if (image != null) {
-            saveToInternalSorage(image);
-        }
-        REFRESH = true;
-        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-        startService();
-    }
 
     @Override
     public void onTokenReceived(String acessToken, String refreshToken) {
@@ -561,7 +547,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public void onProfileReceived(String userID, String product, String userPictureURL) {
         settings.setUserID(userID);
         settings.setProduct(product);
-        spotifyNetwork.getProfilePicture(userPictureURL);
+        new getImageFromURL(userPictureURL).execute();
+        REFRESH = true;
+        spotifyNetwork.getCurrentUserPlaylists(userID, settings.getAccessToken());
+        startService();
     }
 
     @Override
@@ -579,8 +568,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onRandomArtistPictureURLReceived(String artistPictureURL) {
-        settings.setRandomArtistImage(artistPictureURL);
-        setPictureinDrawer();
+        if (!artistPictureURL.isEmpty()) {
+            settings.setRandomArtistImage(artistPictureURL);
+            setPictureinDrawer();
+        }
     }
 
     @Override
@@ -591,6 +582,41 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     public void onEtagUpdate(String etag) {
 
+    }
+
+    private class getImageFromURL extends AsyncTask<Void, Void, Bitmap> {
+
+        final String url;
+
+        public getImageFromURL(String url) {
+            this.url = url;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            URL formedUrl = null;
+            try {
+                formedUrl = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if (formedUrl != null) {
+                try {
+                    return BitmapFactory.decodeStream(formedUrl.openConnection().getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap image) {
+            super.onPostExecute(image);
+            if (image!=null) {
+                saveToInternalSorage(image);
+            }
+        }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {

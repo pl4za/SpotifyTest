@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class FixedSwipeLayout extends SwipeLayout {
 
-    private List<SwipeLayout.SwipeListener> swipeListeners;
+    private final List<SwipeLayout.SwipeListener> swipeListeners;
 
     public FixedSwipeLayout(Context context) {
         super(context);

@@ -1,7 +1,5 @@
 package com.pl4za.spotifast;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -20,9 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +27,9 @@ import java.util.Map;
  */
 public class SpotifyNetworkRequests {
 
+    private static final String TAG = "SpotifyNetworkRequests";
     private static final int MY_SOCKET_TIMEOUT_MS = 8000;
-    private ArrayList<NetworkRequests> networkRequests = new ArrayList<>();
+    private final ArrayList<NetworkRequests> networkRequests = new ArrayList<>();
     private int statusCode;
     private static final SpotifyNetworkRequests INSTANCE = new SpotifyNetworkRequests();
 
@@ -48,54 +44,6 @@ public class SpotifyNetworkRequests {
         this.networkRequests.add(networkRequests);
     }
 
-    public void getProfilePicture(final String url) {
-        Response.Listener<String> jsonListerner = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String list) {
-                URL formedUrl = null;
-                Bitmap image = null;
-                try {
-                    formedUrl = new URL(url);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                if (formedUrl != null) {
-                    try {
-                        image = BitmapFactory.decodeStream(formedUrl.openConnection().getInputStream());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                for(NetworkRequests n:networkRequests) {
-                    n.onProfilePictureReceived(image);
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(Params.TAG_getCurrentUserProfilePicture, "Error: " + error.getMessage());
-                for(NetworkRequests n:networkRequests) {
-                    n.onProfilePictureReceived(null);
-                }
-            }
-        };
-
-        StringRequest fileRequest = new StringRequest(Request.Method.GET, url, jsonListerner, errorListener) {
-            @Override
-            public Priority getPriority() {
-                return Priority.HIGH;
-            }
-        };
-        fileRequest.setShouldCache(false);
-        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserProfilePicture);
-    }
-
     public void exchangeCodeForToken(final String code) {
         String url = "https://accounts.spotify.com/api/token";
         Response.Listener<String> jsonListerner = new Response.Listener<String>() {
@@ -105,7 +53,7 @@ public class SpotifyNetworkRequests {
                     JSONObject jsonObj = new JSONObject(list);
                     String access_token = jsonObj.getString("access_token");
                     String refresh_token = jsonObj.getString("refresh_token");
-                    for(NetworkRequests n:networkRequests) {
+                    for (NetworkRequests n : networkRequests) {
                         n.onTokenReceived(access_token, refresh_token);
                     }
                 } catch (JSONException e) {
@@ -149,7 +97,7 @@ public class SpotifyNetworkRequests {
                 try {
                     JSONObject jsonObj = new JSONObject(list);
                     String access_token = jsonObj.getString("access_token");
-                    for(NetworkRequests n:networkRequests) {
+                    for (NetworkRequests n : networkRequests) {
                         n.onTokenRefresh(access_token);
                     }
                 } catch (JSONException e) {
@@ -199,9 +147,9 @@ public class SpotifyNetworkRequests {
                         JSONArray profilePictures = jsonObj.getJSONArray("images");
                         profilePicture = profilePictures.getJSONObject(0).getString("url");
                     } catch (JSONException e) {
-                        Log.e("json", "No profile image uri.");
+                        Log.e(TAG, "No profile image");
                     }
-                    for(NetworkRequests n:networkRequests) {
+                    for (NetworkRequests n : networkRequests) {
                         n.onProfileReceived(userID, product, profilePicture);
                     }
                 } catch (JSONException e) {
@@ -229,7 +177,7 @@ public class SpotifyNetworkRequests {
 
             @Override
             public Priority getPriority() {
-                return Priority.HIGH;
+                return Priority.NORMAL;
             }
         };
         fileRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -238,6 +186,53 @@ public class SpotifyNetworkRequests {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Adding request to request TRACK_LIST
         AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserProfile);
+    }
+
+    private void getCurrentUserPlaylists(String nextURL, final ArrayList<Playlist> playlists, final String accessToken) {
+        Response.Listener<String> jsonListerner = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String list) {
+                try {
+                    JSONObject json = new JSONObject(list);
+                    JSONArray jsonArr = json.getJSONArray("items");
+                    int size = jsonArr.length();
+                    for (int i = 0; i < size; i++) {
+                        JSONObject ids = jsonArr.getJSONObject(i);
+                        playlists.add(new Playlist(ids.getString("id"), ids.getString("name"), ids.getJSONObject("owner").getString("id")));
+                    }
+                    String nextURL = json.getString("next");
+                    if (!nextURL.equals("null")) {
+                        getCurrentUserPlaylists(nextURL, playlists, accessToken);
+                    } else {
+                        for (NetworkRequests n : networkRequests) {
+                            n.onPlaylistsReceived(playlists);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(Params.TAG_getCurrentUserNextPlaylists, "Error: " + error.getMessage());
+            }
+        };
+        StringRequest fileRequest = new StringRequest(Request.Method.GET, nextURL, jsonListerner, errorListener) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        fileRequest.setShouldCache(false);
+        fileRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserPlaylists);
     }
 
     public void getCurrentUserPlaylists(String user_id, final String accessToken) {
@@ -252,11 +247,15 @@ public class SpotifyNetworkRequests {
                     int size = jsonArr.length();
                     for (int i = 0; i < size; i++) {
                         JSONObject ids = jsonArr.getJSONObject(i);
-                        //Log.i("MainActivity", ids.getString("id") + " - " + ids.getString("name") + " - " + ids.getJSONObject("owner").getString("id"));
                         playlists.add(new Playlist(ids.getString("id"), ids.getString("name"), ids.getJSONObject("owner").getString("id")));
                     }
-                    for(NetworkRequests n:networkRequests) {
-                        n.onPlaylistsReceived(playlists);
+                    String nextURL = json.getString("next");
+                    if (!nextURL.isEmpty()) {
+                        getCurrentUserPlaylists(nextURL, playlists, accessToken);
+                    } else {
+                        for (NetworkRequests n : networkRequests) {
+                            n.onPlaylistsReceived(playlists);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -282,7 +281,9 @@ public class SpotifyNetworkRequests {
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserPlaylists);
+        if (!user_id.isEmpty()) {
+            AppController.getInstance().addToRequestQueue(fileRequest, Params.TAG_getCurrentUserPlaylists);
+        }
     }
 
     public void getArtistPicture(String artistID) {
@@ -296,13 +297,13 @@ public class SpotifyNetworkRequests {
                         JSONArray artistImages = json.getJSONArray("images");
                         JSONObject artistimageObject = artistImages.getJSONObject(1);
                         String artistImageUrl = artistimageObject.getString("url");
-                        for(NetworkRequests n:networkRequests) {
+                        for (NetworkRequests n : networkRequests) {
                             n.onRandomArtistPictureURLReceived(artistImageUrl);
                         }
                     } catch (JSONException e) {
                         Log.e("json", "No artist image...");
-                        for(NetworkRequests n:networkRequests) {
-                            n.onRandomArtistPictureURLReceived("none");
+                        for (NetworkRequests n : networkRequests) {
+                            n.onRandomArtistPictureURLReceived("");
                         }
                     }
                 } catch (JSONException e) {
@@ -313,7 +314,7 @@ public class SpotifyNetworkRequests {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                for(NetworkRequests n:networkRequests) {
+                for (NetworkRequests n : networkRequests) {
                     n.onRandomArtistPictureURLReceived("none");
                 }
             }
@@ -329,11 +330,10 @@ public class SpotifyNetworkRequests {
     }
 
     public void getSelectedPlaylistTracks(String url, final String accessToken, final String etag) {
-        final boolean isCacheNull = true;
         Response.Listener<String> jsonListerner = new Response.Listener<String>() {
             @Override
             public void onResponse(String list) {
-                for(NetworkRequests n:networkRequests) {
+                for (NetworkRequests n : networkRequests) {
                     n.onPlaylistTracksReceived(list);
                 }
             }
@@ -351,9 +351,6 @@ public class SpotifyNetworkRequests {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + accessToken);
-                if (!isCacheNull && !etag.equals("")) {
-                    headers.put("If-None-Match", etag);
-                }
                 return headers;
             }
 
@@ -363,7 +360,7 @@ public class SpotifyNetworkRequests {
                 Log.i("FragmentTracks", "status: " + statusCode);
                 if (statusCode == 200) {
                     Map<String, String> responseHeaders = response.headers;
-                    for(NetworkRequests n:networkRequests) {
+                    for (NetworkRequests n : networkRequests) {
                         n.onEtagUpdate(responseHeaders.get("ETag"));
                     }
                 }

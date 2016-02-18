@@ -8,6 +8,7 @@ public class Params {
     public static final String TAG_getCurrentUserProfile = "getCurrentUserProfile";
     public static final String TAG_getCurrentUserProfilePicture = "getCurrentUserProfile";
     public static final String TAG_getCurrentUserPlaylists = "getCurrentUserPlaylists";
+    public static final String TAG_getCurrentUserNextPlaylists = "getCurrentUserNextPlaylists";
     public static final String TAG_refreshToken = "refreshToken";
     public static final String TAG_getSelectedPlaylistTracks = "getSelectedPlaylistTracks";
     public static final String TAG_getArtistID = "getSelectedPlaylistTracks";

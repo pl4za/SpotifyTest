@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Jason on 01/02/2015.
  */
-public class Queue {
+class Queue {
     private static final String TAG = "Queue";
     private static List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
     private static int trackNumber = 0;
@@ -60,8 +60,7 @@ public class Queue {
 
     private void updateQueuePosition(int removedPosition) {
         if (TRACK_LIST.size() > 0) {
-            if (removedPosition > trackNumber) {
-            } else if (removedPosition < trackNumber) {
+            if (removedPosition < trackNumber) {
                 //updateTrackNumberAndPlayingTrack(playingTrack.getTrackURI());
                 trackNumber--;
             } else if (removedPosition == trackNumber) {
@@ -109,7 +108,7 @@ public class Queue {
     }
 
     public void setQueue(List<Track> queue) {
-        this.TRACK_LIST = queue;
+        TRACK_LIST = queue;
     }
 
 }

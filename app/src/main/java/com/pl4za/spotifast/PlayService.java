@@ -33,10 +33,10 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     private static final String TAG = "PlayService";
     private static final int MAX_ITEMS = 100;
-    public static NotificationManager mNotificationManager;
-    public static Player mPlayer;
-    public static boolean SKIP_NEXT = true;
-    public static boolean TRACK_END = true;
+    private static NotificationManager mNotificationManager;
+    private static Player mPlayer;
+    private static boolean SKIP_NEXT = true;
+    private static boolean TRACK_END = true;
     public static boolean PLAYING = false;
     private static boolean SHUFFLE = false;
     private static boolean REPEAT = false;
@@ -47,9 +47,9 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     private SwitchButtonListener switchButtonListener;
 
     // interfaces
-    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
-    private SettingsManager settings = SettingsManager.getInstance();
+    private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final SettingsManager settings = SettingsManager.getInstance();
 
     @Override
     public void addToQueue(String trackUri) {
@@ -103,7 +103,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     @Override
     public boolean isActive() {
-        return mPlayer.isLoggedIn();
+        return mPlayer != null && mPlayer.isLoggedIn();
     }
 
     @Override
@@ -262,20 +262,26 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             }
             Log.i(TAG, "Initializing player");
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
-            mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
-                @Override
-                public void onInitialized(Player player) {
-                    mPlayer.addConnectionStateCallback(PlayService.this);
-                    mPlayer.addPlayerNotificationCallback(PlayService.this);
-                    Log.i(TAG, "Player initialized");
-                    //viewCtrl.showSnackBar("Player initialized");
-                }
+            if (settings.getProduct().equals("premium")) {
+                viewCtrl.showSnackBar("Initializing player");
+                mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
+                    @Override
+                    public void onInitialized(Player player) {
+                        mPlayer.addConnectionStateCallback(PlayService.this);
+                        mPlayer.addPlayerNotificationCallback(PlayService.this);
+                        Log.i(TAG, "Player initialized");
+                        viewCtrl.showSnackBar("Player ready");
+                    }
 
-                @Override
-                public void onError(Throwable throwable) {
-                    Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
-                }
-            });
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
+                        viewCtrl.showSnackBar(throwable.getMessage());
+                    }
+                });
+            } else {
+                viewCtrl.showSnackBar("Spotify premium required");
+            }
         }
     }
 
@@ -292,7 +298,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void clearQueue() {
-        if (mPlayer.isInitialized()) {
+        if (mPlayer!=null && mPlayer.isInitialized()) {
             mPlayer.pause();
             mPlayer.clearQueue();
         }

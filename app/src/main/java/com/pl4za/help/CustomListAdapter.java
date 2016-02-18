@@ -106,8 +106,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults filteredResults = getFilteredResults(constraint);
-                return filteredResults;
+                return getFilteredResults(constraint);
             }
 
             private FilterResults getFilteredResults(CharSequence constraint) {
@@ -177,7 +176,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
     class SwipeListener extends SimpleSwipeListener {
 
-        int position;
+        final int position;
 
         SwipeListener(int pos) {
             this.position = pos;
@@ -193,7 +192,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
     class DoubleClickListenter implements SwipeLayout.DoubleClickListener {
 
-        int position;
+        final int position;
 
         DoubleClickListenter(int pos) {
             this.position = pos;
@@ -207,13 +206,13 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        FixedSwipeLayout swipeLayout;
-        NetworkImageView thumbNail;
-        TextView track;
-        TextView artist;
-        TextView time;
-        TextView album;
-        TextView added;
+        final FixedSwipeLayout swipeLayout;
+        final NetworkImageView thumbNail;
+        final TextView track;
+        final TextView artist;
+        final TextView time;
+        final TextView album;
+        final TextView added;
 
         public ViewHolder(View itemView) {
             super(itemView);

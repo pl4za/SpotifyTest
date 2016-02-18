@@ -10,8 +10,9 @@ import com.pl4za.spotifast.FragmentTracks;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
-    boolean landscape;
-    Fragment fragmentTracks, fragmentQueue;
+    private boolean landscape;
+    private Fragment fragmentTracks;
+    private Fragment fragmentQueue;
 
     public PageAdapter(FragmentManager fm) {
         super(fm);

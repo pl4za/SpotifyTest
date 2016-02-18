@@ -24,12 +24,6 @@ public class CustomViewPager extends ViewPager {
     }
 
     @Override
-    protected void onPageScrolled(int position, float offset, int offsetPixels) {
-        super.onPageScrolled(position, offset, offsetPixels);
-        //      this.position = position;
-    }
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         /*
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {

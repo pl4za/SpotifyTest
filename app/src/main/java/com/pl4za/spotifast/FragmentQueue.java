@@ -21,13 +21,13 @@ import java.util.List;
 public class FragmentQueue extends Fragment implements FragmentOptions {
     private static final String TAG = "FragmentQueue";
     private static final int SCROLL_STATE_IDLE = 0;
-    public static CustomListAdapter mAdapter;
+    private static CustomListAdapter mAdapter;
     private static RecyclerView recyclerView;
     private static FloatingActionButton fabPlay;
     private static FloatingActionButton fabTracks;
     // interfaces
-    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,10 +56,17 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
+        recyclerView.removeAllViews();
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-        recyclerView.removeAllViews();
+        //recyclerView.removeAllViews();
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fabTracks.setVisibility(View.INVISIBLE);
         } else {
@@ -110,9 +117,8 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         //Not implemented
     }
 
-    private boolean listIsAtTop()   {
-        if(recyclerView.getChildCount() == 0) return true;
-        return recyclerView.getChildAt(0).getTop() == 0;
+    private boolean listIsAtTop() {
+        return recyclerView.getChildCount() == 0 || recyclerView.getChildAt(0).getTop() == 0;
     }
 
     private class FabClickListener implements View.OnClickListener {

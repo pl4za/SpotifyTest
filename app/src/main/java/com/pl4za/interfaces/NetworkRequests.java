@@ -1,7 +1,5 @@
 package com.pl4za.interfaces;
 
-import android.graphics.Bitmap;
-
 import com.pl4za.spotifast.Playlist;
 
 import java.util.ArrayList;
@@ -10,8 +8,6 @@ import java.util.ArrayList;
  * Created by jasoncosta on 2/2/2016.
  */
 public interface NetworkRequests {
-
-    void onProfilePictureReceived(Bitmap image);
 
     void onTokenReceived(String acessToken, String refreshToken);
 

@@ -1,20 +1,17 @@
 package com.pl4za.spotifast;
 
-import android.util.Log;
-
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.interfaces.ViewPagerOptions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jasoncosta on 2/2/2016.
  */
 public class ViewCtrl {
 
-    private ArrayList<FragmentOptions> fragmentsOptions = new ArrayList<>();
+    private final ArrayList<FragmentOptions> fragmentsOptions = new ArrayList<>();
     private ActivityOptions activityOptions;
     private ViewPagerOptions viewPagerInstance;
 
@@ -49,25 +46,13 @@ public class ViewCtrl {
 
     public void updateView() {
         for (FragmentOptions f : fragmentsOptions) {
-            f.updateView();
-        }
-    }
-
-    public void updateView(int viewPosition) {
-        for (FragmentOptions f : fragmentsOptions) {
-            if (viewPosition==0 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentTracks"))) {
+            if (false) {
                 f.updateView();
-            } else if (viewPosition==1 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue"))) {
+            } else if ((f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue"))) {
                 f.updateView();
-            } else if (viewPosition==2 && (f.getClass().getName().equals("com.pl4za.spotifast.FragmentPlayer") || (f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue")))) {
+            } else if (false) {
                 f.updateView();
             }
-        }
-    }
-
-    public void setAdapter() {
-        if (viewPagerInstance != null) {
-            viewPagerInstance.setAdapter();
         }
     }
 
@@ -87,26 +72,10 @@ public class ViewCtrl {
         return activityOptions.isLandscape();
     }
 
-    public void clearSearch() {
-        activityOptions.clearSearch();
-    }
-
     public void updateFilter(String query) {
         for (FragmentOptions f : fragmentsOptions) {
             f.updateFilter(query);
         }
-    }
-
-    public void setList(List<Track> list) {
-        // Not implemented
-    }
-
-    public void onSwipe(int position) {
-        //Not implemented
-    }
-
-    public void onDoubleClick(int position) {
-        //Not implemented
     }
 
     public void loadTracks(String userID, String playlistID) {

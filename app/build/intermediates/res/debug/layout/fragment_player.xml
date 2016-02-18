@@ -8,7 +8,6 @@
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/albumArt"
-        android:transitionName="MyTransition"
         android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

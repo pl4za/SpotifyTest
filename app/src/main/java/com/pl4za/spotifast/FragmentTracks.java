@@ -1,7 +1,6 @@
 package com.pl4za.spotifast;
 
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,28 +38,30 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private static final String TAG = "FragmentTracks";
     private static boolean firstPage = true;
     private static final int SCROLL_STATE_IDLE = 0;
-    String userID, playlistID, oldPlaylistID;
-    List<Track> tempTrackList, tempSortList;
+    private String userID;
+    private String playlistID;
+    private List<Track> tempTrackList;
+    private List<Track> tempSortList;
     private CustomListAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private AsyncTask<Void, Void, String> parseJsonToList;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshView;
-    private View view;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
     // interfaces
-    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-    private TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
-    private SettingsManager settings = SettingsManager.getInstance();
-    private SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
+    private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private final TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final SettingsManager settings = SettingsManager.getInstance();
+    private final SpotifyNetworkRequests spotifyNetwork = SpotifyNetworkRequests.getInstance();
+    private final PlayCtrl playCtrl = PlayCtrl.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewCtrl.setActivityView((ActivityOptions) getActivity());
         viewCtrl.addFragmentView(this);
-        view = inflater.inflate(R.layout.fragment_tracks, container, false);
+        View view = inflater.inflate(R.layout.fragment_tracks, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
@@ -106,21 +107,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         refreshView.setRefreshing(false);
-        recyclerView.removeAllViews();
+        //recyclerView.removeAllViews();
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fabPlay.setVisibility(View.INVISIBLE);
             fabQueue.setVisibility(View.INVISIBLE);
@@ -128,16 +119,18 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
+        /*
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
-                taskCheckCache.cancel(true);
+                //taskCheckCache.cancel(true);
             }
         }
         if (parseJsonToList != null) {
             if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
-                parseJsonToList.cancel(true);
+                //parseJsonToList.cancel(true);
             }
         }
+        */
     }
 
     @Override
@@ -148,9 +141,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         recyclerView.removeAllViews();
-        super.onDestroy();
     }
 
     @Override
@@ -183,24 +176,25 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onSwipe(int position) {
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
-        viewCtrl.updateView(1);
+        viewCtrl.updateView();
         //viewCtrl.updateActionBar(0);
     }
 
     @Override
     public void onDoubleClick(int position) {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
-                .addToBackStack("FragmentPlayer")
-                .commit();
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
+        if (playCtrl.isActive()) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                    .addToBackStack("FragmentPlayer")
+                    .commit();
+        }
     }
 
     @Override
     public synchronized void loadTracks(String userID, String playlistID) {
         this.userID = userID;
-        this.oldPlaylistID = playlistID;
         this.playlistID = playlistID;
         // Reset temp list
         if (tempTrackList!=null) {
@@ -217,19 +211,14 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         taskCheckCache = new checkCache(url).execute();
     }
 
-    @Override
-    public void onProfilePictureReceived(Bitmap image) {
-
-    }
 
     @Override
     public void onTokenReceived(String acessToken, String refreshToken) {
 
     }
 
-    private boolean listIsAtTop()   {
-        if(recyclerView.getChildCount() == 0) return true;
-        return recyclerView.getChildAt(0).getTop() == 0;
+    private boolean listIsAtTop() {
+        return recyclerView.getChildCount() == 0 || recyclerView.getChildAt(0).getTop() == 0;
     }
     /*
     Spotify network related requests
@@ -349,7 +338,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                     String albumArt, bigAlbumArt, artistID;
                     albumArt = bigAlbumArt = artistID = "";
                     String[] artists;
-                    int artistSize = 0;
+                    int artistSize;
                     for (int i = 0; i < playlists.length(); i++) {
                         ids = playlists.getJSONObject(i);
                         tracks = ids.getJSONObject("track");

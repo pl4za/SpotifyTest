@@ -29,10 +29,10 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     private NetworkImageView ivAlbumArt;
 
     // Interfaces
-    private PlayCtrl playCtrl = PlayCtrl.getInstance();
-    private ViewCtrl viewCtrl = ViewCtrl.getInstance();
-    private QueueCtrl queueCtrl = QueueCtrl.getInstance();
-    private SettingsManager settings = SettingsManager.getInstance();
+    private final PlayCtrl playCtrl = PlayCtrl.getInstance();
+    private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
+    private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
+    private final SettingsManager settings = SettingsManager.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -30,8 +30,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="5dp"
-            android:transitionName="MyTransition" />
+            android:layout_marginRight="5dp"/>
 
         <TextView
             android:id="@+id/track"

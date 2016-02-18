@@ -22,22 +22,26 @@ public class CustomListAdapterDrawer extends BaseAdapter {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static String[] playlists;
-    private String user_id, product;
-    private Bitmap profilePicture;
+    private final String user_id;
+    private final String product;
+    private final Bitmap profilePicture;
     private LayoutInflater inflater;
-    private Activity activity;
+    private final Activity activity;
 
     public CustomListAdapterDrawer(Activity activity, String[] list, String userId, String product, Bitmap profilePicture) {
-        this.playlists = list;
+        playlists = list;
         this.user_id = userId;
         this.activity = activity;
-        if (product.equals("open")) {
-            this.product = "Spotify free";
-        } else if (product.equals("premium")) {
-            this.product = "Spotify premium";
-        }
-        else {
-            this.product = "Please login..";
+        switch (product) {
+            case "open":
+                this.product = "Spotify free";
+                break;
+            case "premium":
+                this.product = "Spotify premium";
+                break;
+            default:
+                this.product = "Please login..";
+                break;
         }
         this.profilePicture = profilePicture;
     }
@@ -68,7 +72,6 @@ public class CustomListAdapterDrawer extends BaseAdapter {
         } else {
             viewType = getItemViewType(position);
         }
-        //if (convertView == null) {
         if (viewType == TYPE_HEADER) {
             convertView = inflater.inflate(R.layout.drawer_list_header, null);
             holder = new ViewHolder(convertView, viewType);
@@ -79,11 +82,6 @@ public class CustomListAdapterDrawer extends BaseAdapter {
             holder = new ViewHolder(convertView, viewType);
         }
         convertView.setTag(holder);
-        /*
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        */
         if (viewType == TYPE_HEADER) {
             //holder.drawerHeader.setImageUrl("", imageLoader);
             holder.drawerHeader.setDefaultImageResId(R.drawable.drawer_header); // show your drawable
