@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -49,6 +49,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private SwipeRefreshLayout refreshView;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
+
     // interfaces
     private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
     private final TracklistCtrl tracklistCtrl = TracklistCtrl.getInstance();
@@ -75,9 +76,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         refreshView.setColorScheme(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
+                android.R.color.holo_red_light);        fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
         fabQueue = (FloatingActionButton) view.findViewById(R.id.fabQueue);
         FabClickListener fabClick = new FabClickListener();
         fabPlay.setOnClickListener(fabClick);
@@ -96,11 +95,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
-        if (savedInstanceState==null) {
+        if (savedInstanceState == null) {
             spotifyNetwork.addNetworkListener(this);
             viewCtrl.updateActionBar(0);
-            String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_id);
-            String userID = settings.getPlaylists().get(settings.getLastDrawerItem()-1).get(Params.playlist_user_id);
+            String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_id);
+            String userID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_user_id);
             loadTracks(userID, playlistID);
         }
         return view;
@@ -119,24 +118,13 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
-        /*
-        if (taskCheckCache != null) {
-            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
-                //taskCheckCache.cancel(true);
-            }
-        }
-        if (parseJsonToList != null) {
-            if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
-                //parseJsonToList.cancel(true);
-            }
-        }
-        */
     }
 
     @Override
     public void onPause() {
         refreshView.setRefreshing(false);
         super.onPause();
+
     }
 
     @Override
@@ -176,7 +164,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public void onSwipe(int position) {
         Track track = tracklistCtrl.getTrack(position);
         queueCtrl.addTrack(track);
-        viewCtrl.updateView();
+        viewCtrl.updateView(1);
         //viewCtrl.updateActionBar(0);
     }
 
@@ -197,11 +185,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         this.userID = userID;
         this.playlistID = playlistID;
         // Reset temp list
-        if (tempTrackList!=null) {
+        if (tempTrackList != null) {
             tempTrackList.clear();
         }
         tempTrackList = new ArrayList<>();
-        firstPage=true;
+        firstPage = true;
         String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
@@ -241,11 +229,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onRandomArtistPictureURLReceived(String artistPictureURL) {
-        if (artistPictureURL.equals("none")) {
-            Random rand = new Random();
-            String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
-            spotifyNetwork.getArtistPicture(ranArtist);
-        }
+
     }
 
     @Override
@@ -391,7 +375,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 // add
                 if (firstPage) {
                     tracklistCtrl.clear();
-                    firstPage=false;
+                    firstPage = false;
                 }
                 tracklistCtrl.addTrackList(tempTrackList, 0);
                 tempTrackList.clear();
@@ -401,12 +385,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 // add last page
                 if (firstPage) {
                     tracklistCtrl.clear();
-                    firstPage=false;
+                    firstPage = false;
                 }
                 tracklistCtrl.addTrackList(tempTrackList, 0);
                 tempTrackList.clear();
                 mAdapter.notifyDataSetChanged();
-                if (tempSortList!=null) {
+                if (tempSortList != null) {
                     tempSortList.clear();
                 }
                 tempSortList = new ArrayList<>();

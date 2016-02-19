@@ -14,8 +14,8 @@ import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.pl4za.interfaces.FragmentOptions;
-import com.pl4za.spotifast.R;
-import com.pl4za.spotifast.Track;
+import com.pl4za.spotlight.R;
+import com.pl4za.spotlight.Track;
 import com.pl4za.volley.AppController;
 
 import org.joda.time.DateTime;

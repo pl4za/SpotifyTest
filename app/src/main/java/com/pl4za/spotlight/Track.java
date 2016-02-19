@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 public class Track {
     private String track, time, album, added, trackuri, albumArt, bigAlbumArt, id;

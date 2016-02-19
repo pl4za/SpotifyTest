@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -257,9 +257,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
 
     public void initializePlayer() {
         if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
-            if (queueCtrl.hasTracks()) {
-                destroyPlayer();
-            }
             Log.i(TAG, "Initializing player");
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
             if (settings.getProduct().equals("premium")) {

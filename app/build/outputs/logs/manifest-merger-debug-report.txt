@@ -41,7 +41,7 @@ MERGED from com.github.mrengineer13:snackbar:1.1.0:12:5
 		ADDED from AndroidManifest.xml:15:9
 	android:name
 		ADDED from AndroidManifest.xml:10:9
-activity#com.pl4za.spotifast.MainActivity
+activity#com.pl4za.spotlight.MainActivity
 ADDED from AndroidManifest.xml:17:9
 	android:label
 		ADDED from AndroidManifest.xml:20:13
@@ -93,7 +93,7 @@ action#android.intent.action.SEARCH
 ADDED from AndroidManifest.xml:41:17
 	android:name
 		ADDED from AndroidManifest.xml:41:25
-service#com.pl4za.spotifast.PlayService
+service#com.pl4za.spotlight.PlayService
 ADDED from AndroidManifest.xml:45:9
 	android:exported
 		ADDED from AndroidManifest.xml:47:13

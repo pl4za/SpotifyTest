@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pl4za.spotifyfast"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    package="com.pl4za.spotlight"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.pl4za.spotifast.MainActivity"
+            android:name="com.pl4za.spotlight.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
@@ -47,7 +47,7 @@
         </activity>
 
         <service
-            android:name="com.pl4za.spotifast.PlayService"
+            android:name="com.pl4za.spotlight.PlayService"
             android:exported="false" />
     </application>
 

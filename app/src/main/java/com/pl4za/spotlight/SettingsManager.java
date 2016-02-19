@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import android.content.Context;
 import android.content.SharedPreferences;

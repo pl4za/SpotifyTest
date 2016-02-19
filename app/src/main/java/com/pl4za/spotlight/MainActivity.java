@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -269,9 +269,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
             showSnackBar("Refreshing..");
-            if (mBound) {
+            spotifyNetwork.refreshToken(settings.getRefreshToken());
+            /*if (mBound) {
                 playCtrl.initializePlayer();
-            }
+            }*/
         }
         if (id == R.id.action_clear_queue) {
             queueCtrl.clear();

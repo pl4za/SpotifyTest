@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.pl4za.spotifast.FragmentQueue;
-import com.pl4za.spotifast.FragmentTracks;
+import com.pl4za.spotlight.FragmentQueue;
+import com.pl4za.spotlight.FragmentTracks;
 
 
 public class PageAdapter extends FragmentPagerAdapter {

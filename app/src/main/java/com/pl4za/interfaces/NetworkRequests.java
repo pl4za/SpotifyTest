@@ -1,6 +1,6 @@
 package com.pl4za.interfaces;
 
-import com.pl4za.spotifast.Playlist;
+import com.pl4za.spotlight.Playlist;
 
 import java.util.ArrayList;
 

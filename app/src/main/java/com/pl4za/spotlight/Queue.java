@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import java.util.ArrayList;
 import java.util.Collections;

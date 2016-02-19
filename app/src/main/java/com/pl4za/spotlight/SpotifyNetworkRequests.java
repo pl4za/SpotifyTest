@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import android.util.Log;
 
@@ -315,7 +315,7 @@ public class SpotifyNetworkRequests {
             @Override
             public void onErrorResponse(VolleyError error) {
                 for (NetworkRequests n : networkRequests) {
-                    n.onRandomArtistPictureURLReceived("none");
+                    n.onRandomArtistPictureURLReceived("");
                 }
             }
         };

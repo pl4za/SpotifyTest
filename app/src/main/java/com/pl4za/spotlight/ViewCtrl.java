@@ -1,4 +1,4 @@
-package com.pl4za.spotifast;
+package com.pl4za.spotlight;
 
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
@@ -33,7 +33,9 @@ public class ViewCtrl {
     }
 
     public void showSnackBar(String text) {
-        activityOptions.showSnackBar(text);
+        if (activityOptions != null) {
+            activityOptions.showSnackBar(text);
+        }
     }
 
     public void addFragmentView(FragmentOptions f) {
@@ -46,11 +48,17 @@ public class ViewCtrl {
 
     public void updateView() {
         for (FragmentOptions f : fragmentsOptions) {
-            if (false) {
+            f.updateView();
+        }
+    }
+
+    public void updateView(int viewPosition) {
+        for (FragmentOptions f : fragmentsOptions) {
+            if (viewPosition==0 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentTracks"))) {
                 f.updateView();
-            } else if ((f.getClass().getName().equals("com.pl4za.spotifast.FragmentQueue"))) {
+            } else if (viewPosition==1 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue"))) {
                 f.updateView();
-            } else if (false) {
+            } else if (viewPosition==2 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentPlayer") || (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue")))) {
                 f.updateView();
             }
         }
