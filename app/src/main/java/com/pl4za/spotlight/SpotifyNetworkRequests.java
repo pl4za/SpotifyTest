@@ -250,7 +250,7 @@ public class SpotifyNetworkRequests {
                         playlists.add(new Playlist(ids.getString("id"), ids.getString("name"), ids.getJSONObject("owner").getString("id")));
                     }
                     String nextURL = json.getString("next");
-                    if (!nextURL.isEmpty()) {
+                    if (!nextURL.equals("null")) {
                         getCurrentUserPlaylists(nextURL, playlists, accessToken);
                     } else {
                         for (NetworkRequests n : networkRequests) {

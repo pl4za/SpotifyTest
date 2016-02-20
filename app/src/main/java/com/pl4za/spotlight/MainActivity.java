@@ -122,7 +122,12 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             DISABLE_LOGIN = true;
             ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
-            populateDrawer(settings.getPlaylistsNames());spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+            if (settings.getPlaylistsNames().length>0) {
+                populateDrawer(settings.getPlaylistsNames());
+            } else {
+                activateDrawer(false);
+            }
+            //spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         } else {
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
@@ -134,10 +139,14 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     protected void onResume() {
         super.onResume();
         if (!settings.getUserID().isEmpty()) {
-            activateDrawer(true);
-            populateDrawer(settings.getPlaylistsNames());
+            if (settings.getPlaylistsNames().length>0) {
+                populateDrawer(settings.getPlaylistsNames());
+                activateDrawer(true);
+                loadPlaylist(settings.getLastPlaylistPosition());
+            } else {
+                activateDrawer(false);
+            }
             spotifyNetwork.refreshToken(settings.getRefreshToken());
-            loadPlaylist(settings.getLastPlaylistPosition());
             if (playCtrl.isPlaying() && settings.getPlayerOnTop()) {
                 FragmentPlayer playFrag = new FragmentPlayer();
                 getSupportFragmentManager().beginTransaction()
@@ -556,14 +565,16 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
-        if (REFRESH) {
-            activateDrawer(true);
-            REFRESH = false;
-            openDrawer();
-        }
         if (!playlists.isEmpty()) {
+            if (REFRESH) {
+                activateDrawer(true);
+                REFRESH = false;
+                openDrawer();
+            }
             settings.setPlayLists(playlists);
             populateDrawer(settings.getPlaylistsNames());
+        } else {
+            showSnackBar("You have no playlists!");
         }
     }
 
