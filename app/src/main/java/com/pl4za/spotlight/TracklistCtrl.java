@@ -29,6 +29,11 @@ public class TracklistCtrl implements PlaylistOptions {
     }
 
     @Override
+    public void addTrack(int position, Track track) {
+        trackList.add(position, track);
+    }
+
+    @Override
     public void addTrackList(List<Track> queue, int listStart) {
         trackList.addAll(queue);
     }

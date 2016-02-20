@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
-import com.pl4za.help.CustomListAdapter;
+import com.pl4za.help.TracksAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
@@ -21,7 +21,7 @@ import java.util.List;
 public class FragmentQueue extends Fragment implements FragmentOptions {
     private static final String TAG = "FragmentQueue";
     private static final int SCROLL_STATE_IDLE = 0;
-    private static CustomListAdapter mAdapter;
+    private static TracksAdapter mAdapter;
     private static RecyclerView recyclerView;
     private static FloatingActionButton fabPlay;
     private static FloatingActionButton fabTracks;
@@ -43,7 +43,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         fabPlay.setOnClickListener(fcl);
         fabTracks.setOnClickListener(fcl);
         recyclerView.addOnScrollListener(new ListViewScrollListener());
-        mAdapter = new CustomListAdapter(queueCtrl.getTrackList());
+        mAdapter = new TracksAdapter(queueCtrl.getTrackList());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("left");
         recyclerView.setAdapter(mAdapter);
@@ -127,7 +127,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         public void onClick(View v) {
             if (v.getId() == R.id.fabTracks) {
                 viewCtrl.setViewPagerPosition(0);
-                viewCtrl.updateActionBar(0);
+                //viewCtrl.updateActionBar(0);
             } else if (v.getId() == R.id.fabPlay) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")

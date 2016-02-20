@@ -36,7 +36,6 @@ public class FixedSwipeLayout extends SwipeLayout {
             removeSwipeListener(l);
         }
         swipeListeners.clear();
-
         swipeListeners.add(listener);
         super.addSwipeListener(listener);
     }

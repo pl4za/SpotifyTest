@@ -116,6 +116,14 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Service started..");
+        if (flags == START_FLAG_REDELIVERY) {
+            /***
+             * Can be called if service is set to startForeground and is killed by the system under heavy memory pressure
+             * The service had previously returned START_REDELIVER_INTENT but had been killed before calling stopSelf(int) for that Intent.
+             */
+            Log.i(TAG, "START_FLAG_REDELIVERY = TRUE");
+            //start();
+        }
         initializePlayer();
         return super.onStartCommand(intent, flags, startId);
     }

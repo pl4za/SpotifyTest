@@ -16,7 +16,7 @@ import com.pl4za.spotlight.R;
 import com.pl4za.spotlight.SettingsManager;
 import com.pl4za.volley.AppController;
 
-public class CustomListAdapterDrawer extends BaseAdapter {
+public class DrawerAdapter extends BaseAdapter {
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private static final int TYPE_HEADER = 0;
@@ -28,7 +28,7 @@ public class CustomListAdapterDrawer extends BaseAdapter {
     private LayoutInflater inflater;
     private final Activity activity;
 
-    public CustomListAdapterDrawer(Activity activity, String[] list, String userId, String product, Bitmap profilePicture) {
+    public DrawerAdapter(Activity activity, String[] list, String userId, String product, Bitmap profilePicture) {
         playlists = list;
         this.user_id = userId;
         this.activity = activity;

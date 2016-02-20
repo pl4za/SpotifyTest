@@ -43,6 +43,11 @@ public class QueueCtrl implements QueueOptions {
     }
 
     @Override
+    public void addTrack(int position, Track track) {
+
+    }
+
+    @Override
     public void addTrackList(List<Track> tracklist, int listStart) {
         if (playCtrl.isActive()) {
             if (listStart == 0) {

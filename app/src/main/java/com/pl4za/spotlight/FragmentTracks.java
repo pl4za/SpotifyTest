@@ -16,8 +16,7 @@ import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.daimajia.swipe.util.Attributes;
 import com.melnykov.fab.FloatingActionButton;
-import com.pl4za.help.CustomListAdapter;
-import com.pl4za.help.ListComparator;
+import com.pl4za.help.TracksAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
@@ -29,20 +28,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class FragmentTracks extends Fragment implements FragmentOptions, NetworkRequests {
 
     private static final String TAG = "FragmentTracks";
-    private static boolean firstPage = true;
+    private static int pageNumber = 0;
     private static final int SCROLL_STATE_IDLE = 0;
     private String userID;
     private String playlistID;
     private List<Track> tempTrackList;
-    private List<Track> tempSortList;
-    private CustomListAdapter mAdapter;
+    private TracksAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
     private AsyncTask<Void, Void, String> parseJsonToList;
     private RecyclerView recyclerView;
@@ -83,10 +79,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         fabQueue.setOnClickListener(fabClick);
         recyclerView.addOnScrollListener(new ListViewScrollListener());
         recyclerView.setEnabled(false);
-        mAdapter = new CustomListAdapter(tracklistCtrl.getTrackList());
+        mAdapter = new TracksAdapter(tracklistCtrl.getTrackList());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
+        //recyclerView.setItemAnimator(new AdapterAnimator());
         mAdapter.setMode(Attributes.Mode.Single);
         if (viewCtrl.isLandscape()) {
             fabPlay.setVisibility(View.INVISIBLE);
@@ -97,7 +94,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
         if (savedInstanceState == null) {
             spotifyNetwork.addNetworkListener(this);
-            viewCtrl.updateActionBar(0);
             String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_id);
             String userID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_user_id);
             loadTracks(userID, playlistID);
@@ -132,6 +128,16 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         super.onDestroy();
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         recyclerView.removeAllViews();
+        if (parseJsonToList != null) {
+            if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                parseJsonToList.cancel(true);
+            }
+        }
+        if (taskCheckCache != null) {
+            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
+                taskCheckCache.cancel(true);
+            }
+        }
     }
 
     @Override
@@ -189,7 +195,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             tempTrackList.clear();
         }
         tempTrackList = new ArrayList<>();
-        firstPage = true;
+        pageNumber = 0;
         String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
@@ -199,7 +205,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         taskCheckCache = new checkCache(url).execute();
     }
 
-
     @Override
     public void onTokenReceived(String acessToken, String refreshToken) {
 
@@ -208,6 +213,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private boolean listIsAtTop() {
         return recyclerView.getChildCount() == 0 || recyclerView.getChildAt(0).getTop() == 0;
     }
+
     /*
     Spotify network related requests
      */
@@ -263,12 +269,14 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         @Override
         protected void onPreExecute() {
             refreshView.setEnabled(true);
-            refreshView.post(new Runnable() {
-                @Override
-                public void run() {
-                    refreshView.setRefreshing(true);
-                }
-            });
+            if (!refreshView.isRefreshing()) {
+                refreshView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshView.setRefreshing(true);
+                    }
+                });
+            }
             super.onPreExecute();
         }
 
@@ -363,58 +371,35 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         @Override
         protected void onPostExecute(String next) {
             super.onPostExecute(next);
-            //Log.i(TAG, "Tracklist: " + trackList.size() + " next: " + next);
+            Log.i(TAG, "Loading page: "+pageNumber);
             if (!next.equals("null")) {
-                Log.i(TAG, "Loading next page");
-                if (taskCheckCache != null) {
-                    if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
-                        taskCheckCache.cancel(true);
-                    }
+                if (pageNumber<100) { //TODO: stops at x pages because of memory
+                    taskCheckCache = new checkCache(next).execute();
                 }
-                taskCheckCache = new checkCache(next).execute();
-                // add
-                if (firstPage) {
+                if (pageNumber==0) {
                     tracklistCtrl.clear();
-                    firstPage = false;
                 }
-                tracklistCtrl.addTrackList(tempTrackList, 0);
-                tempTrackList.clear();
+                for (Track track : tempTrackList) {
+                    tracklistCtrl.addTrack(0, track);
+                }
+                tempTrackList = new ArrayList<>();
                 mAdapter.notifyDataSetChanged();
             } else {
                 Log.i(TAG, "No more pages");
                 // add last page
-                if (firstPage) {
+                if (pageNumber==0) {
                     tracklistCtrl.clear();
-                    firstPage = false;
                 }
-                tracklistCtrl.addTrackList(tempTrackList, 0);
-                tempTrackList.clear();
-                mAdapter.notifyDataSetChanged();
-                if (tempSortList != null) {
-                    tempSortList.clear();
-                }
-                tempSortList = new ArrayList<>();
-                if (tracklistCtrl.hasTracks()) {
-                    tempSortList.addAll(tracklistCtrl.getTrackList());
-                    Collections.sort(tempSortList, new ListComparator());
-                    Random rand = new Random();
-                    String ranArtist = tracklistCtrl.getTrackList().get((rand.nextInt(tracklistCtrl.getTrackList().size()))).getID();
-                    spotifyNetwork.getArtistPicture(ranArtist);
-                    int i = 0;
-                    for (Track s : tempSortList) {
-                        s.setPosition(i);
-                        i++;
-                    }
+                for (Track track : tempTrackList) {
+                    tracklistCtrl.addTrack(0, track);
                 }
                 refreshView.setEnabled(true);
                 refreshView.setRefreshing(false);
                 recyclerView.setEnabled(true);
-                tracklistCtrl.clear();
-                tracklistCtrl.addTrackList(tempSortList, 0);
-                tempSortList.clear();
                 mAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(0);
             }
+            pageNumber++;
         }
     }
 
@@ -439,7 +424,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         public void onClick(View v) {
             if (v.getId() == R.id.fabQueue) {
                 viewCtrl.setViewPagerPosition(1);
-                viewCtrl.updateActionBar(1);
+                //viewCtrl.updateActionBar(1);
             } else if (v.getId() == R.id.fabPlay) {
                 FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()

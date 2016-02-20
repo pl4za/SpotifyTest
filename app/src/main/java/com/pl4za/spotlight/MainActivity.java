@@ -35,7 +35,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.mrengineer13.snackbar.SnackBar;
-import com.pl4za.help.CustomListAdapterDrawer;
+import com.pl4za.help.DrawerAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.NetworkRequests;
@@ -321,14 +321,11 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void updateActionBar(int fragmentNumber) {
-        //0: tracks, 1: queue, 2: player
-        //int index = mViewPager.getCurrentItem();
-        //lastPagerPosition = index;
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         boolean clear = queueCtrl.hasTracks();
         if (landscape) {
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
             ENABLE_SEARCH = true;
             ENABLE_CLEAR = clear;
             if (tracklistCtrl.hasTracks()) {
@@ -343,9 +340,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 clearSearch();
             }
         } else {
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
             if (fragmentNumber == 0) {
                 //boolean search = tracklistCtrl.hasTracks();
                 if (tracklistCtrl.hasTracks()) {
@@ -409,7 +403,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         if (list.length > 0) {
             String path = getAplicationPath().toString();
             Bitmap profilepicture = loadImageFromStorage(path);
-            CustomListAdapterDrawer mAdapter = new CustomListAdapterDrawer(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
+            DrawerAdapter mAdapter = new DrawerAdapter(this, list, settings.getUserID(), settings.getProduct(), profilepicture);
             mDrawerList.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }
@@ -542,7 +536,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         ENABLE_REFRESH = true;
         REFRESH = true;
         supportInvalidateOptionsMenu();
-        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
+        spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), acessToken);
         showSnackBar("Fetching playlists...");
     }
 

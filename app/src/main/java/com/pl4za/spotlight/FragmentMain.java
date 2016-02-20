@@ -51,7 +51,6 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         viewPager.removeAllViews();
     }
 
@@ -78,6 +77,7 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             settings.setLastPagerPosition(position);
+            viewCtrl.updateActionBar(position);
         }
 
         @Override

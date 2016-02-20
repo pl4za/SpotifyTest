@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -29,14 +30,15 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.ViewHolder> implements Filterable {
-    private static final String TAG = "CustomListAdapter";
+public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder> implements Filterable {
+
+    private static final String TAG = "TracksAdapter";
     private List<Track> trackList, originalTracklist;
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private FragmentOptions swipeListener;
     private String direction = "right";
 
-    public CustomListAdapter(List<Track> trackList) {
+    public TracksAdapter(List<Track> trackList) {
         this.trackList = trackList;
     }
 
@@ -166,9 +168,9 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
         if (direction.equals("right")) {
-            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.swipeLayout.findViewById(R.id.back));
+            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.backLayout);
         } else {
-            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.swipeLayout.findViewById(R.id.back));
+            holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
@@ -184,7 +186,11 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
 
         @Override
         public void onOpen(SwipeLayout layout) {
-            layout.close(true);
+            if (direction.equals("right")) {
+                layout.close(true);
+            } else {
+                layout.close(false);
+            }
             swipeListener.onSwipe(position);
         }
 
@@ -207,6 +213,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         final FixedSwipeLayout swipeLayout;
+        final LinearLayout backLayout;
         final NetworkImageView thumbNail;
         final TextView track;
         final TextView artist;
@@ -223,6 +230,7 @@ public class CustomListAdapter extends RecyclerSwipeAdapter<CustomListAdapter.Vi
             time = (TextView) itemView.findViewById(R.id.time);
             album = (TextView) itemView.findViewById(R.id.album);
             added = (TextView) itemView.findViewById(R.id.added);
+            backLayout = (LinearLayout) swipeLayout.findViewById(R.id.back);
         }
     }
 }
