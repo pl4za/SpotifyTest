@@ -1,5 +1,6 @@
 package com.pl4za.help;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,11 +122,9 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
                         for (int i = 0; i < originalTracklist.size(); i++) {
                             if (originalTracklist.get(i).getTrack().toLowerCase().contains(constraint.toString())) { //Track
                                 results.add(originalTracklist.get(i));
-                            }
-                            else if (originalTracklist.get(i).getAlbum().toLowerCase().contains(constraint.toString())) { //Album
+                            } else if (originalTracklist.get(i).getAlbum().toLowerCase().contains(constraint.toString())) { //Album
                                 results.add(originalTracklist.get(i));
-                            }
-                            else if (originalTracklist.get(i).getSimpleArtist().toLowerCase().contains(constraint.toString())) { //Artist
+                            } else if (originalTracklist.get(i).getSimpleArtist().toLowerCase().contains(constraint.toString())) { //Artist
                                 results.add(originalTracklist.get(i));
                             }
                         }
@@ -141,7 +140,7 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_view_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -167,13 +166,15 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         holder.added.setText(convertAdded(track.getAdded()));
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
-        if (direction.equals("right")) {
+
+         if (direction.equals("right")) {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.backLayout);
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
+
     }
 
     class SwipeListener extends SimpleSwipeListener {

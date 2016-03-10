@@ -34,7 +34,7 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
         View view = inflater.inflate(R.layout.fragment_queue, container, false);
         viewCtrl.setActivityView((ActivityOptions) getActivity());
         viewCtrl.addFragmentView(this);
-        recyclerView = (RecyclerView) view.findViewById(R.id.listview);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvTracks);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
         fabTracks = (FloatingActionButton) view.findViewById(R.id.fabTracks);

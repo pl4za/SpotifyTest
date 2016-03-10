@@ -59,7 +59,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         viewCtrl.setActivityView((ActivityOptions) getActivity());
         viewCtrl.addFragmentView(this);
         View view = inflater.inflate(R.layout.fragment_tracks, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.listview);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvTracks);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,7 +84,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
         //recyclerView.setItemAnimator(new AdapterAnimator());
-        mAdapter.setMode(Attributes.Mode.Single);
+        //mAdapter.setMode(Attributes.Mode.Single);
         if (viewCtrl.isLandscape()) {
             fabPlay.setVisibility(View.INVISIBLE);
             fabQueue.setVisibility(View.INVISIBLE);

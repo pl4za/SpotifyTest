@@ -8,41 +8,41 @@ package com.github.mrengineer13.snackbar;
 
 public final class R {
 	public static final class color {
-		public static final int sb__button_text_color = 0x7f0c0047;
-		public static final int sb__button_text_color_green = 0x7f0c0062;
-		public static final int sb__button_text_color_red = 0x7f0c0063;
-		public static final int sb__button_text_color_yellow = 0x7f0c0064;
-		public static final int sb__default_button_text_color = 0x7f0c0065;
-		public static final int sb__dim_white = 0x7f0c0048;
-		public static final int sb__snack_alert_bkgnd = 0x7f0c0049;
-		public static final int sb__snack_bkgnd = 0x7f0c004a;
-		public static final int sb__transparent = 0x7f0c004b;
+		public static final int sb__button_text_color = 0x7f0c004b;
+		public static final int sb__button_text_color_green = 0x7f0c0066;
+		public static final int sb__button_text_color_red = 0x7f0c0067;
+		public static final int sb__button_text_color_yellow = 0x7f0c0068;
+		public static final int sb__default_button_text_color = 0x7f0c0069;
+		public static final int sb__dim_white = 0x7f0c004c;
+		public static final int sb__snack_alert_bkgnd = 0x7f0c004d;
+		public static final int sb__snack_bkgnd = 0x7f0c004e;
+		public static final int sb__transparent = 0x7f0c004f;
 	}
 	public static final class dimen {
-		public static final int activity_horizontal_margin = 0x7f09000e;
-		public static final int activity_vertical_margin = 0x7f09000f;
-		public static final int horizontal_margin = 0x7f090057;
-		public static final int vertical_margin_bottom = 0x7f090010;
-		public static final int vertical_margin_top = 0x7f090011;
+		public static final int activity_horizontal_margin = 0x7f090010;
+		public static final int activity_vertical_margin = 0x7f090011;
+		public static final int horizontal_margin = 0x7f090059;
+		public static final int vertical_margin_bottom = 0x7f090012;
+		public static final int vertical_margin_top = 0x7f090013;
 	}
 	public static final class drawable {
 		public static final int sb__tablet_bkgnd = 0x7f020074;
 	}
 	public static final class id {
-		public static final int snackBar = 0x7f0d0095;
+		public static final int snackBar = 0x7f0d0094;
 		public static final int snackButton = 0x7f0d0008;
 		public static final int snackContainer = 0x7f0d0009;
 		public static final int snackMessage = 0x7f0d000a;
 	}
 	public static final class layout {
-		public static final int sb__snack = 0x7f04002c;
-		public static final int sb__snack_container = 0x7f04002d;
+		public static final int sb__snack = 0x7f04002b;
+		public static final int sb__snack_container = 0x7f04002c;
 	}
 	public static final class style {
 		public static final int SnackBar = 0x7f0a0004;
-		public static final int SnackBar_Button = 0x7f0a00b3;
-		public static final int SnackBar_Container = 0x7f0a00b4;
-		public static final int SnackBar_Message = 0x7f0a00b5;
+		public static final int SnackBar_Button = 0x7f0a00b6;
+		public static final int SnackBar_Container = 0x7f0a00b7;
+		public static final int SnackBar_Message = 0x7f0a00b8;
 		public static final int SnackBar_SnackBar = 0x7f0a0005;
 	}
 }
