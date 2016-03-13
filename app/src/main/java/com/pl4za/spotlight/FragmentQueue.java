@@ -108,12 +108,12 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     }
 
     @Override
-    public void onDoubleClick(int position) {
+    public void onDoubleClick(int position, View view) {
         queueCtrl.addTrackList(queueCtrl.getTrackList(), position);
     }
 
     @Override
-    public void loadTracks(String userID, String playlistID) {
+    public void loadTracks(String url) {
         //Not implemented
     }
 

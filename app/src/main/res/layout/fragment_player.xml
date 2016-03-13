@@ -4,14 +4,12 @@
     android:layout_height="match_parent"
     android:clickable="true" >
 
-    <!-- TODO Create landscape layout -->
-
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/albumArt"
+        android:transitionName="fragment_image_trans"
         android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="centerCrop"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/relativeLayout2" />
 
@@ -87,7 +85,6 @@
 
 
     </RelativeLayout>
-
 
     <RelativeLayout
         android:layout_width="fill_parent"

@@ -83,6 +83,13 @@ public class SettingsManager {
         editor.apply();
     }
 
+    public void setLastURL(String url) {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Params.last_url, url);
+        editor.apply();
+    }
+
     public void setRandomArtistImage(String artistURL) {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -196,5 +203,10 @@ public class SettingsManager {
     public boolean getPlayerOnTop() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         return sharedPref.getBoolean(Params.player_on_top, false);
+    }
+
+    public String getLastUrl() {
+        SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
+        return sharedPref.getString(Params.last_url, "");
     }
 }

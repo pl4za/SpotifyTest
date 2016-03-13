@@ -17,6 +17,7 @@
      <!-- List View  -->
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
+    <color name="list_color_back">#ffffff</color>
 
     <!-- List View tinteraction  -->
     <color name="list_row_hover_start_color">#DFE0E5</color>

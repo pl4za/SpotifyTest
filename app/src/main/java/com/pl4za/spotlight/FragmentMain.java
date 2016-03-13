@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,11 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         viewPager = (CustomViewPager) view.findViewById(R.id.pager);
         viewPager.setOnPageChangeListener(new ViewPagerScroll());
-        viewPagerAdapter = new PageAdapter(getActivity().getSupportFragmentManager());
+        viewPagerAdapter = new PageAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setOrientation(viewCtrl.isLandscape());
         viewCtrl.setViewPagerOptions(this);
-        tracklistCtrl.clear();
+        //TODO: tracklistCtrl.clear();
         return view;
     }
 

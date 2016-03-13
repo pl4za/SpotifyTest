@@ -2,22 +2,26 @@ package com.pl4za.spotlight;
 
 import android.content.res.Configuration;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
-import com.daimajia.swipe.util.Attributes;
+import com.android.volley.toolbox.NetworkImageView;
 import com.melnykov.fab.FloatingActionButton;
-import com.pl4za.help.TracksAdapter;
 import com.pl4za.help.Params;
+import com.pl4za.help.TracksAdapter;
 import com.pl4za.interfaces.ActivityOptions;
 import com.pl4za.interfaces.FragmentOptions;
 import com.pl4za.interfaces.NetworkRequests;
@@ -35,8 +39,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private static final String TAG = "FragmentTracks";
     private static int pageNumber = 0;
     private static final int SCROLL_STATE_IDLE = 0;
-    private String userID;
-    private String playlistID;
     private List<Track> tempTrackList;
     private TracksAdapter mAdapter;
     private AsyncTask<Void, Void, JSONObject> taskCheckCache;
@@ -66,13 +68,14 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             @Override
             public void onRefresh() {
                 AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-                loadTracks(userID, playlistID);
+                loadTracks(settings.getLastUrl());
             }
         });
         refreshView.setColorScheme(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);        fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
+                android.R.color.holo_red_light);
+        fabPlay = (FloatingActionButton) view.findViewById(R.id.fabPlay);
         fabQueue = (FloatingActionButton) view.findViewById(R.id.fabQueue);
         FabClickListener fabClick = new FabClickListener();
         fabPlay.setOnClickListener(fabClick);
@@ -80,6 +83,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         recyclerView.addOnScrollListener(new ListViewScrollListener());
         recyclerView.setEnabled(false);
         mAdapter = new TracksAdapter(tracklistCtrl.getTrackList());
+        Log.i(TAG, "SIZE: " + tracklistCtrl.getTrackList().size());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
@@ -92,12 +96,8 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabPlay.setVisibility(View.VISIBLE);
             fabQueue.setVisibility(View.VISIBLE);
         }
-        if (savedInstanceState == null) {
-            spotifyNetwork.addNetworkListener(this);
-            String playlistID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_id);
-            String userID = settings.getPlaylists().get(settings.getLastDrawerItem() - 1).get(Params.playlist_user_id);
-            loadTracks(userID, playlistID);
-        }
+        spotifyNetwork.addNetworkListener(this);
+        loadTracks(settings.getLastUrl());
         return view;
     }
 
@@ -175,28 +175,61 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     }
 
     @Override
-    public void onDoubleClick(int position) {
+    public void onDoubleClick(int position, View view) {
         queueCtrl.clear();
         queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
         if (playCtrl.isActive()) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
-                    .addToBackStack("FragmentPlayer")
-                    .commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Inflate transitions to apply
+                Transition changeTransform = TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_transform);
+                Transition explodeTransform = TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade);
+
+                setSharedElementReturnTransition(changeTransform);
+                setExitTransition(explodeTransform);
+
+                // Create new fragment to add (Fragment B)
+                Fragment fragment = new FragmentPlayer();
+                fragment.setSharedElementEnterTransition(changeTransform);
+                fragment.setEnterTransition(explodeTransform);
+
+                // Our shared element (in Fragment A)
+                NetworkImageView image = (NetworkImageView) view.findViewById(R.id.thumbnail);
+                TextView tvTrack = (TextView) view.findViewById(R.id.track);
+                TextView tvAlbum = (TextView) view.findViewById(R.id.album);
+                TextView tvArtist = (TextView) view.findViewById(R.id.artist);
+                Bundle bundle = new Bundle();
+                bundle.putString("TRANS_IMAGE", image.getTransitionName());
+                bundle.putString("TRANS_ALBUM", tvAlbum.getTransitionName());
+                bundle.putString("TRANS_ARTIST", tvArtist.getTransitionName());
+                bundle.putString("TRANS_TRACK", tvTrack.getTransitionName());
+                //Log.i("TRANSITION", "A: " + image.getTransitionName());
+                fragment.setArguments(bundle);
+
+                // Add Fragment B
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .addToBackStack("player")
+                        .addSharedElement(image, image.getTransitionName())
+                        .addSharedElement(tvTrack, tvTrack.getTransitionName())
+                        .addSharedElement(tvAlbum, tvAlbum.getTransitionName())
+                        .addSharedElement(tvArtist, tvArtist.getTransitionName())
+                        .commit();
+            } else {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                        .addToBackStack("player")
+                        .commit();
+            }
         }
     }
 
     @Override
-    public synchronized void loadTracks(String userID, String playlistID) {
-        this.userID = userID;
-        this.playlistID = playlistID;
-        // Reset temp list
-        if (tempTrackList != null) {
-            tempTrackList.clear();
-        }
+    public synchronized void loadTracks(String url) {
+        Log.i(TAG, "URL: " + url);
+        settings.setLastURL(url);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         tempTrackList = new ArrayList<>();
         pageNumber = 0;
-        String url = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks";
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
                 taskCheckCache.cancel(true);
@@ -371,12 +404,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         @Override
         protected void onPostExecute(String next) {
             super.onPostExecute(next);
-            Log.i(TAG, "Loading page: "+pageNumber);
+            //Log.i(TAG, "Loading page: "+pageNumber);
             if (!next.equals("null")) {
-                if (pageNumber<100) { //TODO: stops at x pages because of memory
+                if (pageNumber < 100) { //TODO: stops at x pages because of memory
                     taskCheckCache = new checkCache(next).execute();
                 }
-                if (pageNumber==0) {
+                if (pageNumber == 0) {
                     tracklistCtrl.clear();
                 }
                 for (Track track : tempTrackList) {
@@ -387,7 +420,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             } else {
                 Log.i(TAG, "No more pages");
                 // add last page
-                if (pageNumber==0) {
+                if (pageNumber == 0) {
                     tracklistCtrl.clear();
                 }
                 for (Track track : tempTrackList) {

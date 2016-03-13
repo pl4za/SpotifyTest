@@ -1,6 +1,6 @@
 package com.pl4za.help;
 
-import android.support.v7.widget.CardView;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,14 +167,19 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
 
-         if (direction.equals("right")) {
+        if (direction.equals("right")) {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.backLayout);
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.thumbNail.setTransitionName("albumArt_" + position);
+            holder.artist.setTransitionName("artist_" + position);
+            holder.track.setTransitionName("track_" + position);
+            holder.album.setTransitionName("album_" + position);
+        }
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
-
     }
 
     class SwipeListener extends SimpleSwipeListener {
@@ -207,7 +212,7 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
 
         @Override
         public void onDoubleClick(SwipeLayout swipeLayout, boolean b) {
-            swipeListener.onDoubleClick(position);
+            swipeListener.onDoubleClick(position, swipeLayout);
         }
     }
 

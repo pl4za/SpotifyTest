@@ -39,6 +39,16 @@ public class ViewCtrl {
     }
 
     public void addFragmentView(FragmentOptions f) {
+        String fragmentClass = f.getClass().getName();
+        ArrayList<Integer> removeArr = new ArrayList<>();
+        for (int i = 0; i < fragmentsOptions.size(); i++) {
+            if (fragmentsOptions.get(i).getClass().getName().equals(fragmentClass)) {
+                removeArr.add(i);
+            }
+        }
+        for (int toRemove : removeArr) {
+            fragmentsOptions.remove(toRemove);
+        }
         fragmentsOptions.add(f);
     }
 
@@ -54,11 +64,11 @@ public class ViewCtrl {
 
     public void updateView(int viewPosition) {
         for (FragmentOptions f : fragmentsOptions) {
-            if (viewPosition==0 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentTracks"))) {
+            if (viewPosition == 0 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentTracks"))) {
                 f.updateView();
-            } else if (viewPosition==1 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue"))) {
+            } else if (viewPosition == 1 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue"))) {
                 f.updateView();
-            } else if (viewPosition==2 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentPlayer") || (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue")))) {
+            } else if (viewPosition == 2 && (f.getClass().getName().equals("com.pl4za.spotlight.FragmentPlayer") || (f.getClass().getName().equals("com.pl4za.spotlight.FragmentQueue")))) {
                 f.updateView();
             }
         }
@@ -71,7 +81,7 @@ public class ViewCtrl {
     }
 
     public void setViewPagerPosition(int position) {
-        if (viewPagerInstance!=null) {
+        if (viewPagerInstance != null) {
             viewPagerInstance.setViewPagerPosition(position);
         }
     }
@@ -88,7 +98,11 @@ public class ViewCtrl {
 
     public void loadTracks(String userID, String playlistID) {
         for (FragmentOptions f : fragmentsOptions) {
-            f.loadTracks(userID, playlistID);
+            if (playlistID.equals("stared")) {
+                f.loadTracks("https://api.spotify.com/v1/me/tracks");
+            } else {
+                f.loadTracks("https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID + "/tracks");
+            }
         }
     }
 }

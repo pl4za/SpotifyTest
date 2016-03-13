@@ -1,5 +1,6 @@
 package com.pl4za.spotlight;
 
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -122,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             DISABLE_LOGIN = true;
             ENABLE_REFRESH = true;
             supportInvalidateOptionsMenu();
-            if (settings.getPlaylistsNames().length>0) {
+            if (settings.getPlaylistsNames().length > 0) {
                 populateDrawer(settings.getPlaylistsNames());
             } else {
                 activateDrawer(false);
@@ -132,14 +133,19 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
         }
-        fragment = new FragmentMain();
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            fragment = (FragmentMain) getSupportFragmentManager().getFragment(savedInstanceState, "fragmentMain");
+        } else {
+            fragment = new FragmentMain();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!settings.getUserID().isEmpty()) {
-            if (settings.getPlaylistsNames().length>0) {
+            if (settings.getPlaylistsNames().length > 0) {
                 populateDrawer(settings.getPlaylistsNames());
                 activateDrawer(true);
                 loadPlaylist(settings.getLastPlaylistPosition());
@@ -159,7 +165,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //No call for super(). Bug on API Level > 11.
+        getSupportFragmentManager().putFragment(outState, "fragmentMain", fragment);
     }
 
     private void activateDrawer(boolean status) {
@@ -437,7 +443,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 fragment = new FragmentMain();
             }
             this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, fragment, "FragmentMain")
+                    .replace(R.id.container, fragment)
                     .commit();
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
             String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
@@ -619,7 +625,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         @Override
         protected void onPostExecute(Bitmap image) {
             super.onPostExecute(image);
-            if (image!=null) {
+            if (image != null) {
                 saveToInternalSorage(image);
             }
         }

@@ -16,7 +16,7 @@ public class Params {
     public static final String CLIENT_ID = "6d4eddf8161c434994500be4a48cab9b";
     public static final String CLIENT_SECRET = "5ddc0c1b67c2446993ca2306eeb90149";
     public static final String REDIRECT_URI = "spotify-feed://callback";
-    public static final String SCOPES = "user-follow-read playlist-read-private streaming user-read-private";
+    public static final String SCOPES = "user-follow-read playlist-read-private streaming user-read-private user-library-read";
     public static final String profile_picture = "profile_picture";
 
     public static final String SpotifyPreferences = "SpotifyPreferences";
@@ -30,6 +30,7 @@ public class Params {
     public static final String last_pager_position = "last_pager_position";
     public static final String last_drawer_item = "last_drawer_item";
     public static final String player_on_top = "player_on_top";
+    public static final String last_url = "last_url";
     // Playlist
     public static final String playlist_name = "playlist_name";
     public static final String playlist_id = "playlist_id";

@@ -22,7 +22,6 @@
         android:id="@+id/front"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:tag="Hover">
 
         <com.android.volley.toolbox.NetworkImageView

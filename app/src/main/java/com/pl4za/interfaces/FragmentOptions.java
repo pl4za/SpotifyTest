@@ -1,5 +1,7 @@
 package com.pl4za.interfaces;
 
+import android.view.View;
+
 import com.pl4za.spotlight.Track;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public interface FragmentOptions {
 
     void onSwipe(int position);
 
-    void onDoubleClick(int position);
+    void onDoubleClick(int position, View view);
 
-    void loadTracks(String userID, String playlistID);
+    void loadTracks(String url);
 }

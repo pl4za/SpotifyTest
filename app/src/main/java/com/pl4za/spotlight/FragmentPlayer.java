@@ -1,6 +1,7 @@
 package com.pl4za.spotlight;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +39,16 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewCtrl.addFragmentView(this);
         view = inflater.inflate(R.layout.fragment_player, container, false);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                view.findViewById(R.id.albumArt).setTransitionName(bundle.getString("TRANS_IMAGE"));
+                view.findViewById(R.id.tvTrackTitle).setTransitionName(bundle.getString("TRANS_TRACK"));
+                view.findViewById(R.id.tvAlbum).setTransitionName(bundle.getString("TRANS_ALBUM"));
+                view.findViewById(R.id.tvArtist).setTransitionName(bundle.getString("TRANS_ARTIST"));
+            }
+        }
+        //Log.i("TRANSITION", "B: " + bundle.getString("TRANS_IMAGE"));
         viewCtrl.updateActionBar(2);
         setButtonsListeners();
         if (queueCtrl.hasTracks()) {
@@ -212,12 +223,12 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
     }
 
     @Override
-    public void onDoubleClick(int position) {
+    public void onDoubleClick(int position, View view) {
         // Not implemented
     }
 
     @Override
-    public void loadTracks(String userID, String playlistID) {
+    public void loadTracks(String url) {
         // Not implemented
     }
 }
