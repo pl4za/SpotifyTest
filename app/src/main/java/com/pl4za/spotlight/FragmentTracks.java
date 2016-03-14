@@ -58,6 +58,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView");
         viewCtrl.setActivityView((ActivityOptions) getActivity());
         viewCtrl.addFragmentView(this);
         View view = inflater.inflate(R.layout.fragment_tracks, container, false);
@@ -83,7 +84,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         recyclerView.addOnScrollListener(new ListViewScrollListener());
         recyclerView.setEnabled(false);
         mAdapter = new TracksAdapter(tracklistCtrl.getTrackList());
-        Log.i(TAG, "SIZE: " + tracklistCtrl.getTrackList().size());
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
@@ -97,7 +97,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             fabQueue.setVisibility(View.VISIBLE);
         }
         spotifyNetwork.addNetworkListener(this);
-        loadTracks(settings.getLastUrl());
+        if (tracklistCtrl.getTrackList().isEmpty()) {
+            loadTracks(settings.getLastUrl());
+        }
         return view;
     }
 
@@ -118,13 +120,25 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onPause() {
+        Log.i(TAG, "onPause");
         refreshView.setRefreshing(false);
+        AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
+        if (parseJsonToList != null) {
+            if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                parseJsonToList.cancel(true);
+            }
+        }
+        if (taskCheckCache != null) {
+            if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
+                taskCheckCache.cancel(true);
+            }
+        }
         super.onPause();
-
     }
 
     @Override
     public void onDestroy() {
+        Log.i(TAG, "onDestroy");
         super.onDestroy();
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         recyclerView.removeAllViews();
@@ -225,11 +239,15 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public synchronized void loadTracks(String url) {
-        Log.i(TAG, "URL: " + url);
         settings.setLastURL(url);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         tempTrackList = new ArrayList<>();
         pageNumber = 0;
+        if (parseJsonToList != null) {
+            if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
+                parseJsonToList.cancel(true);
+            }
+        }
         if (taskCheckCache != null) {
             if (taskCheckCache.getStatus() == AsyncTask.Status.PENDING || taskCheckCache.getStatus() == AsyncTask.Status.RUNNING) {
                 taskCheckCache.cancel(true);

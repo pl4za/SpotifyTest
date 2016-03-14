@@ -1,6 +1,5 @@
 package com.pl4za.spotlight;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,6 +14,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -51,22 +53,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-//TODO: finish undo option
-//TODO: Logout & login in webview
-//TODO: Switch recycleView with cardView
-//TODO: animations and shadows (material design)
-//TODO: custom audio controler
-//TODO: transactions crash
 public class MainActivity extends ActionBarActivity implements ActivityOptions, NetworkRequests {
 
     private static final String TAG = "MainActivity";
-
     private static boolean ENABLE_SEARCH = false;
     private static boolean ENABLE_CLEAR = false;
     private static boolean ENABLE_REFRESH = false;
     private static boolean DISABLE_LOGIN = false;
     private static boolean REFRESH = false;
-
     private static boolean landscape = false;
     private boolean mBound = false;
     private int lastSelection = -1;
@@ -75,6 +69,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private FragmentMain fragment;
+    private SnackBar snackBar;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -99,6 +94,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.postponeEnterTransition(this);
         settings.setContext(this);
         viewCtrl.setActivityView(this);
         Context context = getApplicationContext();
@@ -128,17 +124,19 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             } else {
                 activateDrawer(false);
             }
-            //spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
         } else {
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
         }
+        /*TODO: restore instance
         if (savedInstanceState != null) {
             //Restore the fragment's instance
             fragment = (FragmentMain) getSupportFragmentManager().getFragment(savedInstanceState, "fragmentMain");
         } else {
             fragment = new FragmentMain();
         }
+        */
+        fragment = new FragmentMain();
     }
 
     @Override
@@ -161,11 +159,16 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                         .commit();
             }
         }
+        invalidateOptionsMenu();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        getSupportFragmentManager().putFragment(outState, "fragmentMain", fragment);
+        /*
+        if (fragment != null) {
+            getSupportFragmentManager().putFragment(outState, "fragmentMain", fragment);
+        }
+        */
     }
 
     private void activateDrawer(boolean status) {
@@ -228,6 +231,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         menu.findItem(R.id.action_login).setVisible(!DISABLE_LOGIN);
+        menu.findItem(R.id.action_logout).setVisible(DISABLE_LOGIN);
         menu.findItem(R.id.action_search).setVisible(ENABLE_SEARCH);
         menu.findItem(R.id.action_refresh).setVisible(ENABLE_REFRESH);
         menu.findItem(R.id.action_clear_queue).setVisible(ENABLE_CLEAR);
@@ -265,8 +269,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         int id = item.getItemId();
         if (id == R.id.action_search) {
             return true;
-        }
-        if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             if (!mDrawerToggle.isDrawerIndicatorEnabled()) {
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -274,22 +277,40 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 getSupportFragmentManager().popBackStack();
                 return false;
             }
-        }
-        if (id == R.id.action_login) {
+        } else if (id == R.id.action_login) {
             authorization();
             return true;
-        }
-        if (id == R.id.action_refresh) {
+        } else if (id == R.id.action_logout) {
+            showSnackBar("Goodbye !", SnackBar.SHORT_SNACK);
+            settings.clearAll();
+            mDrawerLayout.closeDrawers();
+            activateDrawer(false);
+            playCtrl.destroyPlayer();
+            DISABLE_LOGIN = false;
+            ENABLE_REFRESH = false;
+            ENABLE_CLEAR = false;
+            ENABLE_SEARCH = false;
+            invalidateOptionsMenu();
+            setTitle("Spotlight");
+            tracklistCtrl.clear();
+            queueCtrl.clear();
+            FragmentManager manager = this.getSupportFragmentManager();
+            manager.popBackStack("fragmentMain", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            FragmentTransaction trans = manager.beginTransaction();
+            trans.remove(fragment);
+            trans.commit();
+            manager.popBackStack();
+            return true;
+        } else if (id == R.id.action_refresh) {
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-            showSnackBar("Refreshing..");
+            showSnackBar("Refreshing...", SnackBar.SHORT_SNACK);
             spotifyNetwork.refreshToken(settings.getRefreshToken());
             /*if (mBound) {
                 playCtrl.initializePlayer();
             }*/
-        }
-        if (id == R.id.action_clear_queue) {
+        } else if (id == R.id.action_clear_queue) {
             queueCtrl.clear();
             playCtrl.cancelNotification();
             updateActionBar(1);
@@ -350,8 +371,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 //boolean search = tracklistCtrl.hasTracks();
                 if (tracklistCtrl.hasTracks()) {
                     setTitle(tracklistCtrl.getPlaylistName());
+                    ENABLE_SEARCH = true;
                 }
-                ENABLE_SEARCH = true;
                 ENABLE_CLEAR = false;
             } else if (fragmentNumber == 1) {
                 //boolean search = queueCtrl.hasTracks();
@@ -374,8 +395,8 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     @Override
-    public void showSnackBar(String text) {
-        new SnackBar.Builder(this)
+    public void showSnackBar(String text, Short duration) {
+        snackBar = new SnackBar.Builder(this)
                 .withMessage(text)
                 .withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
                     @Override
@@ -388,8 +409,15 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                         viewCtrl.hideFab(false);
                     }
                 })
-                .withDuration(SnackBar.SHORT_SNACK)
+                .withDuration(duration)
                 .show();
+    }
+
+    @Override
+    public void clearSnackBar() {
+        if (snackBar!=null) {
+            snackBar.clear(true);
+        }
     }
 
     @Override
@@ -543,7 +571,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         REFRESH = true;
         supportInvalidateOptionsMenu();
         spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), acessToken);
-        showSnackBar("Fetching playlists...");
+        showSnackBar("Fetching playlists...", SnackBar.PERMANENT_SNACK);
     }
 
     @Override
@@ -565,6 +593,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void onPlaylistsReceived(ArrayList<Playlist> playlists) {
+        clearSnackBar();
         if (!playlists.isEmpty()) {
             if (REFRESH) {
                 activateDrawer(true);
@@ -574,7 +603,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             settings.setPlayLists(playlists);
             populateDrawer(settings.getPlaylistsNames());
         } else {
-            showSnackBar("You have no playlists!");
+            showSnackBar("You have no playlists!", SnackBar.SHORT_SNACK);
         }
     }
 

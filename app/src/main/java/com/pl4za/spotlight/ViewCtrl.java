@@ -32,9 +32,9 @@ public class ViewCtrl {
         this.viewPagerInstance = v;
     }
 
-    public void showSnackBar(String text) {
+    public void showSnackBar(String text, Short duration) {
         if (activityOptions != null) {
-            activityOptions.showSnackBar(text);
+            activityOptions.showSnackBar(text, duration);
         }
     }
 

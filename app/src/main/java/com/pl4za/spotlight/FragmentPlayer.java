@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class FragmentPlayer extends Fragment implements View.OnClickListener, FragmentOptions {
 
+    private static final String TAG = "FragmentTracks";
     private static ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private View view;
     private ImageView ivNext;
@@ -37,6 +39,7 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView");
         viewCtrl.addFragmentView(this);
         view = inflater.inflate(R.layout.fragment_player, container, false);
         Bundle bundle = getArguments();

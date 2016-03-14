@@ -2,6 +2,7 @@ package com.pl4za.spotlight;
 
 import android.util.Log;
 
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.QueueOptions;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class QueueCtrl implements QueueOptions {
             queue.addToQueue(track);
             playCtrl.addToQueue(track.getTrackURI());
             setQueueChanged(true);
-            viewCtrl.showSnackBar("Queued: " + track.getTrack());
+            viewCtrl.showSnackBar("Queued: " + track.getTrack(), SnackBar.SHORT_SNACK);
             if (!queueExists) {
                 playCtrl.play(track.getTrackURI());
             }
@@ -54,7 +55,6 @@ public class QueueCtrl implements QueueOptions {
                 queue.addToQueue(tracklist, listStart);
             }
             playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
-            viewCtrl.showSnackBar("Playing");
         } else {
             playCtrl.initializePlayer();
         }
@@ -67,7 +67,7 @@ public class QueueCtrl implements QueueOptions {
 
     @Override
     public void removeFromList(int position) {
-        viewCtrl.showSnackBar("Removed: " + queue.getQueue().get(position).getTrack());
+        viewCtrl.showSnackBar("Removed: " + queue.getQueue().get(position).getTrack(), SnackBar.SHORT_SNACK);
         int oldPos = queue.getQueuePosition();
         if (position == oldPos) {
             queue.setTrackNumberUpdate(0);

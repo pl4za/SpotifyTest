@@ -117,6 +117,12 @@ public class SettingsManager {
         editor.apply();
     }
 
+    public void clearAll() {
+        context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE).edit().clear().commit();
+        context.getSharedPreferences(Params.Playlists, Context.MODE_PRIVATE).edit().clear().commit();
+        context.getSharedPreferences(Params.SpotifyCache, Context.MODE_PRIVATE).edit().clear().commit();
+    }
+
     /*
     Get
      */
@@ -126,7 +132,7 @@ public class SettingsManager {
     }
 
     public String getAccessToken() {
-        if (context!=null) {
+        if (context != null) {
             SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
             return sharedPref.getString(Params.access_token, "");
         }
@@ -160,7 +166,7 @@ public class SettingsManager {
 
     public int getLastPlaylistPosition() {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
-        return sharedPref.getInt(Params.last_drawer_item, -1)-1;
+        return sharedPref.getInt(Params.last_drawer_item, -1) - 1;
     }
 
     public int getLastPagerPosition() {
@@ -209,4 +215,5 @@ public class SettingsManager {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.SpotifyPreferences, Context.MODE_PRIVATE);
         return sharedPref.getString(Params.last_url, "");
     }
+
 }

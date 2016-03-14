@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.pl4za.interfaces.ServiceOptions;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -40,6 +41,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     public static boolean PLAYING = false;
     private static boolean SHUFFLE = false;
     private static boolean REPEAT = false;
+    private static boolean INITIALIZING = false;
 
     private final IBinder mBinder = new LocalBinder();
     private RemoteViews contentView;
@@ -75,14 +77,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         } else {
             int max = MAX_ITEMS;
             int start = 0;
-            //TODO: fix player queue limit.
             if (queueCtrl.getTrackList().size() < max) {
                 max = queueCtrl.getTrackList().size();
             } else {
                 if (listStart - max >= 0) {
                     start = listStart - max / 2;
                     max = listStart + max / 2;
-                    if (max>queueCtrl.getTrackList().size()) {
+                    if (max > queueCtrl.getTrackList().size()) {
                         max = queueCtrl.getTrackList().size();
                     }
                     listStart = (MAX_ITEMS / 2);
@@ -137,6 +138,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void onConnectionMessage(String arg0) {
         Log.i(TAG, arg0);
+        viewCtrl.showSnackBar(arg0, SnackBar.SHORT_SNACK);
     }
 
     @Override
@@ -152,9 +154,6 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void onLoginFailed(Throwable arg0) {
         Log.e(TAG, arg0.getMessage());
-        if (arg0.getMessage().equals("Temporary connection error occurred")) {
-            viewCtrl.showSnackBar("No connection");
-        }
         Toast.makeText(getApplicationContext(), arg0.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
@@ -264,28 +263,28 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void initializePlayer() {
-        if ((mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn())) {
-            Log.i(TAG, "Initializing player");
+        if ((!INITIALIZING && (mPlayer == null || mPlayer.isShutdown() || !mPlayer.isLoggedIn()))) {
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
             if (settings.getProduct().equals("premium")) {
-                viewCtrl.showSnackBar("Initializing player");
+                INITIALIZING = true;
+                viewCtrl.showSnackBar("Initializing player", SnackBar.MED_SNACK);
                 mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
                     @Override
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(PlayService.this);
                         mPlayer.addPlayerNotificationCallback(PlayService.this);
-                        Log.i(TAG, "Player initialized");
-                        viewCtrl.showSnackBar("Player ready");
+                        viewCtrl.showSnackBar("Player ready", SnackBar.SHORT_SNACK);
+                        INITIALIZING = false;
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
-                        viewCtrl.showSnackBar(throwable.getMessage());
+                        viewCtrl.showSnackBar(throwable.getMessage(), SnackBar.MED_SNACK);
                     }
                 });
             } else {
-                viewCtrl.showSnackBar("Spotify premium required");
+                viewCtrl.showSnackBar("Spotify premium required", SnackBar.LONG_SNACK);
             }
         }
     }
@@ -303,7 +302,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void clearQueue() {
-        if (mPlayer!=null && mPlayer.isInitialized()) {
+        if (mPlayer != null && mPlayer.isInitialized()) {
             mPlayer.pause();
             mPlayer.clearQueue();
         }
@@ -370,7 +369,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     }
 
     public void destroyPlayer() {
-        if (mPlayer!=null) {
+        if (mPlayer != null) {
             mPlayer.pause();
             cancelNotification();
             Spotify.destroyPlayer(mPlayer);

@@ -15,6 +15,7 @@
     <string name="search_hint">Search by artist, track or album</string>
     <string name="action_undo">Undo</string>
     <string name="action_queue">Queue</string>
+    <string name="action_logout">Logout</string>
     <!-- Transitions -->
     <string name="list_row_transition">list_row_transition</string>
 </resources>

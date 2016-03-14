@@ -2,6 +2,7 @@ package com.pl4za.help;
 
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,13 +167,13 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         holder.added.setText(convertAdded(track.getAdded()));
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
-
         if (direction.equals("right")) {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.backLayout);
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //Log.i(TAG, "albumArt_" + position);
             holder.thumbNail.setTransitionName("albumArt_" + position);
             holder.artist.setTransitionName("artist_" + position);
             holder.track.setTransitionName("track_" + position);

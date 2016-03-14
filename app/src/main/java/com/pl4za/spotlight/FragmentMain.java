@@ -22,6 +22,7 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
 
     private static CustomViewPager viewPager;
     private PageAdapter viewPagerAdapter;
+    private static final String TAG = "FragmentMain";
 
     // Delegators
     private final ViewCtrl viewCtrl = ViewCtrl.getInstance();
@@ -30,6 +31,7 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         viewPager = (CustomViewPager) view.findViewById(R.id.pager);
         viewPager.setOnPageChangeListener(new ViewPagerScroll());
@@ -37,22 +39,16 @@ public class FragmentMain extends Fragment implements ViewPagerOptions {
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setOrientation(viewCtrl.isLandscape());
         viewCtrl.setViewPagerOptions(this);
-        //TODO: tracklistCtrl.clear();
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.i(TAG, "onStart");
         int lastPagerPosition = settings.getLastPagerPosition();
         viewCtrl.updateActionBar(lastPagerPosition);
         viewPager.setCurrentItem(lastPagerPosition);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        viewPager.removeAllViews();
     }
 
     @Override

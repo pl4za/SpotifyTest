@@ -7,7 +7,9 @@ public interface ActivityOptions {
 
     void updateActionBar(int position);
 
-    void showSnackBar(String text);
+    void showSnackBar(String text, Short duration);
+
+    void clearSnackBar();
 
     boolean isLandscape();
 
