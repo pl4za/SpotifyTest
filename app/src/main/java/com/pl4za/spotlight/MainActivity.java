@@ -305,7 +305,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
             REFRESH = true;
             spotifyNetwork.getCurrentUserPlaylists(settings.getUserID(), settings.getAccessToken());
-            showSnackBar("Refreshing...", SnackBar.SHORT_SNACK);
+            showSnackBar("Refreshing...", SnackBar.MED_SNACK);
             spotifyNetwork.refreshToken(settings.getRefreshToken());
             /*if (mBound) {
                 playCtrl.initializePlayer();
@@ -415,7 +415,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
 
     @Override
     public void clearSnackBar() {
-        if (snackBar!=null) {
+        if (snackBar != null) {
             snackBar.clear(true);
         }
     }
@@ -461,7 +461,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     private void loadPlaylist(int position) {
-        if (position >= 0) {
+        if (position >= 0 && position < settings.getPlaylistsNames().length) {
             tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
             // Set playlist name if resuming to pager 0.
             if (settings.getLastPagerPosition() == 0) {
@@ -531,7 +531,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     }
 
     private void setListItemChecked(int position) {
-        if (position > 0) {
+        if (position > 0 && position <= settings.getPlaylistsNames().length) {
             settings.setLastDrawerItem(position);
             TextView tv;
             if (lastSelection != -1) {

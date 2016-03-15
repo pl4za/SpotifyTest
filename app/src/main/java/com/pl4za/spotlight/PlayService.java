@@ -89,12 +89,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     listStart = (MAX_ITEMS / 2);
                 }
             }
-            //Log.i(TAG, "queue size: "+queue.size()+" start: "+start+" max: "+max+" click: "+listStart);
+            // Log.i(TAG, "queue size: "+queue.size()+" start: "+start+" max: "+max+" click: "+listStart);
             // start: 76 max: 98 click: 49
             List<String> subList = queue.subList(start, max);
             // Log.i(TAG, "subList size: "+subList.size()+" max: "+subList.size());
             mPlayer.play(PlayConfig.createFor(subList).withTrackIndex(listStart));
         }
+        PLAYING = false;
         TRACK_END = false;
         SKIP_NEXT = false;
         if (mNotificationManager != null && contentView != null) {
@@ -273,7 +274,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(PlayService.this);
                         mPlayer.addPlayerNotificationCallback(PlayService.this);
-                        viewCtrl.showSnackBar("Player ready", SnackBar.SHORT_SNACK);
+                        viewCtrl.showSnackBar("Player ready", SnackBar.MED_SNACK);
                         INITIALIZING = false;
                     }
 

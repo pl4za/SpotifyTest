@@ -100,6 +100,7 @@ public class SettingsManager {
     public void setPlayLists(ArrayList<Playlist> playlists) {
         SharedPreferences sharedPref = context.getSharedPreferences(Params.Playlists, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
         editor.putInt("list_size", playlists.size());
         for (int i = 0; i < playlists.size(); i++) {
             //Log.i("MainActivity", a.getName());

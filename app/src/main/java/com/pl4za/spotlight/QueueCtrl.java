@@ -38,8 +38,6 @@ public class QueueCtrl implements QueueOptions {
             if (!queueExists) {
                 playCtrl.play(track.getTrackURI());
             }
-        } else {
-            playCtrl.initializePlayer();
         }
     }
 
@@ -55,8 +53,6 @@ public class QueueCtrl implements QueueOptions {
                 queue.addToQueue(tracklist, listStart);
             }
             playCtrl.addToQueue(getTrackURIList(tracklist), listStart);
-        } else {
-            playCtrl.initializePlayer();
         }
     }
 

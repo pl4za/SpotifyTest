@@ -245,7 +245,7 @@ public class SpotifyNetworkRequests {
                     JSONObject json = new JSONObject(list);
                     JSONArray jsonArr = json.getJSONArray("items");
                     int size = jsonArr.length();
-                    playlists.add(new Playlist("stared", "Stared", "me"));
+                    playlists.add(new Playlist("stared", "Saved songs", "me"));
                     for (int i = 0; i < size; i++) {
                         JSONObject ids = jsonArr.getJSONObject(i);
                         playlists.add(new Playlist(ids.getString("id"), ids.getString("name"), ids.getJSONObject("owner").getString("id")));
