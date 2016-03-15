@@ -172,13 +172,15 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //Log.i(TAG, "albumArt_" + position);
             holder.thumbNail.setTransitionName("albumArt_" + position);
-            holder.artist.setTransitionName("artist_" + position);
-            holder.track.setTransitionName("track_" + position);
-            holder.album.setTransitionName("album_" + position);
+            //holder.artist.setTransitionName("artist_" + position);
+            //holder.track.setTransitionName("track_" + position);
+            //holder.album.setTransitionName("album_" + position);
         }
+        */
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
     }

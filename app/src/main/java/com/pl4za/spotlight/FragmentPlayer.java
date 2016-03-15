@@ -46,9 +46,9 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
         if (bundle != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 view.findViewById(R.id.albumArt).setTransitionName(bundle.getString("TRANS_IMAGE"));
-                view.findViewById(R.id.tvTrackTitle).setTransitionName(bundle.getString("TRANS_TRACK"));
-                view.findViewById(R.id.tvAlbum).setTransitionName(bundle.getString("TRANS_ALBUM"));
-                view.findViewById(R.id.tvArtist).setTransitionName(bundle.getString("TRANS_ARTIST"));
+                //view.findViewById(R.id.tvTrackTitle).setTransitionName(bundle.getString("TRANS_TRACK"));
+                //view.findViewById(R.id.tvAlbum).setTransitionName(bundle.getString("TRANS_ALBUM"));
+                //view.findViewById(R.id.tvArtist).setTransitionName(bundle.getString("TRANS_ARTIST"));
             }
         }
         //Log.i("TRANSITION", "B: " + bundle.getString("TRANS_IMAGE"));

@@ -139,7 +139,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
     @Override
     public void onConnectionMessage(String arg0) {
         Log.i(TAG, arg0);
-        viewCtrl.showSnackBar(arg0, SnackBar.SHORT_SNACK);
+        viewCtrl.showSnackBar(arg0, SnackBar.MED_SNACK);
     }
 
     @Override
@@ -397,7 +397,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         if (!queueCtrl.hasTracks()) {
             cancelNotification();
         } else if (mNotificationManager != null) {
-            contentView.setImageViewResource(R.id.image, R.drawable.no_image);
+            //contentView.setImageViewResource(R.id.image, R.drawable.no_image);
             contentView.setTextViewText(R.id.tvTrackTitle, queueCtrl.getCurrentTrack().getTrack());
             contentView.setTextViewText(R.id.tvArtistAndAlbum, queueCtrl.getCurrentTrack().getSimpleArtist() + " - " + queueCtrl.getCurrentTrack().getAlbum());
             mNotificationManager.notify(1, notification);

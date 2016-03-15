@@ -190,8 +190,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public void onDoubleClick(int position, View view) {
-        queueCtrl.clear();
-        queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
         if (playCtrl.isActive()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 // Inflate transitions to apply
@@ -208,14 +206,16 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
                 // Our shared element (in Fragment A)
                 NetworkImageView image = (NetworkImageView) view.findViewById(R.id.thumbnail);
-                TextView tvTrack = (TextView) view.findViewById(R.id.track);
-                TextView tvAlbum = (TextView) view.findViewById(R.id.album);
-                TextView tvArtist = (TextView) view.findViewById(R.id.artist);
+                //TextView tvTrack = (TextView) view.findViewById(R.id.track);
+                //TextView tvAlbum = (TextView) view.findViewById(R.id.album);
+                //TextView tvArtist = (TextView) view.findViewById(R.id.artist);
                 Bundle bundle = new Bundle();
+                //bundle.putString("TRANS_IMAGE", image.getTransitionName());
+                image.setTransitionName("albumArt_" + position);
                 bundle.putString("TRANS_IMAGE", image.getTransitionName());
-                bundle.putString("TRANS_ALBUM", tvAlbum.getTransitionName());
-                bundle.putString("TRANS_ARTIST", tvArtist.getTransitionName());
-                bundle.putString("TRANS_TRACK", tvTrack.getTransitionName());
+                //bundle.putString("TRANS_ALBUM", tvAlbum.getTransitionName());
+                //bundle.putString("TRANS_ARTIST", tvArtist.getTransitionName());
+                //bundle.putString("TRANS_TRACK", tvTrack.getTransitionName());
                 //Log.i("TRANSITION", "A: " + image.getTransitionName());
                 fragment.setArguments(bundle);
 
@@ -224,9 +224,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                         .replace(R.id.container, fragment)
                         .addToBackStack("player")
                         .addSharedElement(image, image.getTransitionName())
-                        .addSharedElement(tvTrack, tvTrack.getTransitionName())
-                        .addSharedElement(tvAlbum, tvAlbum.getTransitionName())
-                        .addSharedElement(tvArtist, tvArtist.getTransitionName())
+                        //.addSharedElement(tvTrack, tvTrack.getTransitionName())
+                        //.addSharedElement(tvAlbum, tvAlbum.getTransitionName())
+                        //.addSharedElement(tvArtist, tvArtist.getTransitionName())
                         .commit();
             } else {
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -235,6 +235,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                         .commit();
             }
         }
+        queueCtrl.clear();
+        queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
+        queueCtrl.clear();
+        queueCtrl.addTrackList(tracklistCtrl.getTrackList().subList(position, tracklistCtrl.getTrackList().size()), 0);
     }
 
     @Override
