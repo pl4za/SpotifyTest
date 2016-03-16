@@ -1,5 +1,7 @@
 package com.pl4za.spotlight;
 
+import android.util.Log;
+
 import com.pl4za.interfaces.PlaylistOptions;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class TracklistCtrl implements PlaylistOptions {
 
     private static List<Track> trackList;
     private String trackListName;
+    private String trackListID;
 
     private static final TracklistCtrl INSTANCE = new TracklistCtrl();
 
@@ -40,7 +43,7 @@ public class TracklistCtrl implements PlaylistOptions {
 
     @Override
     public void setTrackList(List<Track> newTrackList) {
-        trackList=newTrackList;
+        trackList = newTrackList;
     }
 
     @Override
@@ -74,8 +77,18 @@ public class TracklistCtrl implements PlaylistOptions {
     }
 
     @Override
+    public String getPlaylistID() {
+        return trackListID;
+    }
+
+    @Override
     public void setPlaylistName(String tracklistName) {
         this.trackListName = tracklistName;
+    }
+
+    @Override
+    public void setPlaylistID(String trackListID) {
+        this.trackListID = trackListID;
     }
 
 }

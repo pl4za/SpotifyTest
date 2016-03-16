@@ -14,12 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.android.volley.toolbox.NetworkImageView;
 import com.melnykov.fab.FloatingActionButton;
+import com.pl4za.help.DBOperations;
+import com.pl4za.help.DatabaseAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.help.TracksAdapter;
 import com.pl4za.interfaces.ActivityOptions;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FragmentTracks extends Fragment implements FragmentOptions, NetworkRequests {
 
@@ -87,8 +89,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         mAdapter.setSwipeListener(this);
         mAdapter.setSwipeDirection("right");
         recyclerView.setAdapter(mAdapter);
-        //recyclerView.setItemAnimator(new AdapterAnimator());
-        //mAdapter.setMode(Attributes.Mode.Single);
         if (viewCtrl.isLandscape()) {
             fabPlay.setVisibility(View.INVISIBLE);
             fabQueue.setVisibility(View.INVISIBLE);
@@ -206,27 +206,16 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
                 // Our shared element (in Fragment A)
                 NetworkImageView image = (NetworkImageView) view.findViewById(R.id.thumbnail);
-                //TextView tvTrack = (TextView) view.findViewById(R.id.track);
-                //TextView tvAlbum = (TextView) view.findViewById(R.id.album);
-                //TextView tvArtist = (TextView) view.findViewById(R.id.artist);
                 Bundle bundle = new Bundle();
-                //bundle.putString("TRANS_IMAGE", image.getTransitionName());
-                image.setTransitionName("albumArt_" + position);
+                //image.setTransitionName("albumArt_" + position);
                 bundle.putString("TRANS_IMAGE", image.getTransitionName());
-                //bundle.putString("TRANS_ALBUM", tvAlbum.getTransitionName());
-                //bundle.putString("TRANS_ARTIST", tvArtist.getTransitionName());
-                //bundle.putString("TRANS_TRACK", tvTrack.getTransitionName());
-                //Log.i("TRANSITION", "A: " + image.getTransitionName());
                 fragment.setArguments(bundle);
 
                 // Add Fragment B
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, fragment)
                         .addToBackStack("player")
-                        .addSharedElement(image, image.getTransitionName())
-                        //.addSharedElement(tvTrack, tvTrack.getTransitionName())
-                        //.addSharedElement(tvAlbum, tvAlbum.getTransitionName())
-                        //.addSharedElement(tvArtist, tvArtist.getTransitionName())
+                        .addSharedElement(image, "albumArt_" + position)
                         .commit();
             } else {
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -257,6 +246,25 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 taskCheckCache.cancel(true);
             }
         }
+        DatabaseAdapter dbAdapter = new DatabaseAdapter(getActivity());
+        DBOperations dbOperations = new DBOperations(dbAdapter);
+        List<Track> DBTracklist = dbOperations.getAllTracks(tracklistCtrl.getPlaylistID());
+        if (DBTracklist.isEmpty()) {
+            refreshView.setEnabled(true);
+            if (!refreshView.isRefreshing()) {
+                refreshView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshView.setRefreshing(true);
+                    }
+                });
+            }
+        } else {
+            for (Track track : DBTracklist) {
+                tracklistCtrl.addTrack(0, track);
+            }
+        }
+        updateView();
         taskCheckCache = new checkCache(url).execute();
     }
 
@@ -322,20 +330,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
 
         @Override
-        protected void onPreExecute() {
-            refreshView.setEnabled(true);
-            if (!refreshView.isRefreshing()) {
-                refreshView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshView.setRefreshing(true);
-                    }
-                });
-            }
-            super.onPreExecute();
-        }
-
-        @Override
         protected JSONObject doInBackground(Void... params) {
             Cache cache = AppController.getInstance().getRequestQueue().getCache();
             Entry entry = cache.get(url);
@@ -370,9 +364,18 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private class parseJsonToList extends AsyncTask<Void, Void, String> {
 
         final JSONObject json;
+        DatabaseAdapter dbAdapter;
+        DBOperations dbOperations;
 
         public parseJsonToList(JSONObject jsonObject) {
             this.json = jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dbAdapter = new DatabaseAdapter(getActivity());
+            dbOperations = new DBOperations(dbAdapter);
         }
 
         @Override
@@ -385,6 +388,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                     String albumArt, bigAlbumArt, artistID;
                     albumArt = bigAlbumArt = artistID = "";
                     String[] artists;
+                    Track track;
                     int artistSize;
                     for (int i = 0; i < playlists.length(); i++) {
                         ids = playlists.getJSONObject(i);
@@ -412,8 +416,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                         } catch (JSONException e) {
                             Log.e("json", "No album art or No artists");
                         }
-                        tempTrackList.add(new Track(tracks.getString("name"), artists, artistID, tracks.getString("duration_ms"), tracks.getJSONObject("album").getString("name"),
-                                ids.getString("added_at"), tracks.getString("uri"), albumArt, bigAlbumArt));
+                        track = new Track(tracks.getString("name"), artists, artistID, tracks.getString("duration_ms"), tracks.getJSONObject("album").getString("name"),
+                                ids.getString("added_at"), tracks.getString("uri"), albumArt, bigAlbumArt);
+                        tempTrackList.add(track);
+                        dbOperations.addTrack(track, tracklistCtrl.getPlaylistID());
                     }
                     return json.getString("next");
                 }
@@ -438,9 +444,13 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                     tracklistCtrl.addTrack(0, track);
                 }
                 tempTrackList = new ArrayList<>();
-                mAdapter.notifyDataSetChanged();
+                //mAdapter.notifyDataSetChanged();
             } else {
+                dbAdapter.close();
                 Log.i(TAG, "No more pages");
+                Random rand = new Random();
+                String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                spotifyNetwork.getArtistPicture(ranArtist);
                 // add last page
                 if (pageNumber == 0) {
                     tracklistCtrl.clear();

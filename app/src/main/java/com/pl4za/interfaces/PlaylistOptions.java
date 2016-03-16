@@ -7,6 +7,9 @@ public interface PlaylistOptions extends TracklistOptions {
 
     String getPlaylistName();
 
+    String getPlaylistID();
+
     void setPlaylistName(String tracklistName);
 
+    void setPlaylistID(String trackListID);
 }

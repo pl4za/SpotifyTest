@@ -38,6 +38,8 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.mrengineer13.snackbar.SnackBar;
+import com.pl4za.help.DBOperations;
+import com.pl4za.help.DatabaseAdapter;
 import com.pl4za.help.DrawerAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
@@ -94,6 +96,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*new DBOperations(new DatabaseAdapter(this)).dropDB();
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        db.onCreate(db.getWritableDB());*/
+
         ActivityCompat.postponeEnterTransition(this);
         settings.setContext(this);
         viewCtrl.setActivityView(this);
@@ -128,14 +134,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
         }
-        /*TODO: restore instance
-        if (savedInstanceState != null) {
-            //Restore the fragment's instance
-            fragment = (FragmentMain) getSupportFragmentManager().getFragment(savedInstanceState, "fragmentMain");
-        } else {
-            fragment = new FragmentMain();
-        }
-        */
         fragment = new FragmentMain();
     }
 
@@ -463,6 +461,7 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private void loadPlaylist(int position) {
         if (position >= 0 && position < settings.getPlaylistsNames().length) {
             tracklistCtrl.setPlaylistName(settings.getPlaylists().get(position).get(Params.playlist_name));
+            tracklistCtrl.setPlaylistID(settings.getPlaylists().get(position).get(Params.playlist_id));
             // Set playlist name if resuming to pager 0.
             if (settings.getLastPagerPosition() == 0) {
                 setTitle(tracklistCtrl.getPlaylistName());

@@ -51,7 +51,6 @@ public class FragmentPlayer extends Fragment implements View.OnClickListener, Fr
                 //view.findViewById(R.id.tvArtist).setTransitionName(bundle.getString("TRANS_ARTIST"));
             }
         }
-        //Log.i("TRANSITION", "B: " + bundle.getString("TRANS_IMAGE"));
         viewCtrl.updateActionBar(2);
         setButtonsListeners();
         if (queueCtrl.hasTracks()) {

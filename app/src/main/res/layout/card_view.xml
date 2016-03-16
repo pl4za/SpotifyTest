@@ -5,7 +5,8 @@
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/list_row_selector">
+    android:focusable="true"
+    android:clickable="true">
 
     <LinearLayout
         android:id="@+id/back"
@@ -24,7 +25,8 @@
         android:padding="2dp"
         card_view:cardCornerRadius="4dp"
         android:tag="Hover"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <RelativeLayout
             android:id="@+id/front"

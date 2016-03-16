@@ -39,7 +39,7 @@ class Queue {
     }
 
     public void clearQueue() {
-        TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
+        TRACK_LIST.clear();
         trackNumber = 0;
     }
 

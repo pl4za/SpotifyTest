@@ -165,6 +165,7 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         holder.time.setText(convertTime(track.getTime()));
         holder.album.setText(track.getAlbum());
         holder.added.setText(convertAdded(track.getAdded()));
+        holder.thumbNail.setBackgroundResource(R.drawable.no_image);
         imageLoader.get(albumArt, ImageLoader.getImageListener(
                 holder.thumbNail, R.drawable.no_image, R.drawable.no_image));
         if (direction.equals("right")) {
@@ -172,17 +173,13 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
         } else {
             holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.backLayout);
         }
-        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //Log.i(TAG, "albumArt_" + position);
-            holder.thumbNail.setTransitionName("albumArt_" + position);
-            //holder.artist.setTransitionName("artist_" + position);
-            //holder.track.setTransitionName("track_" + position);
-            //holder.album.setTransitionName("album_" + position);
+            //Log.i(TAG, "POSITION: "+position);
+            holder.thumbNail.setTransitionName("albumArt_" + position); //TODO: first seven are ignored
         }
-        */
         holder.swipeLayout.addSwipeListener(new SwipeListener(position));
         holder.swipeLayout.setOnDoubleClickListener(new DoubleClickListenter(position));
+        holder.swipeLayout.setOnLongClickListener(new LongClickListener(position));
     }
 
     class SwipeListener extends SimpleSwipeListener {
@@ -209,13 +206,28 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
 
         final int position;
 
-        DoubleClickListenter(int pos) {
-            this.position = pos;
+        DoubleClickListenter(int position) {
+            this.position = position;
         }
 
         @Override
         public void onDoubleClick(SwipeLayout swipeLayout, boolean b) {
             swipeListener.onDoubleClick(position, swipeLayout);
+        }
+    }
+
+    class LongClickListener implements SwipeLayout.OnLongClickListener {
+
+        final int position;
+
+        public LongClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            swipeListener.onSwipe(position);
+            return false;
         }
     }
 
@@ -242,4 +254,6 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
             backLayout = (LinearLayout) swipeLayout.findViewById(R.id.back);
         }
     }
+
+
 }

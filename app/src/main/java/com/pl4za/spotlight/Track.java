@@ -3,7 +3,6 @@ package com.pl4za.spotlight;
 public class Track {
     private String track, time, album, added, trackuri, albumArt, bigAlbumArt, id;
     private String[] artist;
-    private String simpleArtist;
     private int position;
 
     public Track() {
@@ -62,7 +61,11 @@ public class Track {
     }
 
     // SET
-    
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
     public void setTrack(String track) {
         this.track = track;
     }
