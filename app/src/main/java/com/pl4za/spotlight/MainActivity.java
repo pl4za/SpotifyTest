@@ -38,8 +38,6 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.mrengineer13.snackbar.SnackBar;
-import com.pl4za.help.DBOperations;
-import com.pl4za.help.DatabaseAdapter;
 import com.pl4za.help.DrawerAdapter;
 import com.pl4za.help.Params;
 import com.pl4za.interfaces.ActivityOptions;
@@ -99,7 +97,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         /*new DBOperations(new DatabaseAdapter(this)).dropDB();
         DatabaseAdapter db = new DatabaseAdapter(this);
         db.onCreate(db.getWritableDB());*/
-
         ActivityCompat.postponeEnterTransition(this);
         settings.setContext(this);
         viewCtrl.setActivityView(this);
@@ -211,9 +208,9 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
         if (mBound) {
             if (!playCtrl.isActive()) {
                 playCtrl.destroyPlayer();
-            } else {
-                unbindService(mConnection);
+
             }
+            unbindService(mConnection);
             mBound = false;
         }
         AppController.getInstance().cancelPendingRequests(Params.TAG_exchangeCodeForToken);

@@ -13,8 +13,12 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     /**
      * Created by jason on 16-Mar-16.
      */
+
+    private Context context;
+
     public DatabaseAdapter(Context context) {
         super(context, DBTable.DATABASE_NAME, null, DBTable.DATABASE_VERSION);
+        this.context = context;
     }
 
     private static final String TEXT_TYPE = " TEXT";
@@ -36,11 +40,17 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + DBTable.TABLE_NAME;
 
     public SQLiteDatabase getWritableDB() {
-        return this.getWritableDatabase();
+        if (this.context != null) {
+            return this.getWritableDatabase();
+        }
+        return null;
     }
 
     public SQLiteDatabase getReadableDB() {
-        return this.getReadableDatabase();
+        if (this.context != null) {
+            return this.getReadableDatabase();
+        }
+        return null;
     }
 
     @Override

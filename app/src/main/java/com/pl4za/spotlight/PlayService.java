@@ -268,12 +268,13 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
             Config playerConfig = new Config(this, settings.getAccessToken(), CLIENT_ID);
             if (settings.getProduct().equals("premium")) {
                 INITIALIZING = true;
-                viewCtrl.showSnackBar("Initializing player", SnackBar.MED_SNACK);
+                viewCtrl.showSnackBar("Initializing player", SnackBar.PERMANENT_SNACK);
                 mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
                     @Override
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(PlayService.this);
                         mPlayer.addPlayerNotificationCallback(PlayService.this);
+                        viewCtrl.clearSnackBar();
                         viewCtrl.showSnackBar("Player ready", SnackBar.MED_SNACK);
                         INITIALIZING = false;
                     }
@@ -281,6 +282,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
                     @Override
                     public void onError(Throwable throwable) {
                         Log.e(TAG, "Could not initialize player: " + throwable.getMessage());
+                        viewCtrl.clearSnackBar();
                         viewCtrl.showSnackBar(throwable.getMessage(), SnackBar.MED_SNACK);
                     }
                 });

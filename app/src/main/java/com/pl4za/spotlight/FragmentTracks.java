@@ -49,6 +49,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     private SwipeRefreshLayout refreshView;
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabQueue;
+    private DatabaseAdapter dbAdapter;
 
     // interfaces
     private final QueueCtrl queueCtrl = QueueCtrl.getInstance();
@@ -60,6 +61,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        dbAdapter = new DatabaseAdapter(getActivity());
         Log.i(TAG, "onCreateView");
         viewCtrl.setActivityView((ActivityOptions) getActivity());
         viewCtrl.addFragmentView(this);
@@ -152,6 +154,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 taskCheckCache.cancel(true);
             }
         }
+        dbAdapter.close();
     }
 
     @Override
@@ -234,7 +237,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     public synchronized void loadTracks(String url) {
         settings.setLastURL(url);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
-        tempTrackList = new ArrayList<>();
         pageNumber = 0;
         if (parseJsonToList != null) {
             if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
@@ -246,7 +248,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 taskCheckCache.cancel(true);
             }
         }
-        DatabaseAdapter dbAdapter = new DatabaseAdapter(getActivity());
+        tempTrackList = new ArrayList<>();
         DBOperations dbOperations = new DBOperations(dbAdapter);
         List<Track> DBTracklist = dbOperations.getAllTracks(tracklistCtrl.getPlaylistID());
         if (DBTracklist.isEmpty()) {
@@ -260,6 +262,7 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 });
             }
         } else {
+            tracklistCtrl.clear();
             for (Track track : DBTracklist) {
                 tracklistCtrl.addTrack(0, track);
             }
@@ -449,8 +452,10 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 dbAdapter.close();
                 Log.i(TAG, "No more pages");
                 Random rand = new Random();
-                String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
-                spotifyNetwork.getArtistPicture(ranArtist);
+                if (tempTrackList.size()>0) {
+                    String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                    spotifyNetwork.getArtistPicture(ranArtist);
+                }
                 // add last page
                 if (pageNumber == 0) {
                     tracklistCtrl.clear();

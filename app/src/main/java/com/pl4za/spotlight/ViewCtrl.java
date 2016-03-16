@@ -38,6 +38,12 @@ public class ViewCtrl {
         }
     }
 
+    public void clearSnackBar() {
+        if (activityOptions != null) {
+            activityOptions.clearSnackBar();
+        }
+    }
+
     public void addFragmentView(FragmentOptions f) {
         String fragmentClass = f.getClass().getName();
         ArrayList<Integer> removeArr = new ArrayList<>();
