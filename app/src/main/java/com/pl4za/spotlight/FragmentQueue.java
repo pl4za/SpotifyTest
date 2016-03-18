@@ -104,7 +104,9 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
     public void onSwipe(int position) {
         queueCtrl.removeFromList(position);
         viewCtrl.updateActionBar(1);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemRemoved(position);
+        mAdapter.notifyItemRangeChanged(position, queueCtrl.getTrackList().size());
+        //mAdapter.notifyDataSetChanged();
     }
 
     @Override

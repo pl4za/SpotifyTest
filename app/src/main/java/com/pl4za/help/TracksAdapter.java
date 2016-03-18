@@ -2,7 +2,6 @@ package com.pl4za.help;
 
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -185,19 +184,44 @@ public class TracksAdapter extends RecyclerSwipeAdapter<TracksAdapter.ViewHolder
     class SwipeListener extends SimpleSwipeListener {
 
         final int position;
+        private boolean swiped;
 
         SwipeListener(int pos) {
             this.position = pos;
         }
 
+
         @Override
-        public void onOpen(SwipeLayout layout) {
-            if (direction.equals("right")) {
-                layout.close(true);
-            } else {
-                layout.close(false);
+        public void onStartOpen(SwipeLayout swipeLayout) {
+        }
+
+        @Override
+        public void onOpen(SwipeLayout swipeLayout) {
+            if (swiped) {
+                swipeListener.onSwipe(position);
+                if (direction.equals("right")) {
+                    swipeLayout.close(true);
+                }
+                swiped=false;
             }
-            swipeListener.onSwipe(position);
+        }
+
+        @Override
+        public void onStartClose(SwipeLayout swipeLayout) {
+        }
+
+        @Override
+        public void onClose(SwipeLayout swipeLayout) {
+
+        }
+
+        @Override
+        public void onUpdate(SwipeLayout swipeLayout, int i, int i1) {
+        }
+
+        @Override
+        public void onHandRelease(SwipeLayout swipeLayout, float v, float v1) {
+            swiped = true;
         }
 
     }

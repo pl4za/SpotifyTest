@@ -40,4 +40,7 @@ public class Params {
     public static final String Etag = "ETag";
 
     public static final String Playlists = "SpotifyCache";
+
+    public static final short SHORT_SNACK = 1000;{
+    }
 }
