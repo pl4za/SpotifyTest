@@ -398,7 +398,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         Log.i(TAG, "Updating notification");
         if (!queueCtrl.hasTracks()) {
             cancelNotification();
-        } else if (mNotificationManager != null) {
+        } else if (contentView != null) {
             //contentView.setImageViewResource(R.id.image, R.drawable.no_image);
             contentView.setTextViewText(R.id.tvTrackTitle, queueCtrl.getCurrentTrack().getTrack());
             contentView.setTextViewText(R.id.tvArtistAndAlbum, queueCtrl.getCurrentTrack().getSimpleArtist() + " - " + queueCtrl.getCurrentTrack().getAlbum());
@@ -410,7 +410,7 @@ public class PlayService extends Service implements PlayerNotificationCallback, 
         Log.i(TAG, "Updating notification");
         if (!queueCtrl.hasTracks()) {
             cancelNotification();
-        } else if (mNotificationManager != null) {
+        } else if (contentView != null) {
             if (queueCtrl.hasNext()) {
                 contentView.setImageViewResource(R.id.ivNext, R.drawable.next_selector);
             } else {

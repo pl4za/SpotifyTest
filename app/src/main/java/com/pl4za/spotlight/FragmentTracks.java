@@ -33,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -100,7 +102,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
         }
         spotifyNetwork.addNetworkListener(this);
         if (tracklistCtrl.getTrackList().isEmpty()) {
-            loadTracks(settings.getLastUrl());
+            if (!settings.getLastUrl().isEmpty()) {
+                loadTracks(settings.getLastUrl());
+            }
         }
         return view;
     }
@@ -235,6 +239,14 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
 
     @Override
     public synchronized void loadTracks(String url) {
+        if (refreshView.isRefreshing()) {
+            refreshView.post(new Runnable() {
+                @Override
+                public void run() {
+                    refreshView.setRefreshing(false);
+                }
+            });
+        }
         settings.setLastURL(url);
         AppController.getInstance().cancelPendingRequests(Params.TAG_getSelectedPlaylistTracks);
         pageNumber = 0;
@@ -248,7 +260,6 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 taskCheckCache.cancel(true);
             }
         }
-        tempTrackList = new ArrayList<>();
         DBOperations dbOperations = new DBOperations(dbAdapter);
         List<Track> DBTracklist = dbOperations.getAllTracks(tracklistCtrl.getPlaylistID());
         if (DBTracklist.isEmpty()) {
@@ -307,13 +318,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
     @Override
     public void onPlaylistTracksReceived(String json) {
         try {
-            JSONObject list = new JSONObject(json);
             if (parseJsonToList != null) {
                 if (parseJsonToList.getStatus() == AsyncTask.Status.PENDING || parseJsonToList.getStatus() == AsyncTask.Status.RUNNING) {
                     parseJsonToList.cancel(true);
                 }
             }
-            parseJsonToList = new parseJsonToList(list).execute();
+            parseJsonToList = new parseJsonToList(new JSONObject(json)).execute();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -362,6 +372,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 spotifyNetwork.getSelectedPlaylistTracks(url, settings.getAccessToken(), settings.getEtag(url));
             }
         }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            this.cancel(true);
+        }
     }
 
     private class parseJsonToList extends AsyncTask<Void, Void, String> {
@@ -379,10 +395,11 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
             super.onPreExecute();
             dbAdapter = new DatabaseAdapter(getActivity());
             dbOperations = new DBOperations(dbAdapter);
+            tempTrackList = Collections.synchronizedList(new ArrayList<Track>());
         }
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected synchronized String doInBackground(Void... params) {
             try {
                 if (json != null) {
                     JSONArray playlists = json.getJSONArray("items");
@@ -443,17 +460,17 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 if (pageNumber == 0) {
                     tracklistCtrl.clear();
                 }
-                for (Track track : tempTrackList) {
-                    tracklistCtrl.addTrack(0, track);
+                Iterator<Track> iter = tempTrackList.iterator();
+                while (iter.hasNext()) {
+                    tracklistCtrl.addTrack(0, iter.next());
                 }
-                tempTrackList = new ArrayList<>();
-                //mAdapter.notifyDataSetChanged();
+                tempTrackList = Collections.synchronizedList(new ArrayList<Track>());
             } else {
                 dbAdapter.close();
                 Log.i(TAG, "No more pages");
                 Random rand = new Random();
-                if (tempTrackList.size()>0) {
-                    String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getID();
+                if (!tempTrackList.isEmpty()) {
+                    String ranArtist = tempTrackList.get((rand.nextInt(tempTrackList.size()))).getArtistID();
                     spotifyNetwork.getArtistPicture(ranArtist);
                 }
                 // add last page
@@ -470,6 +487,12 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 recyclerView.scrollToPosition(0);
             }
             pageNumber++;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            this.cancel(true);
         }
     }
 
@@ -496,10 +519,9 @@ public class FragmentTracks extends Fragment implements FragmentOptions, Network
                 viewCtrl.setViewPagerPosition(1);
                 //viewCtrl.updateActionBar(1);
             } else if (v.getId() == R.id.fabPlay) {
-                FragmentPlayer playFrag = new FragmentPlayer();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, playFrag, "FragmentPlayer")
-                        .addToBackStack("FragmentPlayer")
+                        .replace(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                        .addToBackStack("player")
                         .commit();
                 viewCtrl.updateActionBar(2);
             }

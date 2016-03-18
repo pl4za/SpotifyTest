@@ -1,10 +1,9 @@
 package com.pl4za.spotlight;
 
-import android.util.Log;
-
 import com.pl4za.interfaces.PlaylistOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,14 +11,14 @@ import java.util.List;
  */
 public class TracklistCtrl implements PlaylistOptions {
 
-    private static List<Track> trackList;
+    private static List<Track> TRACK_LIST = Collections.synchronizedList(new ArrayList<Track>());
     private String trackListName;
     private String trackListID;
 
     private static final TracklistCtrl INSTANCE = new TracklistCtrl();
 
     private TracklistCtrl() {
-        trackList = new ArrayList<>();
+        TRACK_LIST = new ArrayList<>();
     }
 
     public static TracklistCtrl getInstance() {
@@ -28,47 +27,47 @@ public class TracklistCtrl implements PlaylistOptions {
 
     @Override
     public void addTrack(Track track) {
-        trackList.add(track);
+        TRACK_LIST.add(track);
     }
 
     @Override
     public void addTrack(int position, Track track) {
-        trackList.add(position, track);
+        TRACK_LIST.add(position, track);
     }
 
     @Override
     public void addTrackList(List<Track> queue, int listStart) {
-        trackList.addAll(queue);
+        TRACK_LIST.addAll(queue);
     }
 
     @Override
     public void setTrackList(List<Track> newTrackList) {
-        trackList = newTrackList;
+        TRACK_LIST = newTrackList;
     }
 
     @Override
     public void removeFromList(int position) {
-        trackList.remove(position);
+        TRACK_LIST.remove(position);
     }
 
     @Override
     public void clear() {
-        trackList.clear();
+        TRACK_LIST.clear();
     }
 
     @Override
     public boolean hasTracks() {
-        return !trackList.isEmpty();
+        return !TRACK_LIST.isEmpty();
     }
 
     @Override
     public Track getTrack(int position) {
-        return trackList.get(position);
+        return TRACK_LIST.get(position);
     }
 
     @Override
     public List<Track> getTrackList() {
-        return trackList;
+        return TRACK_LIST;
     }
 
     @Override

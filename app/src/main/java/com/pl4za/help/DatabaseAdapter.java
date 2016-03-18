@@ -28,11 +28,11 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
                     DBTable.COLUMN_NAME_PLAYLIST_ID + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_TRACK_NAME + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_TRACK_ARTIST + TEXT_TYPE + COMMA_SEP +
-                    DBTable.COLUMN_NAME_TRACK_ID + TEXT_TYPE + " PRIMARY KEY" + COMMA_SEP +
+                    DBTable.COLUMN_NAME_ARTIST_ID + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_ENTRY_TIME + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_TRACK_ALBUM + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_ADDED + TEXT_TYPE + COMMA_SEP +
-                    DBTable.COLUMN_NAME_TRACK_URI + TEXT_TYPE + COMMA_SEP +
+                    DBTable.COLUMN_NAME_TRACK_URI + TEXT_TYPE + " PRIMARY KEY" + COMMA_SEP +
                     DBTable.COLUMN_NAME_TRACK_ART + TEXT_TYPE + COMMA_SEP +
                     DBTable.COLUMN_NAME_TRACK_ART_BIG + TEXT_TYPE +
                     ")";
@@ -85,7 +85,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         protected static final String COLUMN_NAME_PLAYLIST_ID = "playlist_id";
         protected static final String COLUMN_NAME_TRACK_NAME = "track_name";
         protected static final String COLUMN_NAME_TRACK_ARTIST = "track_artist";
-        protected static final String COLUMN_NAME_TRACK_ID = "track_id";
+        protected static final String COLUMN_NAME_ARTIST_ID = "track_id";
         protected static final String COLUMN_NAME_ENTRY_TIME = "track_time";
         protected static final String COLUMN_NAME_TRACK_ALBUM = "track_album";
         protected static final String COLUMN_NAME_ADDED = "track_added";

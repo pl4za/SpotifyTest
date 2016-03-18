@@ -3,6 +3,7 @@ package com.pl4za.help;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.pl4za.spotlight.Track;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class DBOperations {
 
+    private static final String TAG = "DBOperations";
     DatabaseAdapter dbAdapter = null;
 
     public DBOperations(DatabaseAdapter db) {
@@ -25,12 +27,13 @@ public class DBOperations {
     }
 
     public void addTrack(Track track, String playlistID) {
+        //Log.i(TAG, track.getTrack()+": "+track.getArtistID());
         SQLiteDatabase db = dbAdapter.getWritableDB();
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_PLAYLIST_ID, playlistID);
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_ALBUM, track.getAlbum());
-            values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_ID, track.getID());
+            values.put(DatabaseAdapter.DBTable.COLUMN_NAME_ARTIST_ID, track.getArtistID());
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_ART, track.getAlbumArt());
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_ENTRY_TIME, track.getTime());
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_ADDED, track.getAdded());
@@ -44,7 +47,6 @@ public class DBOperations {
                 }
             }
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_ARTIST, artists);
-            values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_ID, track.getID());
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_NAME, track.getTrack());
             values.put(DatabaseAdapter.DBTable.COLUMN_NAME_TRACK_URI, track.getTrackURI());
             // Inserting Row
@@ -63,7 +65,7 @@ public class DBOperations {
                 DatabaseAdapter.DBTable.COLUMN_NAME_PLAYLIST_ID +
                 " LIKE '" +
                 playlistID +
-                "'";
+                "' ORDER BY ROWID ";
         SQLiteDatabase db = dbAdapter.getReadableDB();
         if (db != null) {
             Cursor cursor = db.rawQuery(selectQuery, null);
@@ -73,7 +75,7 @@ public class DBOperations {
                     Track track = new Track();
                     track.setTrack(cursor.getString(1));
                     track.setArtist(cursor.getString(2).split(","));
-                    track.setID(cursor.getString(3));
+                    track.setArtistID(cursor.getString(3));
                     track.setTime(cursor.getString(4));
                     track.setAlbum(cursor.getString(5));
                     track.setAdded(cursor.getString(6));

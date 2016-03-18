@@ -68,7 +68,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private FragmentMain fragment;
     private SnackBar snackBar;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
@@ -131,7 +130,6 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             activateDrawer(false);
             Toast.makeText(context, "Please add a user", Toast.LENGTH_SHORT).show();
         }
-        fragment = new FragmentMain();
     }
 
     @Override
@@ -146,11 +144,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
                 activateDrawer(false);
             }
             spotifyNetwork.refreshToken(settings.getRefreshToken());
-            if (playCtrl.isPlaying() && settings.getPlayerOnTop()) {
-                FragmentPlayer playFrag = new FragmentPlayer();
+            if (settings.getPlayerOnTop()) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, playFrag, "FragmentPlayer")
-                        .addToBackStack("FragmentPlayer")
+                        .replace(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                        .addToBackStack("player")
                         .commit();
             }
         }
@@ -292,9 +289,10 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             FragmentManager manager = this.getSupportFragmentManager();
             manager.popBackStack("fragmentMain", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             FragmentTransaction trans = manager.beginTransaction();
-            trans.remove(fragment);
+            /*trans.remove(fragment);
             trans.commit();
             manager.popBackStack();
+            */
             return true;
         } else if (id == R.id.action_refresh) {
             AppController.getInstance().cancelPendingRequests(Params.TAG_getCurrentUserPlaylists);
@@ -463,12 +461,24 @@ public class MainActivity extends ActionBarActivity implements ActivityOptions, 
             if (settings.getLastPagerPosition() == 0) {
                 setTitle(tracklistCtrl.getPlaylistName());
             }
-            if (fragment == null) {
-                fragment = new FragmentMain();
+            FragmentMain fragmentMain = (FragmentMain) getSupportFragmentManager().findFragmentByTag("FragmentMain");
+            FragmentPlayer fragmentPlayer = (FragmentPlayer) getSupportFragmentManager().findFragmentByTag("FragmentPlayer");
+            if (fragmentPlayer != null) {
+                getSupportFragmentManager().popBackStack();
+                if (fragmentMain == null) {
+                    fragmentMain = new FragmentMain();
+                }
+                this.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragmentMain, "FragmentMain")
+                        .commit();
+            } else {
+                if (fragmentMain==null) {
+                    fragmentMain = new FragmentMain();
+                }
+                this.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragmentMain, "FragmentMain")
+                        .commit();
             }
-            this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit();
             String playlistID = settings.getPlaylists().get(position).get(Params.playlist_id);
             String userID = settings.getPlaylists().get(position).get(Params.playlist_user_id);
             viewCtrl.loadTracks(userID, playlistID);

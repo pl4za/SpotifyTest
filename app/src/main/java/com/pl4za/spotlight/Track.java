@@ -1,17 +1,17 @@
 package com.pl4za.spotlight;
 
 public class Track {
-    private String track, time, album, added, trackuri, albumArt, bigAlbumArt, id;
+    private String track, time, album, added, trackuri, albumArt, bigAlbumArt, artistID;
     private String[] artist;
     private int position;
 
     public Track() {
     }
  
-    public Track(String track, String[] artist, String id, String time, String album, String added, String trackuri, String albumArt, String bigAlbumArt) {
+    public Track(String track, String[] artist, String artistID, String time, String album, String added, String trackuri, String albumArt, String bigAlbumArt) {
         this.track = track;
         this.artist = artist;
-        this.id = id;
+        this.artistID = artistID;
         this.time = time;
         this.album = album;
         this.added = added;
@@ -56,14 +56,14 @@ public class Track {
         return bigAlbumArt;
     }
 
-    public String getID() {
-        return id;
+    public String getArtistID() {
+        return artistID;
     }
 
     // SET
 
-    public void setID(String id) {
-        this.id = id;
+    public void setArtistID(String id) {
+        this.artistID = id;
     }
 
     public void setTrack(String track) {

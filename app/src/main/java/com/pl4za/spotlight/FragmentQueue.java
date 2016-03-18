@@ -130,8 +130,8 @@ public class FragmentQueue extends Fragment implements FragmentOptions {
                 //viewCtrl.updateActionBar(0);
             } else if (v.getId() == R.id.fabPlay) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new FragmentPlayer(), "FragmentPlayer")
-                        .addToBackStack("FragmentPlayer")
+                        .replace(R.id.container, new FragmentPlayer(), "FragmentPlayer")
+                        .addToBackStack("player")
                         .commit();
                 viewCtrl.updateActionBar(2);
             }
